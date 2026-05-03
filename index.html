@@ -3,7 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Rice & Flower — Social Studio</title>
+<title>Rice & Flower — Social Studio</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><text x=%2250%25%22 y=%2254%22 font-size=%2256%22 text-anchor=%22middle%22>%F0%9F%8C%B8</text></svg>'
+    />
+    <!-- iOS home-screen icon (PNG required; emoji fonts aren't renderable on iOS for this) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/apple-touch-icon-167.png" />
+    <link rel="icon" sizes="192x192" href="/apple-touch-icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Rice & Flower" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -600,15 +613,68 @@ body {
         text-underline-offset: 4px;
       }
 
-      .frame {
-        padding: 14px 0;
+.frame {
         border-top: 1px solid var(--hairline);
+      }
+      .frame:last-of-type { border-bottom: 1px solid var(--hairline); }
+      .frame > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 14px 4px;
+        display: grid;
+        grid-template-columns: 60px 1fr auto;
+        gap: 14px;
+        align-items: center;
+      }
+      .frame > summary::-webkit-details-marker { display: none; }
+      .frame > summary:hover { background: var(--paper-deep); }
+      .frame[open] > summary { background: var(--paper-deep); }
+
+      .frame-summary-num {
+        font-family: var(--serif);
+        font-size: 1.6em;
+        line-height: 1;
+        color: var(--ink);
+        font-variant-numeric: lining-nums tabular-nums;
+        font-weight: 300;
+      }
+      .frame-summary-shot {
+        font-family: var(--sans);
+        font-size: 0.78em;
+        color: var(--ink);
+        line-height: 1.4;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .frame-summary-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .frame-summary-dur {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--ink-soft);
+        font-size: 0.74em;
+        white-space: nowrap;
+      }
+      .frame-chevron {
+        display: inline-block;
+        transition: transform 200ms ease;
+        color: var(--ink-soft);
+        font-size: 0.86em;
+      }
+      .frame[open] .frame-chevron { transform: rotate(90deg); }
+
+      .frame-body {
         display: grid;
         grid-template-columns: 70px 1fr 124px;
         gap: 16px;
+        padding: 4px 4px 18px;
         align-items: start;
       }
-      .frame:last-of-type { border-bottom: 1px solid var(--hairline); }
 
 .frame-num {
         font-family: var(--serif);
@@ -1546,13 +1612,20 @@ body {
         .phone-overlay-text { font-size: 14px; bottom: 60px; }
         .phone-meta { font-size: 9px; padding: 0 18px; bottom: 16px; }
 
-        /* Frame card: stack everything in a single column */
-        .frame {
-          grid-template-columns: 1fr;
-          gap: 8px;
-          padding: 16px 0;
+/* Frame summary: tappable on phone */
+        .frame > summary {
+          padding: 16px 6px;
+          grid-template-columns: 48px 1fr auto;
+          gap: 10px;
         }
-        .frame > div:first-child {
+        .frame-summary-num { font-size: 1.4em; }
+        .frame-summary-shot { font-size: 0.84em; }
+        .frame-body {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding: 0 6px 16px;
+        }
+        .frame-body > div:first-child {
           display: flex;
           align-items: center;
           gap: 12px;
@@ -1561,22 +1634,49 @@ body {
         .frame-num small { display: inline; margin-left: 4px; font-size: 0.4em; }
         .frame-controls { margin-top: 0; gap: 4px; }
         .frame-control { width: 36px; height: 36px; font-size: 14pt; }
-        .frame-fields { font-size: 0.82em; }
+        .frame-fields { font-size: 0.86em; }
         .frame-fields dl {
-          grid-template-columns: 100px 1fr;
-          row-gap: 10px;
-          column-gap: 12px;
+          grid-template-columns: 1fr;
+          row-gap: 4px;
+          column-gap: 0;
         }
-        .frame-fields dt { font-size: 0.86em; }
+        .frame-fields dt {
+          font-size: 0.86em;
+          margin-top: 8px;
+        }
+        .frame-fields dt:first-child { margin-top: 0; }
+        .frame-fields dd { margin-bottom: 4px; }
         .frame-actions {
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
           gap: 12px;
-          padding: 8px 0;
+          flex-wrap: wrap;
+          padding: 10px 0;
           border-top: 1px solid var(--hairline);
         }
-        .frame-regen-btn { padding: 10px 0; font-size: 0.78em; }
+        .frame-regen-btn { padding: 10px 0; font-size: 0.82em; }
+
+        /* Collapsible top blocks: details */
+        .collapse > summary {
+          cursor: pointer;
+          padding: 12px 0;
+          font-family: var(--serif);
+          font-style: italic;
+          font-size: 0.86em;
+          color: var(--ink);
+          list-style: none;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .collapse > summary::-webkit-details-marker { display: none; }
+        .collapse > summary::after {
+          content: "›";
+          color: var(--ink-soft);
+          transition: transform 200ms ease;
+        }
+        .collapse[open] > summary::after { transform: rotate(90deg); }
 
         /* Frame image zone touch-friendly */
         .frame-image-zone { padding: 20px 14px; }
@@ -1652,7 +1752,8 @@ body {
     <main class="page" id="app" hidden>
       <div class="topbar">
         <div class="brand-mini">RICE &amp; FLOWER</div>
-        <div class="topbar-actions">
+<div class="topbar-actions">
+          <button class="topbar-btn" id="save-progress" title="Save progress and continue later">Save</button>
           <button class="topbar-btn" id="library-toggle">Recent</button>
           <button class="topbar-btn" id="settings-toggle">Settings</button>
         </div>
@@ -2712,11 +2813,13 @@ async function regenerateFrame(frameIndex, opts = {}) {
             ${escapeHtml(s.label)}${s.pass === true ? " ✓" : s.pass === false ? " ✗" : ""}${tipHtml(s.tip)}
           </span>`).join("")}</div>`;
 
-        const strategyHtml = sb.strategy
-          ? `<div class="strategy-block">
-               <span class="strategy-label">studio rationale${tipHtml("Why this concept fits the format and what 2026 playbook signals it leans on — sends-per-reach, saves, watch time, originality, search.")}</span>
-               ${showRationale ? escapeHtml(sb.strategy) : `<span style="color:var(--ink-soft);font-style:italic">— turn on rationale in settings to read the studio's reasoning</span>`}
-             </div>` : "";
+const strategyHtml = sb.strategy
+          ? `<details class="collapse" open>
+               <summary>studio rationale${tipHtml("Why this concept fits the format and what 2026 playbook signals it leans on — sends-per-reach, saves, watch time, originality, search.")}</summary>
+               <div class="strategy-block">
+                 ${showRationale ? escapeHtml(sb.strategy) : `<span style="color:var(--ink-soft);font-style:italic">— turn on rationale in settings to read the studio's reasoning</span>`}
+               </div>
+             </details>` : "";
 
         const frames = sb.frames.map((f, i) => renderFrame(f, i, showRationale)).join(`
           <div class="add-frame-row"><button type="button" class="add-frame-btn" data-after="${"$INDEX$"}">add a frame here</button></div>
@@ -2912,7 +3015,7 @@ function setFocusMode(on) {
           });
           updateUi();
         };
-        const updateUi = () => {
+const updateUi = () => {
           document.querySelectorAll("#phone-dots .phone-dot").forEach((b, j) => {
             b.classList.toggle("is-active", j === idx);
           });
@@ -2926,6 +3029,11 @@ function setFocusMode(on) {
           const next = document.querySelector(".phone-next");
           if (prev) prev.disabled = idx === 0;
           if (next) next.disabled = idx === total - 1;
+          // Open the corresponding frame card so the editor follows the carousel
+          document.querySelectorAll(".frame").forEach((f) => {
+            const i = Number(f.dataset.frameIndex);
+            f.open = i === idx;
+          });
         };
         document.querySelector(".phone-prev")?.addEventListener("click", () => setIndex(idx - 1));
         document.querySelector(".phone-next")?.addEventListener("click", () => setIndex(idx + 1));
@@ -2991,40 +3099,51 @@ function renderFrame(f, i, showRationale) {
                <div class="frame-image-empty">drop or click to add a reference image (9:16 ideal)</div>
                <input type="file" accept="image/*" hidden data-frame-file="${i}" />
              </div>`;
-        const last = state.storyboard.frames.length - 1;
+const last = state.storyboard.frames.length - 1;
+        const shotPreview = (f.shot_description || "").trim() || "(tap to fill in)";
         return `
-          <article class="frame" data-frame-index="${i}">
-            <div>
-              <div class="frame-num">${num}${rationaleTip}<small>frame</small></div>
-              <div class="frame-controls">
-                <button type="button" class="frame-control" data-move="up" data-i="${i}" ${i === 0 ? "disabled" : ""} title="Move up">↑</button>
-                <button type="button" class="frame-control" data-move="down" data-i="${i}" ${i === last ? "disabled" : ""} title="Move down">↓</button>
-                <button type="button" class="frame-control" data-delete="${i}" ${state.storyboard.frames.length <= 1 ? "disabled" : ""} title="Delete">×</button>
+          <details class="frame" data-frame-index="${i}" ${i === 0 ? "open" : ""}>
+            <summary>
+              <span class="frame-summary-num">${num}</span>
+              <span class="frame-summary-shot">${escapeHtml(shotPreview)}</span>
+              <span class="frame-summary-meta">
+                ${dur ? `<span class="frame-summary-dur">${dur}</span>` : ""}
+                <span class="frame-chevron">›</span>
+              </span>
+            </summary>
+            <div class="frame-body">
+              <div>
+                <div class="frame-num">${num}${rationaleTip}<small>frame</small></div>
+                <div class="frame-controls">
+                  <button type="button" class="frame-control" data-move="up" data-i="${i}" ${i === 0 ? "disabled" : ""} title="Move up">↑</button>
+                  <button type="button" class="frame-control" data-move="down" data-i="${i}" ${i === last ? "disabled" : ""} title="Move down">↓</button>
+                  <button type="button" class="frame-control" data-delete="${i}" ${state.storyboard.frames.length <= 1 ? "disabled" : ""} title="Delete">×</button>
+                </div>
+              </div>
+              <div class="frame-fields">
+                <dl>
+                  ${row("Shot", f.shot_description)}
+                  ${row("Camera", f.camera_direction)}
+                  ${row("On-screen text", f.on_screen_text)}
+                  ${row("Caption", f.caption_segment)}
+                  ${row("Audio", f.audio_cue)}
+                  ${row("Transition in", f.transition_in)}
+                  ${row("Transition out", f.transition_out)}
+                </dl>
+                ${ratHtml}
+                ${imgZone}
+                <div class="frame-notes">
+                  <div class="frame-notes-label">your notes</div>
+                  <textarea data-frame-i="${i}" placeholder="adjust the framing, swap an angle, jot a reminder —">${escapeHtml(noteVal)}</textarea>
+                </div>
+              </div>
+              <div class="frame-actions">
+                <span class="frame-duration">${dur}</span>
+                <button type="button" class="frame-regen-btn" data-regen="${i}">regenerate frame</button>
+                <button type="button" class="frame-regen-btn" data-apply-notes="${i}" ${(state.notes[i] || "").trim() ? "" : "disabled"}>apply my notes</button>
               </div>
             </div>
-            <div class="frame-fields">
-              <dl>
-                ${row("Shot", f.shot_description)}
-                ${row("Camera", f.camera_direction)}
-                ${row("On-screen text", f.on_screen_text)}
-                ${row("Caption", f.caption_segment)}
-                ${row("Audio", f.audio_cue)}
-                ${row("Transition in", f.transition_in)}
-                ${row("Transition out", f.transition_out)}
-              </dl>
-              ${ratHtml}
-              ${imgZone}
-              <div class="frame-notes">
-                <div class="frame-notes-label">your notes</div>
-                <textarea data-frame-i="${i}" placeholder="adjust the framing, swap an angle, jot a reminder —">${escapeHtml(noteVal)}</textarea>
-              </div>
-            </div>
-<div class="frame-actions">
-              <span class="frame-duration">${dur}</span>
-              <button type="button" class="frame-regen-btn" data-regen="${i}">regenerate frame</button>
-              <button type="button" class="frame-regen-btn" data-apply-notes="${i}" ${(state.notes[i] || "").trim() ? "" : "disabled"}>apply my notes</button>
-            </div>
-          </article>`;
+          </details>`;
       }
 
       function bindFrameInteractions(root) {
@@ -3486,7 +3605,7 @@ if (state.format) {
       function saveLibrary(items) {
         try { localStorage.setItem(LIB_KEY, JSON.stringify(items)); } catch {}
       }
-      function saveCurrentToLibrary() {
+function saveCurrentToLibrary() {
         if (!state.storyboard) return;
         snapshotActiveVariant();
         const items = loadLibrary();
@@ -3494,6 +3613,7 @@ if (state.format) {
         items.unshift({
           id,
           ts: Date.now(),
+          kind: "storyboard",
           concept: state.storyboard.concept || "",
           format: state.storyboard.format || state.format || "",
           frameCount: state.storyboard.frames.length,
@@ -3504,11 +3624,57 @@ if (state.format) {
             hashtags: state.hashtags,
           },
         });
-        // Cap library to 30 entries to avoid localStorage bloat
         while (items.length > 30) items.pop();
         saveLibrary(items);
         flash("save-btn", "Saved");
       }
+
+      function saveProgress() {
+        // Snapshot whatever progress exists — works at any step, not just storyboard
+        if (state.storyboard) snapshotActiveVariant();
+        const items = loadLibrary();
+        const id = "p-" + Date.now();
+        const idea = (ideaEl?.value || state.idea || "").trim();
+        const title = state.storyboard?.concept || idea || "Untitled draft";
+        const stepLabels = { 1: "format", 2: "idea", 3: "refine", 4: "storyboard" };
+        items.unshift({
+          id,
+          ts: Date.now(),
+          kind: state.storyboard ? "storyboard" : "draft",
+          concept: title,
+          format: state.format || "",
+          frameCount: state.storyboard ? state.storyboard.frames.length : 0,
+          step: state.step,
+          stepLabel: stepLabels[state.step] || "",
+          payload: {
+            step: state.step,
+            highest: state.highest,
+            format: state.format,
+            formatParams: state.formatParams,
+            idea: idea,
+            chatTurns: state.chatTurns,
+            questions: state.questions,
+            answers: state.answers,
+            messages: state.messages,
+            storyboard: state.storyboard,
+            notes: state.notes,
+            images: state.images,
+            hashtags: state.hashtags,
+            variants: state.variants,
+            activeVariant: state.activeVariant,
+          },
+        });
+        while (items.length > 30) items.pop();
+        saveLibrary(items);
+        // Visual confirmation on the topbar Save button
+        const b = document.getElementById("save-progress");
+        if (b) {
+          const orig = b.textContent;
+          b.textContent = "Saved";
+          setTimeout(() => (b.textContent = orig), 1400);
+        }
+      }
+      document.getElementById("save-progress").addEventListener("click", saveProgress);
       function renderLibrary() {
         const root = $("library-content");
         const items = loadLibrary();
@@ -3518,14 +3684,17 @@ if (state.format) {
         }
         const ul = document.createElement("ul");
         ul.className = "library-list";
-        items.forEach((it) => {
+items.forEach((it) => {
           const li = document.createElement("li");
           const dt = new Date(it.ts);
           const when = dt.toLocaleString();
+          const tag = it.kind === "draft"
+            ? `draft — at ${escapeHtml(it.stepLabel || "in progress")}`
+            : `${escapeHtml(it.format)} · ${it.frameCount} frames`;
           li.innerHTML = `
             <button type="button" class="library-item" data-id="${it.id}">
               <div class="library-item-title"></div>
-              <div class="library-item-meta">${escapeHtml(it.format)} · ${it.frameCount} frames · ${when}</div>
+              <div class="library-item-meta">${tag} · ${when}</div>
             </button>
             <div class="library-item-actions">
               <button type="button" class="btn library-load" data-id="${it.id}">Load</button>
@@ -3550,22 +3719,64 @@ if (state.format) {
           });
         });
       }
-      function loadFromLibrary(id) {
+function loadFromLibrary(id) {
         const it = loadLibrary().find((x) => x.id === id);
         if (!it) return;
-        state.format = it.format || "auto";
-        state.highest = 4;
-        state.variants = [{
-          storyboard: it.payload.storyboard,
-          notes: it.payload.notes || {},
-          images: it.payload.images || {},
-          hashtags: it.payload.hashtags || [...(it.payload.storyboard.hashtags || [])],
-        }];
-        state.activeVariant = 0;
-        bindActiveVariant();
-        renderStoryboard();
+        const p = it.payload || {};
+
+        // Restore everything we have, regardless of whether it's a full
+        // storyboard or a partial draft saved mid-flow.
+        state.format = p.format || it.format || "auto";
+        state.formatParams = p.formatParams || {};
+        state.highest = p.highest || (p.storyboard ? 4 : (p.questions?.length ? 3 : (p.idea ? 2 : 1)));
+        state.chatTurns = p.chatTurns || [];
+        state.questions = p.questions || [];
+        state.answers = p.answers || [];
+        state.messages = p.messages || [];
+
+        if (p.storyboard) {
+          state.variants = p.variants && p.variants.length
+            ? p.variants
+            : [{
+                storyboard: p.storyboard,
+                notes: p.notes || {},
+                images: p.images || {},
+                hashtags: p.hashtags || [...(p.storyboard.hashtags || [])],
+              }];
+          state.activeVariant = p.activeVariant || 0;
+          bindActiveVariant();
+        } else {
+          state.variants = [];
+          state.storyboard = null;
+        }
+
+        // Reflect state in the UI for steps that aren't auto-rendered
+        if (state.format) {
+          document.querySelectorAll(".format-btn").forEach((b) => {
+            b.classList.toggle("is-selected", b.dataset.format === state.format);
+          });
+          $("next-1").disabled = false;
+          renderFormatParams();
+        }
+        if (p.idea) {
+          ideaEl.value = p.idea;
+          $("next-2").disabled = p.idea.trim().length < 3;
+        }
+        if (state.chatTurns.length > 0) {
+          renderChat(false);
+          $("brainstorm-panel").hidden = false;
+          $("brainstorm-toggle").textContent = "Hide chat";
+        } else {
+          $("brainstorm-panel").hidden = true;
+          $("brainstorm-toggle").textContent = "Chat with the studio about this idea →";
+          $("chat-log").innerHTML = "";
+        }
+        if (state.questions.length > 0) renderQuestions();
+        if (state.storyboard) renderStoryboard();
+
         document.querySelectorAll(".scrim, .drawer").forEach((d) => d.classList.remove("is-open"));
-        goto(4);
+        const targetStep = p.step || (state.storyboard ? 4 : state.highest);
+        goto(targetStep);
         scheduleAutoSave();
       }
 
