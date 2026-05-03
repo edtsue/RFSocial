@@ -204,8 +204,11 @@ const {
     format,
     formatParams,
     voice,
+    customVoice,
     storyboard,
     frame_index,
+    user_notes,
+    apply_notes,
   } = req.body || {};
 
   const VALID_MODES = new Set([
@@ -228,9 +231,15 @@ const {
     }
   }
 
-const voiceRegister =
-    voice === "studio" || voice === "warmer" ? voice : "balanced";
-  const voiceLine = `VOICE REGISTER: ${voiceRegister}.`;
+let voiceLine;
+  if (voice === "custom" && typeof customVoice === "string" && customVoice.trim()) {
+    const trimmed = customVoice.trim().slice(0, 400);
+    voiceLine = `VOICE REGISTER (custom — described by the user): ${trimmed}. Stay grounded in the studio's atelier voice rules where they don't conflict with this brief.`;
+  } else {
+    const voiceRegister =
+      voice === "studio" || voice === "warmer" ? voice : "balanced";
+    voiceLine = `VOICE REGISTER: ${voiceRegister}.`;
+  }
 
   const fp = formatParams && typeof formatParams === "object" ? formatParams : {};
   const formatHints = [];
@@ -261,7 +270,12 @@ modeInstruction = `${voiceLine}\nMODE: AUTO-COMPOSE. The user wants the studio t
         .json({ error: "regenerate-frame needs storyboard and frame_index" });
       return;
     }
-    modeInstruction = `${voiceLine}\nMODE: REGENERATE-FRAME. Replace frame index ${frame_index} with a fresh take — different angle, beat, or gesture — that still fits the surrounding transitions. Return ONLY the updated single frame object as a \`\`\`json fenced block.`;
+const noteText =
+      typeof user_notes === "string" ? user_notes.trim().slice(0, 800) : "";
+    const noteLine = apply_notes && noteText
+      ? `\nThe user wrote these notes for this frame — incorporate them faithfully into the rewritten shot, treating them as direction (camera angle, gesture, prop, mood, anything specific they asked for). The new frame should clearly answer to these notes while still fitting the surrounding transitions.\n\nUSER NOTES:\n"""\n${noteText}\n"""`
+      : "";
+    modeInstruction = `${voiceLine}\nMODE: REGENERATE-FRAME. Replace frame index ${frame_index}${apply_notes ? " by applying the user's notes" : " with a fresh take — different angle, beat, or gesture"} — keep it consistent with the surrounding transitions. Return ONLY the updated single frame object as a \`\`\`json fenced block.${noteLine}`;
     outboundMessages = [
       {
         role: "user",

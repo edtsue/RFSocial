@@ -1010,12 +1010,29 @@ body {
         color: var(--ink-soft);
         letter-spacing: 0.04em;
       }
-      .tone-row .seg { flex: 0 0 auto; min-width: 240px; }
+.tone-row .seg { flex: 0 0 auto; min-width: 280px; }
       .tone-apply {
         font-family: var(--serif);
         font-style: italic;
         font-size: 0.78em;
         color: var(--accent);
+      }
+      .tone-custom-input {
+        flex: 1 1 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--ink);
+        font: inherit;
+        font-family: var(--sans);
+        font-size: 0.84em;
+        color: var(--ink);
+        padding: 8px 0;
+        outline: none;
+      }
+      .tone-custom-input::placeholder {
+        font-family: var(--sans);
+        color: var(--ink-soft);
+        opacity: 0.65;
       }
 
       /* Hover tooltips for playbook rationales */
@@ -1088,17 +1105,18 @@ body {
         gap: 16px;
         margin-bottom: 36px;
       }
-      .phone-shell {
-        width: 240px;
-        height: 488px;
+.phone-shell {
+        width: 300px;
+        height: 608px;
         background: #1a1714;
-        border-radius: 36px;
-        padding: 10px;
+        border-radius: 42px;
+        padding: 11px;
         position: relative;
         box-shadow:
           0 24px 48px rgba(0, 0, 0, 0.22),
           0 4px 12px rgba(0, 0, 0, 0.08),
           inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+        transition: width 240ms ease, height 240ms ease;
       }
       .phone-notch {
         position: absolute;
@@ -1274,7 +1292,7 @@ body {
         width: 20px;
         border-radius: 3px;
       }
-      .phone-caption-row {
+.phone-caption-row {
         font-family: var(--serif);
         font-style: italic;
         font-size: 0.78em;
@@ -1282,6 +1300,135 @@ body {
         text-align: center;
         max-width: 280px;
       }
+
+      /* Focus button alongside phone controls */
+      .phone-focus-btn {
+        background: none;
+        border: 1px solid var(--hairline);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--ink);
+        cursor: pointer;
+        padding: 8px 14px;
+        letter-spacing: 0.04em;
+      }
+      .phone-focus-btn:hover {
+        border-color: var(--ink);
+        background: var(--paper-deep);
+      }
+      .phone-focus-btn::before { content: "⛶ "; }
+
+      /* Focus mode: maximize phone, dim everything else */
+      body[data-focus="on"] {
+        overflow: hidden;
+      }
+      body[data-focus="on"] .page > *:not(#panel-4),
+      body[data-focus="on"] #panel-4 > *:not(#storyboard) {
+        opacity: 0.08;
+        filter: blur(2px);
+        pointer-events: none;
+        transition: opacity 220ms ease, filter 220ms ease;
+      }
+      body[data-focus="on"] #storyboard > *:not(.phone-preview) {
+        opacity: 0;
+        pointer-events: none;
+        height: 0;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      body[data-focus="on"] .phone-preview {
+        position: fixed;
+        inset: 0;
+        z-index: 250;
+        margin: 0;
+        background: rgba(15, 13, 9, 0.94);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        padding: 24px;
+        opacity: 1;
+        pointer-events: auto;
+        filter: none;
+      }
+      body[data-focus="on"] .phone-shell {
+        width: min(380px, 90vw);
+        height: min(800px, 86vh);
+      }
+      body[data-focus="on"] .phone-shell .phone-notch {
+        width: 110px;
+        height: 30px;
+        top: 16px;
+      }
+      body[data-focus="on"] .phone-overlay-text {
+        font-size: 22px;
+        bottom: 110px;
+        padding: 20px 28px;
+      }
+      body[data-focus="on"] .phone-status,
+      body[data-focus="on"] .phone-meta {
+        font-size: 13px;
+      }
+      body[data-focus="on"] .phone-controls {
+        gap: 24px;
+      }
+      body[data-focus="on"] .phone-nav {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.25);
+        color: #fff;
+      }
+      body[data-focus="on"] .phone-nav:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+      body[data-focus="on"] .phone-dot::before {
+        background: rgba(255, 255, 255, 0.35);
+      }
+      body[data-focus="on"] .phone-dot.is-active::before {
+        background: #fff;
+        width: 24px;
+      }
+      body[data-focus="on"] .phone-caption-row {
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 480px;
+      }
+      body[data-focus="on"] .phone-focus-btn {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 0.86em;
+      }
+      body[data-focus="on"] .phone-focus-btn::before { content: "× "; }
+      body[data-focus="on"] .phone-focus-btn:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .focus-hint {
+        position: fixed;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+        z-index: 251;
+        letter-spacing: 0.04em;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+      body[data-focus="on"] .focus-hint { opacity: 1; }
 
 @media (max-width: 760px) {
         .page { padding: 18px 16px 56px; }
@@ -1479,6 +1626,7 @@ body {
   </head>
   <body data-theme="light" data-scale="md" data-motion="full" data-rationale="on">
     <div class="api-bar" id="api-bar" aria-hidden="true"></div>
+    <div class="focus-hint" aria-hidden="true">press <strong>esc</strong> or <strong>f</strong> to exit · ← → to navigate</div>
 
     <!-- Auth gate -->
     <div class="gate" id="gate" role="dialog" aria-label="Studio access">
@@ -1628,7 +1776,15 @@ body {
             <button data-value="studio" type="button">Studio</button>
             <button data-value="balanced" type="button">Balanced</button>
             <button data-value="warmer" type="button">Warmer</button>
+            <button data-value="custom" type="button">Custom</button>
           </div>
+          <input
+            type="text"
+            class="tone-custom-input"
+            data-custom-voice
+            placeholder="describe a custom tone — e.g. 'first-person, after-hours studio, slightly tired'"
+            hidden
+          />
           <button class="btn btn-secondary tone-apply" id="tone-apply" type="button" hidden>
             Re-compose with this tone
           </button>
@@ -1677,13 +1833,22 @@ body {
           <button data-value="lg" type="button">Large</button>
         </div>
       </div>
-      <div class="setting">
+<div class="setting">
         <div class="setting-label">Voice register</div>
         <div class="seg" data-setting="voice">
           <button data-value="studio" type="button">Studio</button>
           <button data-value="balanced" type="button">Balanced</button>
           <button data-value="warmer" type="button">Warmer</button>
+          <button data-value="custom" type="button">Custom</button>
         </div>
+        <input
+          type="text"
+          class="tone-custom-input"
+          data-custom-voice
+          placeholder="describe a custom tone in your own words"
+          hidden
+          style="margin-top: 10px"
+        />
       </div>
       <div class="setting">
         <div class="toggle-row">
@@ -1805,7 +1970,7 @@ const state = {
       applySettings();
       bindSettings();
 
-      function loadSettings() {
+function loadSettings() {
         try {
           const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
           return {
@@ -1814,9 +1979,13 @@ const state = {
             motion: s.motion || "full",
             rationale: s.rationale === false ? false : true,
             voice: s.voice || "balanced",
+            customVoice: s.customVoice || "",
           };
         } catch {
-          return { theme: "light", scale: "md", motion: "full", rationale: true, voice: "balanced" };
+          return {
+            theme: "light", scale: "md", motion: "full",
+            rationale: true, voice: "balanced", customVoice: "",
+          };
         }
       }
       function saveSettings() {
@@ -1832,7 +2001,7 @@ const state = {
         body.dataset.motion = settings.motion;
         body.dataset.rationale = settings.rationale ? "on" : "off";
 
-        document.querySelectorAll(".seg").forEach((seg) => {
+document.querySelectorAll(".seg").forEach((seg) => {
           const key = seg.dataset.setting;
           seg.querySelectorAll("button").forEach((b) => {
             b.classList.toggle("is-active", b.dataset.value === settings[key]);
@@ -1843,6 +2012,12 @@ const state = {
         const m = document.getElementById("toggle-motion");
         const on = settings.motion === "reduce";
         m.classList.toggle("is-on", on);
+
+        // Show/hide and sync custom-voice inputs
+        document.querySelectorAll("[data-custom-voice]").forEach((input) => {
+          input.hidden = settings.voice !== "custom";
+          if (input.value !== settings.customVoice) input.value = settings.customVoice || "";
+        });
 
         if (state?.storyboard) renderStoryboard();
         if (state?.questions?.length) renderQuestions();
@@ -1865,6 +2040,24 @@ function bindSettings() {
             }
           });
         });
+// Custom-voice inputs (one in tone-row, one in settings drawer) — keep synced
+        document.querySelectorAll("[data-custom-voice]").forEach((input) => {
+          input.addEventListener("input", (e) => {
+            settings.customVoice = e.target.value;
+            saveSettings();
+            // Mirror without re-rendering segs (avoid focus loss)
+            document.querySelectorAll("[data-custom-voice]").forEach((other) => {
+              if (other !== e.target && other.value !== e.target.value) {
+                other.value = e.target.value;
+              }
+            });
+            if (state.storyboard) {
+              const apply = document.getElementById("tone-apply");
+              if (apply) apply.hidden = false;
+            }
+          });
+        });
+
         document.getElementById("toggle-rationale").addEventListener("click", () => {
           settings.rationale = !settings.rationale;
           saveSettings(); applySettings();
@@ -1971,10 +2164,11 @@ function bindSettings() {
           const res = await fetch("/api/chat", {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({
+  body: JSON.stringify({
               mode: "brainstorm",
               format: state.format,
               voice: settings.voice,
+              customVoice: settings.customVoice || "",
               messages: state.chatTurns,
             }),
           });
@@ -2166,10 +2360,11 @@ function bindSettings() {
           const res = await fetch("/api/chat", {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({
+  body: JSON.stringify({
               mode: "brainstorm",
               format: state.format,
               voice: settings.voice,
+              customVoice: settings.customVoice || "",
               messages: state.chatTurns,
             }),
           });
@@ -2429,15 +2624,18 @@ $("save-btn").addEventListener("click", saveCurrentToLibrary);
         }
       }
 
-      async function regenerateFrame(frameIndex) {
+async function regenerateFrame(frameIndex, opts = {}) {
         const frameEl = document.querySelector(`.frame[data-frame-index="${frameIndex}"]`);
         if (frameEl) frameEl.classList.add("is-regenerating");
         try {
           const data = await callApiWith({
             mode: "regenerate-frame",
             voice: settings.voice,
+            customVoice: settings.customVoice || "",
             storyboard: state.storyboard,
             frame_index: frameIndex,
+            user_notes: opts.userNotes || "",
+            apply_notes: !!opts.applyNotes,
           });
           const parsed = parseStoryboard(data.text);
           if (!parsed) throw new Error("Couldn't parse the new frame.");
@@ -2453,6 +2651,12 @@ $("save-btn").addEventListener("click", saveCurrentToLibrary);
         } finally {
           if (frameEl) frameEl.classList.remove("is-regenerating");
         }
+      }
+
+      async function applyNotesToFrame(frameIndex) {
+        const note = (state.notes[frameIndex] || "").trim();
+        if (!note) return;
+        await regenerateFrame(frameIndex, { userNotes: note, applyNotes: true });
       }
 
       function parseStoryboard(text) {
@@ -2656,7 +2860,7 @@ $("save-btn").addEventListener("click", saveCurrentToLibrary);
               `<button type="button" class="phone-dot" data-dot="${j}" aria-label="frame ${j + 1}"></button>`,
           )
           .join("");
-        return `
+return `
           <div class="phone-preview" id="phone-preview">
             <div class="phone-shell">
               <div class="phone-notch"></div>
@@ -2671,9 +2875,29 @@ $("save-btn").addEventListener("click", saveCurrentToLibrary);
               <div class="phone-dots" id="phone-dots">${dots}</div>
               <button type="button" class="phone-nav phone-next" aria-label="next frame">›</button>
             </div>
+            <button type="button" class="phone-focus-btn" id="phone-focus-btn">Focus mode</button>
             <div class="phone-caption-row">— a preview of how the feed will receive it —</div>
           </div>`;
       }
+
+function setFocusMode(on) {
+        document.body.dataset.focus = on ? "on" : "off";
+        const btn = document.getElementById("phone-focus-btn");
+        if (btn) btn.textContent = on ? "Exit focus" : "Focus mode";
+      }
+
+      // Global keyboard shortcuts for focus mode
+      document.addEventListener("keydown", (e) => {
+        const tag = (e.target.tagName || "").toLowerCase();
+        const typing = tag === "input" || tag === "textarea" || e.target.isContentEditable;
+        if (e.key === "Escape" && document.body.dataset.focus === "on") {
+          setFocusMode(false);
+        } else if ((e.key === "f" || e.key === "F") && !typing && state.storyboard) {
+          // Only honor "f" when not typing in a field
+          if (document.body.dataset.focus === "on") setFocusMode(false);
+          else if (state.step === 4) setFocusMode(true);
+        }
+      });
 
       function bindPhonePreview(sb) {
         const track = document.getElementById("phone-track");
@@ -2725,6 +2949,28 @@ $("save-btn").addEventListener("click", saveCurrentToLibrary);
           if (e.key === "ArrowLeft") { e.preventDefault(); setIndex(idx - 1); }
           else if (e.key === "ArrowRight") { e.preventDefault(); setIndex(idx + 1); }
         });
+
+        // Focus mode toggle button
+        const focusBtn = document.getElementById("phone-focus-btn");
+        if (focusBtn) {
+          focusBtn.addEventListener("click", () => {
+            setFocusMode(document.body.dataset.focus !== "on");
+          });
+        }
+        // Click outside phone shell while in focus mode → exit
+        const preview = document.getElementById("phone-preview");
+        if (preview) {
+          preview.addEventListener("click", (e) => {
+            if (document.body.dataset.focus !== "on") return;
+            if (
+              e.target.closest(".phone-shell") ||
+              e.target.closest(".phone-controls") ||
+              e.target.closest(".phone-focus-btn")
+            ) return;
+            setFocusMode(false);
+          });
+        }
+
         updateUi();
       }
 
@@ -2773,9 +3019,10 @@ function renderFrame(f, i, showRationale) {
                 <textarea data-frame-i="${i}" placeholder="adjust the framing, swap an angle, jot a reminder —">${escapeHtml(noteVal)}</textarea>
               </div>
             </div>
-            <div class="frame-actions">
+<div class="frame-actions">
               <span class="frame-duration">${dur}</span>
               <button type="button" class="frame-regen-btn" data-regen="${i}">regenerate frame</button>
+              <button type="button" class="frame-regen-btn" data-apply-notes="${i}" ${(state.notes[i] || "").trim() ? "" : "disabled"}>apply my notes</button>
             </div>
           </article>`;
       }
@@ -2819,9 +3066,12 @@ function renderFrame(f, i, showRationale) {
             scheduleAutoSave();
           });
         });
-        // Regenerate frame
-        root.querySelectorAll(".frame-regen-btn").forEach((b) => {
+// Regenerate frame (fresh take) or apply notes
+        root.querySelectorAll(".frame-regen-btn[data-regen]").forEach((b) => {
           b.addEventListener("click", () => regenerateFrame(Number(b.dataset.regen)));
+        });
+        root.querySelectorAll(".frame-regen-btn[data-apply-notes]").forEach((b) => {
+          b.addEventListener("click", () => applyNotesToFrame(Number(b.dataset.applyNotes)));
         });
         // Image drop / click
         root.querySelectorAll(".frame-image-zone").forEach((zone) => {
@@ -3113,6 +3363,7 @@ async function callApi(mode) {
           format: state.format,
           formatParams: state.formatParams,
           voice: settings.voice,
+          customVoice: settings.customVoice || "",
           messages: state.messages,
         });
       }
