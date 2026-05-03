@@ -1,0 +1,9 @@
+{
+  "name": "rfsocial",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Rice & Flower — Social Studio. Storyboard tool for Instagram content in the studio's atelier voice.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.1"
+  }
+}
