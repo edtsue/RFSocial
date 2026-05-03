@@ -11,17 +11,17 @@
       rel="stylesheet"
     />
     <style>
-      :root {
+:root {
         --paper: #faf7f2;
         --paper-deep: #f3ede3;
         --paper-input: #ffffff;
         --paper-output: #f6efe2;
         --ink: #2a2620;
-        --ink-soft: #6b6358;
+        --ink-soft: #56503f;        /* deepened for AAA on small text */
         --hairline: #d9cfbf;
-        --accent: #8a6f4a;
+        --accent: #6f5733;          /* darkened for AA on accent text */
         --error: #8a3a2a;
-        --good: #4a6a3a;
+        --good: #3d5a2e;
 
         --serif: "Cormorant Garamond", "Cormorant", Georgia, serif;
         --sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
@@ -34,11 +34,11 @@
         --paper-input: #0e0c08;
         --paper-output: #261f15;
         --ink: #f0e8db;
-        --ink-soft: #a89d8a;
+        --ink-soft: #c4b6a0;        /* lighter for small-text contrast in dark */
         --hairline: #3a3128;
-        --accent: #c9a878;
-        --error: #d68872;
-        --good: #9bbf86;
+        --accent: #d6b787;
+        --error: #e09c87;
+        --good: #aecf99;
       }
       [data-scale="sm"] { --base-size: 16pt; }
       [data-scale="md"] { --base-size: 18pt; }
@@ -52,16 +52,26 @@
       }
       * { box-sizing: border-box; }
       html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
-      body {
+body {
         font-family: var(--sans);
         font-size: var(--base-size);
-        line-height: 1.5;
-        font-weight: 300;
+        line-height: 1.55;
+        font-weight: 400;
+        font-variant-numeric: lining-nums;
         -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
         transition: background 200ms ease, color 200ms ease;
       }
 
-      .page { max-width: 760px; margin: 0 auto; padding: 32px 32px 64px; }
+      /* Focus rings for keyboard navigation */
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      button:focus:not(:focus-visible) { outline: none; }
+
+      .page { max-width: 720px; margin: 0 auto; padding: 32px 32px 64px; }
+      .step-body { max-width: 62ch; }
 
       .topbar {
         display: flex;
@@ -224,6 +234,19 @@
       }
       .format-btn.is-selected .check { opacity: 1; }
 
+      .format-params {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--hairline);
+      }
+      .format-params .param-label {
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.78em; color: var(--ink-soft);
+        letter-spacing: 0.04em;
+        margin-bottom: 8px;
+      }
+      .format-params .seg + .param-label { margin-top: 14px; }
+
       .or-divider {
         text-align: center;
         font-family: var(--serif);
@@ -269,11 +292,12 @@
         font-family: var(--sans);
         resize: vertical;
       }
-      .field textarea::placeholder,
+.field textarea::placeholder,
       .field input::placeholder {
-        font-family: var(--serif);
-        font-style: italic;
+        font-family: var(--sans);
+        font-style: normal;
         color: var(--ink-soft);
+        opacity: 0.7;
       }
       .field textarea { min-height: 72px; }
 
@@ -483,10 +507,13 @@
       }
 
       /* Storyboard */
-      .strategy-block {
-        font-family: var(--serif); font-style: italic;
-        font-size: 0.92em; line-height: 1.55; color: var(--ink);
-        padding: 20px 22px;
+.strategy-block {
+        font-family: var(--serif);
+        font-style: normal;            /* roman, not italic — competes less with concept */
+        font-size: 0.92em;
+        line-height: 1.55;
+        color: var(--ink);
+        padding: 18px 20px;
         background: var(--paper-output);
         border-left: 2px solid var(--accent);
         margin-bottom: 24px;
@@ -583,10 +610,12 @@
       }
       .frame:last-of-type { border-bottom: 1px solid var(--hairline); }
 
-      .frame-num {
+.frame-num {
         font-family: var(--serif);
         font-size: 2.4em; line-height: 1;
         color: var(--ink); font-weight: 300;
+        font-variant-numeric: lining-nums tabular-nums;
+        position: relative;
       }
       .frame-num small {
         display: block;
@@ -615,11 +644,11 @@
       .frame-control:disabled { opacity: 0.3; cursor: not-allowed; }
 
       .frame-fields { font-size: 0.74em; line-height: 1.55; }
-      .frame-fields dl {
+.frame-fields dl {
         margin: 0;
         display: grid;
         grid-template-columns: 130px 1fr;
-        row-gap: 8px;
+        row-gap: 12px;
         column-gap: 16px;
       }
       .frame-fields dt {
@@ -966,6 +995,91 @@
       }
       .draft-banner[hidden] { display: none; }
 
+/* Tone row at top of step 4 */
+      .tone-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+      .tone-label {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--ink-soft);
+        letter-spacing: 0.04em;
+      }
+      .tone-row .seg { flex: 0 0 auto; min-width: 240px; }
+      .tone-apply {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--accent);
+      }
+
+      /* Hover tooltips for playbook rationales */
+      .tip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border: 1px solid var(--accent);
+        border-radius: 50%;
+        color: var(--accent);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 11px;
+        line-height: 1;
+        text-align: center;
+        cursor: help;
+        position: relative;
+        vertical-align: middle;
+        margin-left: 6px;
+        background: transparent;
+        padding: 0;
+      }
+      .tip:hover, .tip:focus-visible {
+        background: var(--accent);
+        color: var(--paper);
+        outline: none;
+      }
+      .tip .tip-bubble {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 260px;
+        max-width: 70vw;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 10px 12px;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 13px;
+        line-height: 1.45;
+        text-align: left;
+        z-index: 50;
+        pointer-events: none;
+        transition: opacity 160ms ease;
+        white-space: normal;
+        font-weight: 400;
+      }
+      .tip .tip-bubble::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: var(--ink);
+      }
+      .tip:hover .tip-bubble,
+      .tip:focus-visible .tip-bubble { visibility: visible; opacity: 1; }
+
       /* iPhone-style preview carousel */
       .phone-preview {
         display: flex;
@@ -1081,18 +1195,24 @@
         z-index: 2;
         letter-spacing: 0.06em;
       }
-      .phone-overlay-text {
+.phone-overlay-text {
         position: absolute;
-        bottom: 96px;
-        left: 22px; right: 22px;
+        bottom: 76px;
+        left: 0; right: 0;
+        padding: 14px 22px;
         font-family: var(--serif);
         font-style: italic;
         font-size: 17px;
         color: #fff;
         text-align: center;
         line-height: 1.3;
-        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
         z-index: 2;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.55) 50%,
+          rgba(0, 0, 0, 0.55) 100%
+        );
       }
       .phone-meta {
         position: absolute;
@@ -1232,7 +1352,7 @@
         <h2 class="step-title">Choose a format.</h2>
         <p class="step-body">Each format has its own rhythm — frame-by-frame motion, sequential stills, or a single composed image.</p>
 
-        <div class="zone zone-input">
+<div class="zone zone-input">
           <div class="zone-label">your turn — pick one</div>
           <ul class="format-list" id="format-list">
             <li><button class="format-btn" data-format="reel" type="button"><span class="name">Reel</span><span class="desc">vertical video, frame by frame</span><span class="check">selected</span></button></li>
@@ -1240,6 +1360,7 @@
             <li><button class="format-btn" data-format="post" type="button"><span class="name">Post</span><span class="desc">single image or carousel</span><span class="check">selected</span></button></li>
             <li><button class="format-btn" data-format="auto" type="button"><span class="name">— Decide for me</span><span class="desc">let the studio choose what fits</span><span class="check">selected</span></button></li>
           </ul>
+          <div id="format-params" class="format-params" hidden></div>
         </div>
 
         <div class="or-divider">— or —</div>
@@ -1311,13 +1432,25 @@
         <div class="error" id="error-3" hidden></div>
       </section>
 
-      <!-- STEP 4: STORYBOARD -->
+<!-- STEP 4: STORYBOARD -->
       <section class="step-panel" id="panel-4">
         <div class="step-eyebrow">Step four</div>
         <h2 class="step-title">Your storyboard.</h2>
         <p class="step-body">Edit anything, reorder frames, drop in references, regenerate one frame or the whole thing. When ready, share or export.</p>
 
-        <div id="sb-loading" class="loading-line">piping —</div>
+        <div class="tone-row">
+          <span class="tone-label">Tone</span>
+          <div class="seg" data-setting="voice">
+            <button data-value="studio" type="button">Studio</button>
+            <button data-value="balanced" type="button">Balanced</button>
+            <button data-value="warmer" type="button">Warmer</button>
+          </div>
+          <button class="btn btn-secondary tone-apply" id="tone-apply" type="button" hidden>
+            Re-compose with this tone
+          </button>
+        </div>
+
+        <div id="sb-loading" class="loading-line">piping</div>
         <div id="storyboard" hidden></div>
 
         <div class="nav">
@@ -1462,10 +1595,11 @@
       if (isAuthedLocal()) hideGate(); else showGate();
 
       /* ============== app state (declared early so settings can reference) ============== */
-      const state = {
+const state = {
         step: 1,
         highest: 1,
         format: null,
+        formatParams: {},
         idea: "",
         questions: [],
         answers: [],
@@ -1528,15 +1662,22 @@
         if (state?.storyboard) renderStoryboard();
         if (state?.questions?.length) renderQuestions();
       }
-      function bindSettings() {
+function bindSettings() {
         document.querySelectorAll(".seg").forEach((seg) => {
           seg.addEventListener("click", (e) => {
             const btn = e.target.closest("button[data-value]");
             if (!btn) return;
             const key = seg.dataset.setting;
+            const prev = settings[key];
             settings[key] = btn.dataset.value;
             saveSettings();
             applySettings();
+            // If voice changed and we have a storyboard, surface the
+            // "re-compose with this tone" affordance.
+            if (key === "voice" && prev !== settings.voice && state.storyboard) {
+              const apply = document.getElementById("tone-apply");
+              if (apply) apply.hidden = false;
+            }
           });
         });
         document.getElementById("toggle-rationale").addEventListener("click", () => {
@@ -1697,16 +1838,86 @@
         b.addEventListener("click", () => goto(Number(b.dataset.step)));
       });
 
-      /* ============== step 1 ============== */
+/* ============== step 1 ============== */
       document.querySelectorAll(".format-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           state.format = btn.dataset.format;
           document.querySelectorAll(".format-btn").forEach((b) => b.classList.toggle("is-selected", b === btn));
           $("next-1").disabled = false;
+          renderFormatParams();
           reach(2);
         });
       });
       $("next-1").addEventListener("click", () => goto(2));
+
+      function renderFormatParams() {
+        const root = $("format-params");
+        if (!state.format || state.format === "auto") {
+          root.hidden = true;
+          root.innerHTML = "";
+          state.formatParams = {};
+          return;
+        }
+        let html = "";
+        const fp = { ...(state.formatParams || {}) };
+        if (state.format === "reel") {
+          if (!fp.length) fp.length = "7-15";
+          html = `
+            <div class="param-label">Target length${tipHtml("Reels under 15s see the highest completion rates and are favored for discovery. 15–30s suits storytelling; 30–60s only when the idea genuinely warrants the runtime.")}</div>
+            <div class="seg" data-param="length">
+              <button data-value="7-15" type="button">7–15s</button>
+              <button data-value="15-30" type="button">15–30s</button>
+              <button data-value="30-60" type="button">30–60s</button>
+            </div>`;
+        } else if (state.format === "story") {
+          if (!fp.frames) fp.frames = 4;
+          html = `
+            <div class="param-label">Number of frames${tipHtml("23.8% of viewers exit after frame one. 3–6 frames is the proven sweet spot — beyond 7, retention drops sharply.")}</div>
+            <div class="seg" data-param="frames">
+              <button data-value="3" type="button">3</button>
+              <button data-value="4" type="button">4</button>
+              <button data-value="5" type="button">5</button>
+              <button data-value="6" type="button">6</button>
+            </div>`;
+        } else if (state.format === "post") {
+          if (!fp.layout) fp.layout = "carousel";
+          html = `
+            <div class="param-label">Layout${tipHtml("Carousels average ~1.92% engagement vs ~0.50% for Reels. They get an algorithmic 'second chance' re-serve from slide 2 — the format wins for depth and saves.")}</div>
+            <div class="seg" data-param="layout">
+              <button data-value="single" type="button">Single image</button>
+              <button data-value="carousel" type="button">Carousel</button>
+            </div>`;
+          if (fp.layout === "carousel") {
+            if (!fp.slides) fp.slides = 8;
+            html += `
+              <div class="param-label">Slide count${tipHtml("8–10 slides is the sweet spot. Engagement dips after slide 3 then climbs again at slide 8+ when viewers commit to finishing.")}</div>
+              <div class="seg" data-param="slides">
+                <button data-value="3" type="button">3</button>
+                <button data-value="5" type="button">5</button>
+                <button data-value="8" type="button">8</button>
+                <button data-value="10" type="button">10</button>
+              </div>`;
+          }
+        }
+        state.formatParams = fp;
+        root.innerHTML = html;
+        root.hidden = !html;
+        root.querySelectorAll(".seg").forEach((seg) => {
+          const k = seg.dataset.param;
+          seg.querySelectorAll("button").forEach((b) => {
+            b.classList.toggle("is-active", String(state.formatParams[k]) === b.dataset.value);
+          });
+          seg.addEventListener("click", (e) => {
+            const btn = e.target.closest("button[data-value]");
+            if (!btn) return;
+            const raw = btn.dataset.value;
+            const value = /^\d+$/.test(raw) ? Number(raw) : raw;
+            state.formatParams = { ...state.formatParams, [k]: value };
+            renderFormatParams();
+            scheduleAutoSave();
+          });
+        });
+      }
 
       $("skip-all").addEventListener("click", () => {
         state.format = "auto";
@@ -1934,7 +2145,17 @@
       });
       $("regen-btn").addEventListener("click", regenerate);
       $("variants-btn").addEventListener("click", composeTwoVariants);
-      $("save-btn").addEventListener("click", saveCurrentToLibrary);
+$("save-btn").addEventListener("click", saveCurrentToLibrary);
+
+      $("tone-apply").addEventListener("click", () => {
+        if (!state.storyboard) return;
+        $("tone-apply").hidden = true;
+        state.messages.push({
+          role: "user",
+          content: `Re-compose the storyboard in a ${settings.voice} register — keep the idea and structure, but adjust the writing throughout to match this tone. Return the full storyboard JSON.`,
+        });
+        runStoryboardCall("storyboard");
+      });
 
       async function runAuto() {
         $("sb-loading").hidden = false;
@@ -2096,14 +2317,17 @@
                 <span class="meta">· ${v.storyboard.frames.length} frames</span>
               </button>`).join("")}</div>` : "";
 
-        // Signal chips
+        // Signal chips with hover tips explaining the playbook signal
         const signalHtml = `<div class="signals">${computeSignals(sb).map((s) => `
           <span class="signal-chip ${s.pass === true ? "is-pass" : s.pass === false ? "is-fail" : ""}">
-            ${escapeHtml(s.label)}${s.pass === true ? " ✓" : s.pass === false ? " ✗" : ""}
+            ${escapeHtml(s.label)}${s.pass === true ? " ✓" : s.pass === false ? " ✗" : ""}${tipHtml(s.tip)}
           </span>`).join("")}</div>`;
 
-        const strategyHtml = showRationale && sb.strategy
-          ? `<div class="strategy-block"><span class="strategy-label">studio rationale</span>${escapeHtml(sb.strategy)}</div>` : "";
+        const strategyHtml = sb.strategy
+          ? `<div class="strategy-block">
+               <span class="strategy-label">studio rationale${tipHtml("Why this concept fits the format and what 2026 playbook signals it leans on — sends-per-reach, saves, watch time, originality, search.")}</span>
+               ${showRationale ? escapeHtml(sb.strategy) : `<span style="color:var(--ink-soft);font-style:italic">— turn on rationale in settings to read the studio's reasoning</span>`}
+             </div>` : "";
 
         const frames = sb.frames.map((f, i) => renderFrame(f, i, showRationale)).join(`
           <div class="add-frame-row"><button type="button" class="add-frame-btn" data-after="${"$INDEX$"}">add a frame here</button></div>
@@ -2131,13 +2355,13 @@
           <div class="concept-meta">${[fmt, totalDur, `${sb.frames.length} frames`].filter(Boolean).join(" · ")}</div>
           <div class="frames-rail">${framesWithAdd.join("")}</div>
           <div class="caption-block">
-            <div class="caption-label">Caption — edit as needed</div>
+            <div class="caption-label">Caption — edit as needed${tipHtml(sb.caption_strategy || "The first 125 characters carry the hook. Open with a save or send invitation in the studio voice.")}</div>
             <div class="caption-input-wrap">
               <textarea class="caption-input" id="caption-input">${escapeHtml(sb.full_caption || "")}</textarea>
             </div>
             <div class="caption-counter" id="caption-counter"></div>
             ${captionRationaleHtml}
-            <div class="caption-label" style="margin-top:18px">Hashtags</div>
+            <div class="caption-label" style="margin-top:18px">Hashtags${tipHtml("Instagram is testing a 5-tag cap. Keep tags niche, lowercase, anchored in NYC cake design and Korean buttercream — they categorize, they don't boost reach.")}</div>
             <div class="hashtag-editor" id="hashtag-editor"></div>
             <div class="hashtag-warning" id="hashtag-warning" hidden></div>
           </div>`;
@@ -2319,9 +2543,10 @@
         updateUi();
       }
 
-      function renderFrame(f, i, showRationale) {
+function renderFrame(f, i, showRationale) {
         const num = String(f.frame_number ?? i + 1).padStart(2, "0");
         const dur = typeof f.duration_seconds === "number" && f.duration_seconds > 0 ? `${f.duration_seconds}s` : "";
+        const rationaleTip = f.rationale ? tipHtml(f.rationale) : "";
         const ratHtml = showRationale && f.rationale
           ? `<div class="frame-rationale">— ${escapeHtml(f.rationale)}</div>` : "";
         const noteVal = state.notes[i] || "";
@@ -2339,7 +2564,7 @@
         return `
           <article class="frame" data-frame-index="${i}">
             <div>
-              <div class="frame-num">${num}<small>frame</small></div>
+              <div class="frame-num">${num}${rationaleTip}<small>frame</small></div>
               <div class="frame-controls">
                 <button type="button" class="frame-control" data-move="up" data-i="${i}" ${i === 0 ? "disabled" : ""} title="Move up">↑</button>
                 <button type="button" class="frame-control" data-move="down" data-i="${i}" ${i === last ? "disabled" : ""} title="Move down">↓</button>
@@ -2549,46 +2774,69 @@
         scheduleAutoSave();
       }
 
-      /* ============== signals ============== */
+/* ============== signals ============== */
       function computeSignals(sb) {
         const signals = [];
         const fmt = (sb.format || state.format || "").toLowerCase();
         const frames = sb.frames || [];
 
-        // Hook duration (Reels)
         if (fmt === "reel") {
           const first = frames[0];
           const hookOk = first && typeof first.duration_seconds === "number" && first.duration_seconds <= 3;
-          signals.push({ label: "1.5–3s hook", pass: !!hookOk });
+          signals.push({
+            label: "1.5–3s hook",
+            pass: !!hookOk,
+            tip: "Up to 50% of viewers drop in the first 3 seconds. The opening frame needs motion or a pattern break — never a logo or slow establishing shot.",
+          });
         }
 
-        // Frame count
         const counts = { reel: [5, 8], story: [3, 6], post: [1, 8] };
         const range = counts[fmt];
         if (range) {
           const ok = frames.length >= range[0] && frames.length <= range[1];
-          signals.push({ label: `${range[0]}–${range[1]} frames`, pass: ok });
+          signals.push({
+            label: `${range[0]}–${range[1]} frames`,
+            pass: ok,
+            tip: `For ${fmt}s, ${range[0]}–${range[1]} frames hold retention without sprawling. Beyond that the algorithm sees drop-off and pushes the post less.`,
+          });
         }
 
-        // Hashtags 3-5
         const hCount = (state.hashtags || []).length;
-        signals.push({ label: `${hCount} hashtags`, pass: hCount >= 3 && hCount <= 5 });
+        signals.push({
+          label: `${hCount} hashtags`,
+          pass: hCount >= 3 && hCount <= 5,
+          tip: "Instagram is testing a 5-tag cap and Mosseri has said hashtags categorize content for the algorithm — they don't boost reach. 3 to 5 niche tags is the safe range.",
+        });
 
-        // Audio cue every frame
         const audioOk = frames.every((f) => (f.audio_cue || "").trim().length > 0);
-        signals.push({ label: "audio on every frame", pass: audioOk });
+        signals.push({
+          label: "audio on every frame",
+          pass: audioOk,
+          tip: "Reels without audio are blocked from recommendations. Even ambient apartment sound or silence-as-design counts as long as it's named.",
+        });
 
-        // CTA in caption
         const cap = (sb.full_caption || "").toLowerCase();
         const hasCTA = /save|share|send|dm|comment|tag|message/.test(cap);
-        signals.push({ label: "save/send CTA", pass: hasCTA });
+        signals.push({
+          label: "save/send CTA",
+          pass: hasCTA,
+          tip: "Sends-per-reach is 3 to 5 times more powerful than likes for reaching new audiences. A clear save or send invitation is the single biggest lever.",
+        });
 
-        // First 125 chars
         const first125 = (sb.full_caption || "").slice(0, 125);
         const front125Ok = first125.trim().length >= 50;
-        signals.push({ label: "first 125 chars used", pass: front125Ok });
+        signals.push({
+          label: "first 125 chars used",
+          pass: front125Ok,
+          tip: "Instagram truncates the caption with 'more' at 125 characters. That same surface is now indexed by Google. The hook has to land before the cut.",
+        });
 
         return signals;
+      }
+
+      function tipHtml(text) {
+        if (!text) return "";
+        return `<button type="button" class="tip" tabindex="0" aria-label="why this works">?<span class="tip-bubble">${escapeHtml(text)}</span></button>`;
       }
 
       /* ============== util ============== */
@@ -2674,9 +2922,13 @@
       }
 
       /* ============== api ============== */
-      async function callApi(mode) {
+async function callApi(mode) {
         return callApiWith({
-          mode, format: state.format, voice: settings.voice, messages: state.messages,
+          mode,
+          format: state.format,
+          formatParams: state.formatParams,
+          voice: settings.voice,
+          messages: state.messages,
         });
       }
       let apiInFlight = 0;
@@ -2718,13 +2970,14 @@
         clearTimeout(autoSaveTimer);
         autoSaveTimer = setTimeout(persistDraft, 1500);
       }
-      function persistDraft() {
+function persistDraft() {
         try {
           const draft = {
             ts: Date.now(),
             step: state.step,
             highest: state.highest,
             format: state.format,
+            formatParams: state.formatParams,
             idea: ideaEl.value,
             chatTurns: state.chatTurns,
             questions: state.questions,
@@ -2756,6 +3009,7 @@
       }
       function restoreDraft(d) {
         state.format = d.format;
+        state.formatParams = d.formatParams || {};
         state.highest = d.highest || 1;
         state.chatTurns = d.chatTurns || [];
         state.questions = d.questions || [];
@@ -2764,11 +3018,12 @@
         state.variants = d.variants || [];
         state.activeVariant = d.activeVariant || 0;
         ideaEl.value = d.idea || "";
-        if (state.format) {
+if (state.format) {
           document.querySelectorAll(".format-btn").forEach((b) => {
             b.classList.toggle("is-selected", b.dataset.format === state.format);
           });
           $("next-1").disabled = false;
+          renderFormatParams();
         }
         if (ideaEl.value.trim().length >= 3) $("next-2").disabled = false;
         if (state.questions.length > 0) renderQuestions();

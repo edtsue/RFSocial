@@ -17,24 +17,24 @@ try {
 const FRAME_SCHEMA = `{
   "format": "reel" | "story" | "post",
   "total_duration_seconds": number,
-  "concept": "One-line description of the overall narrative",
-  "strategy": "1 to 2 sentences in the studio voice on why this concept fits the format and what playbook signals it leans on (sends, saves, watch time, originality, search). This is the editorial rationale, not the concept restated.",
+  "concept": "One short sentence describing the overall idea",
+  "strategy": "1 to 2 plain sentences on why this idea fits the format and what playbook signal it leans on (sends, saves, watch time, originality, search).",
   "frames": [
     {
       "frame_number": number,
       "duration_seconds": number,
-      "shot_description": "What the camera sees, framing, subject, action",
-      "camera_direction": "Lens, movement, lighting, angle",
-      "on_screen_text": "Short overlaid text or empty string",
+      "shot_description": "Plain English: what's in the shot, who or what is moving, what we see. Two sentences max.",
+      "camera_direction": "Plain English iPhone direction: how to hold the phone (handheld, propped on a stack of books, on a tripod), how close to stand (close-up, mid, wide), how high (overhead, eye-level, low to the table), and what light to shoot in (the window in morning, a single lamp, the kitchen counter). No lenses, no professional gear.",
+      "on_screen_text": "Short overlaid text in the studio voice, or empty string",
       "caption_segment": "Optional fragment of the overall caption tied to this frame, or empty string",
-      "audio_cue": "Diegetic sound, music, or silence",
-      "transition_in": "How this frame begins",
+      "audio_cue": "What the viewer hears — ambient apartment sound, the piping squeeze, a soft instrumental, silence. No specific copyrighted tracks.",
+      "transition_in": "How this frame begins (cut, fade, match cut on the petal, etc.)",
       "transition_out": "How this frame ends into the next",
-      "rationale": "One sentence on why this frame at this moment — what it does for the viewer, or the specific playbook signal it serves (e.g. hook in the first 1.5s, save-worthy reference moment, send-worthy identity beat)."
+      "rationale": "One sentence on why this frame at this moment — what it does for the viewer, or the playbook signal it serves (the 1.5s hook, a save-worthy reference moment, a send-worthy identity beat)."
     }
   ],
   "full_caption": "Full Instagram caption in Rice & Flower voice",
-  "caption_strategy": "One sentence naming the playbook signal this caption and CTA target — sends-per-reach, saves, search keyword surfacing in the first 125 characters, etc.",
+  "caption_strategy": "One sentence naming the playbook signal this caption and CTA target.",
   "hashtags": ["#tag", "#tag"]
 }`;
 
@@ -108,12 +108,20 @@ OUTPUT DISCIPLINE FOR ALL JSON MODES (storyboard, auto, regenerate-frame):
 - The JSON must be syntactically valid: no trailing commas, all strings double-quoted, all keys present.
 - No prose, headers, or commentary before or after the fence.
 
+PRODUCTION CONSTRAINTS (HARD RULES):
+- Everything is shot on an iPhone. No professional cameras, no lenses, no DSLRs, no rigs.
+- Everything is shot inside Seyun's apartment. No exterior locations, no studio sets, no on-location shoots, no brownstone steps, no streetscapes.
+- Available light only — windows, lamps, kitchen overheads, ambient apartment surfaces. No softboxes, no continuous lights, no professional grip gear.
+- The studio works alone or with one assistant. No crew, no boom, no second camera.
+- All directions must be a single person can execute alone with a phone in one hand. Use plain English a non-filmmaker would understand. Avoid words like "lens," "aperture," "focal length," "macro," "dolly," "rack focus," "B-roll" — instead say things like "hold the phone close to the petal," "prop the phone on a stack of books at table height," "move the phone slowly along the tier."
+- Do NOT mention exterior settings (brownstones, streets, parks, gardens, cars, sidewalks). The brand context can name those (clients, occasions) but the shoot itself is always indoors.
+
 STORYBOARD GUIDANCE:
-- Reels: 7 to 15 seconds for discovery, 30 to 60 only when warranted. First 1.5 to 3 seconds is a real hook — motion, pattern interrupt, mid-action. Never open on a logo. Vertical 9:16. End on a save- or send-worthy beat with a CTA.
+- Reels: 7 to 15 seconds for discovery, 30 to 60 only when warranted. First 1.5 to 3 seconds is a real hook — motion, a pattern break, a mid-action moment. Never open on a logo. Vertical 9:16. End on a save- or send-worthy beat with a CTA.
 - Stories: 3 to 6 frames, each 4 to 7 seconds. Hook in frames 1 to 3.
 - Posts: 1 to 6 frames; carousel slide 1 promises a specific outcome; slide 2 pulls past the swipe.
 
-Every frame reads like a directed shot — specific lens feel, lighting, gesture.
+Every frame should read like a clear shot a person with a phone can capture — specific framing, the surface or background, the light source, the gesture.
 
 ON-SCREEN TEXT — short, lowercase, serif-feeling phrases. Empty when silence is stronger.
 
@@ -125,7 +133,7 @@ CAPTION:
 
 HASHTAGS — 3 to 5 niche, lowercase, anchored in NYC cake design, Korean buttercream, atelier identity.
 
-AUDIO_CUE — always specified.
+AUDIO_CUE — always specified, in plain language a non-filmmaker would understand.
 
 INSTAGRAM PLAYBOOK (reference — apply to every recommendation, do not quote verbatim):
 
@@ -190,10 +198,11 @@ export default async function handler(req, res) {
     return;
   }
 
-  const {
+const {
     messages,
     mode,
     format,
+    formatParams,
     voice,
     storyboard,
     frame_index,
@@ -219,19 +228,32 @@ export default async function handler(req, res) {
     }
   }
 
-  const voiceRegister =
+const voiceRegister =
     voice === "studio" || voice === "warmer" ? voice : "balanced";
   const voiceLine = `VOICE REGISTER: ${voiceRegister}.`;
+
+  const fp = formatParams && typeof formatParams === "object" ? formatParams : {};
+  const formatHints = [];
+  if (fp.length) formatHints.push(`Target Reel length: ${fp.length} seconds — make total_duration_seconds and the per-frame durations add up within this range.`);
+  if (fp.frames) formatHints.push(`Use exactly ${fp.frames} Story frames — no more, no fewer.`);
+  if (fp.layout === "single") formatHints.push(`Post layout: SINGLE image. Return exactly one frame with duration_seconds 0.`);
+  if (fp.layout === "carousel") {
+    const slides = fp.slides || 8;
+    formatHints.push(`Post layout: CAROUSEL. Return exactly ${slides} frames, each with duration_seconds 0.`);
+  }
+  const formatHintsLine = formatHints.length
+    ? `\nUSER FORMAT PARAMETERS (HARD): ${formatHints.join(" ")}`
+    : "";
 
   let modeInstruction;
   let outboundMessages = messages;
 
-  if (mode === "clarify") {
-    modeInstruction = `${voiceLine}\nMODE: CLARIFYING. The user has chosen format: ${format || "let-the-studio-decide"}. Ask 2 to 3 short, plain-English clarifying questions (each ten words or fewer), each paired with an em-dashed rationale line. Plain prose only.`;
+if (mode === "clarify") {
+    modeInstruction = `${voiceLine}\nMODE: CLARIFYING. The user has chosen format: ${format || "let-the-studio-decide"}.${formatHintsLine} Ask 2 to 3 short, plain-English clarifying questions (each ten words or fewer), each paired with an em-dashed rationale line. Plain prose only.`;
   } else if (mode === "brainstorm") {
     modeInstruction = `${voiceLine}\nMODE: BRAINSTORM. Help the user sharpen their idea conversationally — 2 to 3 short sentences. No questions list, no JSON, no storyboard.`;
   } else if (mode === "auto") {
-    modeInstruction = `${voiceLine}\nMODE: AUTO-COMPOSE. The user wants the studio to choose for them — pick the strongest format and a fresh on-brand idea, then return a complete storyboard as a single \`\`\`json fenced JSON block. Note in strategy that the studio chose the direction.`;
+modeInstruction = `${voiceLine}\nMODE: AUTO-COMPOSE. The user wants the studio to choose for them — pick the strongest format and a fresh on-brand idea, then return a complete storyboard as a single \`\`\`json fenced JSON block. Note in strategy that the studio chose the direction.${formatHintsLine}`;
   } else if (mode === "regenerate-frame") {
     if (!storyboard || typeof frame_index !== "number") {
       res
@@ -251,7 +273,7 @@ export default async function handler(req, res) {
       },
     ];
   } else {
-    modeInstruction = `${voiceLine}\nMODE: STORYBOARD. The user has chosen format: ${format || "let-the-studio-decide"}. Return a complete storyboard as a single \`\`\`json fenced JSON block matching the schema. No prose outside the fence.`;
+    modeInstruction = `${voiceLine}\nMODE: STORYBOARD. The user has chosen format: ${format || "let-the-studio-decide"}.${formatHintsLine} Return a complete storyboard as a single \`\`\`json fenced JSON block matching the schema. No prose outside the fence.`;
   }
 
   const client = new Anthropic({ apiKey });
