@@ -21,14 +21,13 @@
         --hairline: #d9cfbf;
         --accent: #8a6f4a;
         --error: #8a3a2a;
+        --good: #4a6a3a;
 
         --serif: "Cormorant Garamond", "Cormorant", Georgia, serif;
         --sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
           sans-serif;
-
         --base-size: 18pt;
       }
-
       [data-theme="dark"] {
         --paper: #18150f;
         --paper-deep: #221d15;
@@ -39,18 +38,11 @@
         --hairline: #3a3128;
         --accent: #c9a878;
         --error: #d68872;
+        --good: #9bbf86;
       }
-
-      [data-scale="sm"] {
-        --base-size: 16pt;
-      }
-      [data-scale="md"] {
-        --base-size: 18pt;
-      }
-      [data-scale="lg"] {
-        --base-size: 21pt;
-      }
-
+      [data-scale="sm"] { --base-size: 16pt; }
+      [data-scale="md"] { --base-size: 18pt; }
+      [data-scale="lg"] { --base-size: 21pt; }
       [data-motion="reduce"] *,
       [data-motion="reduce"] *::before,
       [data-motion="reduce"] *::after {
@@ -58,19 +50,8 @@
         transition: none !important;
         scroll-behavior: auto !important;
       }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        background: var(--paper);
-        color: var(--ink);
-      }
-
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
       body {
         font-family: var(--sans);
         font-size: var(--base-size);
@@ -80,11 +61,7 @@
         transition: background 200ms ease, color 200ms ease;
       }
 
-      .page {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 56px 32px 96px;
-      }
+      .page { max-width: 760px; margin: 0 auto; padding: 56px 32px 96px; }
 
       .topbar {
         display: flex;
@@ -92,20 +69,13 @@
         align-items: center;
         margin-bottom: 32px;
       }
-
       .brand-mini {
         font-family: var(--serif);
         font-size: 0.7em;
         letter-spacing: 0.24em;
         color: var(--ink-soft);
       }
-
-      .topbar-actions {
-        display: flex;
-        gap: 18px;
-        align-items: center;
-      }
-
+      .topbar-actions { display: flex; gap: 18px; align-items: center; }
       .topbar-btn {
         background: none;
         border: none;
@@ -118,16 +88,13 @@
         letter-spacing: 0.04em;
         border-bottom: 1px solid transparent;
       }
-      .topbar-btn:hover {
-        border-bottom-color: var(--ink);
-      }
+      .topbar-btn:hover { border-bottom-color: var(--ink); }
 
       header.masthead {
         text-align: center;
         padding-bottom: 36px;
         margin-bottom: 36px;
       }
-
       .wordmark {
         font-family: var(--serif);
         font-weight: 400;
@@ -135,7 +102,6 @@
         font-size: 1.2em;
         margin: 0;
       }
-
       .tagline {
         font-family: var(--serif);
         font-style: italic;
@@ -145,7 +111,6 @@
         letter-spacing: 0.04em;
       }
 
-      /* Stepper — clickable */
       .stepper {
         display: flex;
         justify-content: center;
@@ -155,7 +120,6 @@
         border-bottom: 1px solid var(--hairline);
         flex-wrap: wrap;
       }
-
       .stepper .step {
         background: none;
         border: none;
@@ -168,17 +132,9 @@
         padding: 4px 16px;
         font-weight: 300;
       }
-      .stepper .step:hover:not(:disabled) {
-        color: var(--ink);
-      }
-      .stepper .step:disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
-      }
-      .stepper .step .num {
-        font-style: italic;
-        margin-right: 8px;
-      }
+      .stepper .step:hover:not(:disabled) { color: var(--ink); }
+      .stepper .step:disabled { cursor: not-allowed; opacity: 0.5; }
+      .stepper .step .num { font-style: italic; margin-right: 8px; }
       .stepper .step.is-current {
         color: var(--ink);
         position: relative;
@@ -190,17 +146,10 @@
         background: var(--ink);
         margin-top: 6px;
       }
-      .stepper .step.is-done {
-        color: var(--ink);
-      }
+      .stepper .step.is-done { color: var(--ink); }
 
-      /* Step panels */
-      .step-panel {
-        display: none;
-      }
-      .step-panel.is-active {
-        display: block;
-      }
+      .step-panel { display: none; }
+      .step-panel.is-active { display: block; }
 
       .step-eyebrow {
         font-family: var(--serif);
@@ -210,7 +159,6 @@
         letter-spacing: 0.06em;
         margin-bottom: 12px;
       }
-
       .step-title {
         font-family: var(--serif);
         font-weight: 300;
@@ -218,7 +166,6 @@
         line-height: 1.25;
         margin: 0 0 14px;
       }
-
       .step-body {
         font-size: 0.86em;
         color: var(--ink-soft);
@@ -239,7 +186,6 @@
         background: var(--paper-output);
         border-left-color: var(--accent);
       }
-
       .zone-label {
         font-family: var(--serif);
         font-style: italic;
@@ -247,59 +193,27 @@
         letter-spacing: 0.06em;
         margin-bottom: 14px;
       }
-      .zone-input .zone-label {
-        color: var(--ink);
-      }
-      .zone-input .zone-label::before {
-        content: "▸ ";
-        font-style: normal;
-      }
-      .zone-output .zone-label {
-        color: var(--accent);
-      }
-      .zone-output .zone-label::before {
-        content: "❦ ";
-        font-style: normal;
-      }
+      .zone-input .zone-label { color: var(--ink); }
+      .zone-input .zone-label::before { content: "▸ "; font-style: normal; }
+      .zone-output .zone-label { color: var(--accent); }
+      .zone-output .zone-label::before { content: "❦ "; font-style: normal; }
 
-      /* Format options */
-      .format-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .format-list li + li {
-        border-top: 1px solid var(--hairline);
-      }
+      .format-list { list-style: none; margin: 0; padding: 0; }
+      .format-list li + li { border-top: 1px solid var(--hairline); }
       .format-btn {
-        background: none;
-        border: none;
-        width: 100%;
-        text-align: left;
-        font: inherit;
-        color: var(--ink);
-        padding: 18px 4px;
-        cursor: pointer;
-        display: flex;
-        align-items: baseline;
-        gap: 18px;
+        background: none; border: none; width: 100%;
+        text-align: left; font: inherit; color: var(--ink);
+        padding: 18px 4px; cursor: pointer;
+        display: flex; align-items: baseline; gap: 18px;
       }
-      .format-btn:hover {
-        background: var(--paper-deep);
-      }
-      .format-btn.is-selected {
-        background: var(--paper-deep);
-      }
+      .format-btn:hover, .format-btn.is-selected { background: var(--paper-deep); }
       .format-btn .name {
         font-family: var(--serif);
         font-style: italic;
         font-size: 1.05em;
         min-width: 130px;
       }
-      .format-btn .desc {
-        font-size: 0.74em;
-        color: var(--ink-soft);
-      }
+      .format-btn .desc { font-size: 0.74em; color: var(--ink-soft); }
       .format-btn .check {
         margin-left: auto;
         font-family: var(--serif);
@@ -308,9 +222,7 @@
         color: var(--ink);
         opacity: 0;
       }
-      .format-btn.is-selected .check {
-        opacity: 1;
-      }
+      .format-btn.is-selected .check { opacity: 1; }
 
       .or-divider {
         text-align: center;
@@ -320,28 +232,19 @@
         color: var(--ink-soft);
         margin: 18px 0;
       }
-
       .skip-link {
-        display: block;
-        text-align: center;
-        background: none;
-        border: 1px solid var(--accent);
+        display: block; text-align: center;
+        background: none; border: 1px solid var(--accent);
         padding: 14px;
         font-family: var(--serif);
         font-style: italic;
         font-size: 0.92em;
         color: var(--accent);
-        cursor: pointer;
-        width: 100%;
+        cursor: pointer; width: 100%;
       }
-      .skip-link:hover {
-        background: var(--paper-output);
-      }
+      .skip-link:hover { background: var(--paper-output); }
 
-      /* Inputs */
-      .field + .field {
-        margin-top: 22px;
-      }
+      .field + .field { margin-top: 22px; }
       .field label {
         font-family: var(--serif);
         font-style: italic;
@@ -372,14 +275,9 @@
         font-style: italic;
         color: var(--ink-soft);
       }
-      .field textarea {
-        min-height: 100px;
-      }
+      .field textarea { min-height: 100px; }
 
-      /* Inspirations */
-      .inspirations {
-        margin-top: 22px;
-      }
+      .inspirations { margin-top: 22px; }
       .inspirations-label {
         font-family: var(--serif);
         font-style: italic;
@@ -388,12 +286,8 @@
         margin-bottom: 10px;
       }
       .inspirations-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
+        list-style: none; margin: 0; padding: 0;
+        display: flex; flex-wrap: wrap; gap: 8px;
       }
       .inspiration-chip {
         background: none;
@@ -406,12 +300,8 @@
         cursor: pointer;
         text-align: left;
       }
-      .inspiration-chip:hover {
-        background: var(--paper-deep);
-        border-color: var(--ink);
-      }
+      .inspiration-chip:hover { background: var(--paper-deep); border-color: var(--ink); }
 
-      /* Brainstorm chat */
       .brainstorm-toggle {
         margin-top: 22px;
         background: none;
@@ -424,9 +314,7 @@
         cursor: pointer;
         width: 100%;
       }
-      .brainstorm-toggle:hover {
-        border-color: var(--ink);
-      }
+      .brainstorm-toggle:hover { border-color: var(--ink); }
       .brainstorm-panel {
         margin-top: 22px;
         padding-top: 22px;
@@ -439,9 +327,7 @@
         font-size: 0.84em;
         line-height: 1.55;
       }
-      .chat-msg {
-        margin-bottom: 14px;
-      }
+      .chat-msg { margin-bottom: 14px; }
       .chat-msg .who {
         font-family: var(--serif);
         font-style: italic;
@@ -450,89 +336,44 @@
         display: block;
         margin-bottom: 4px;
       }
-      .chat-msg.user {
-        text-align: right;
-        color: var(--ink-soft);
-      }
-      .chat-msg.assistant {
-        color: var(--ink);
-      }
-      .chat-msg .body {
-        white-space: pre-wrap;
-      }
+      .chat-msg.user { text-align: right; color: var(--ink-soft); }
+      .chat-msg.assistant { color: var(--ink); }
+      .chat-msg .body { white-space: pre-wrap; }
       .chat-composer {
-        display: flex;
-        align-items: flex-end;
-        gap: 14px;
-        border-bottom: 1px solid var(--ink);
-        padding-bottom: 6px;
+        display: flex; align-items: flex-end; gap: 14px;
+        border-bottom: 1px solid var(--ink); padding-bottom: 6px;
       }
       .chat-composer textarea {
-        flex: 1;
-        background: transparent;
-        border: none;
-        resize: none;
-        font: inherit;
-        font-size: 0.86em;
-        color: var(--ink);
-        outline: none;
-        padding: 6px 0;
-        min-height: 1.6em;
-        max-height: 6em;
+        flex: 1; background: transparent; border: none; resize: none;
+        font: inherit; font-size: 0.86em; color: var(--ink);
+        outline: none; padding: 6px 0; min-height: 1.6em; max-height: 6em;
       }
       .chat-composer textarea::placeholder {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
+        font-family: var(--serif); font-style: italic; color: var(--ink-soft);
       }
       .chat-send {
-        background: none;
-        border: none;
-        font: inherit;
-        font-size: 0.78em;
-        color: var(--ink);
-        cursor: pointer;
-        padding: 6px 0 6px 8px;
-        letter-spacing: 0.06em;
+        background: none; border: none;
+        font: inherit; font-size: 0.78em; color: var(--ink);
+        cursor: pointer; padding: 6px 0 6px 8px; letter-spacing: 0.06em;
       }
-      .chat-send:disabled {
-        color: var(--ink-soft);
-        cursor: not-allowed;
-      }
+      .chat-send:disabled { color: var(--ink-soft); cursor: not-allowed; }
 
-      /* Clarify questions */
-      .questions {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
+      .questions { list-style: none; margin: 0; padding: 0; }
       .questions > li {
-        margin-bottom: 26px;
-        padding-bottom: 26px;
+        margin-bottom: 26px; padding-bottom: 26px;
         border-bottom: 1px solid var(--hairline);
       }
-      .questions > li:last-child {
-        border-bottom: none;
-      }
+      .questions > li:last-child { border-bottom: none; }
       .question-text {
-        font-family: var(--serif);
-        font-size: 1.02em;
-        font-style: italic;
-        color: var(--ink);
-        margin-bottom: 6px;
+        font-family: var(--serif); font-size: 1.02em;
+        font-style: italic; color: var(--ink); margin-bottom: 6px;
       }
       .question-rationale {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.78em;
-        color: var(--ink-soft);
-        margin-bottom: 14px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.78em; color: var(--ink-soft); margin-bottom: 14px;
       }
-      .questions textarea {
-        min-height: 60px;
-      }
+      .questions textarea { min-height: 60px; }
 
-      /* Nav */
       .nav {
         margin-top: 40px;
         padding-top: 24px;
@@ -540,147 +381,172 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 16px;
+        gap: 12px;
         flex-wrap: wrap;
       }
-      .nav .spacer {
-        flex: 1;
-      }
+      .nav .spacer { flex: 1; }
 
       .btn {
-        background: none;
-        border: none;
-        font: inherit;
-        font-size: 0.82em;
-        color: var(--ink);
-        cursor: pointer;
-        padding: 8px 0;
+        background: none; border: none;
+        font: inherit; font-size: 0.82em; color: var(--ink);
+        cursor: pointer; padding: 8px 0;
         letter-spacing: 0.06em;
         border-bottom: 1px solid transparent;
       }
-      .btn:hover:not(:disabled) {
-        border-bottom-color: var(--ink);
-      }
-      .btn:disabled {
-        color: var(--ink-soft);
-        cursor: not-allowed;
-      }
+      .btn:hover:not(:disabled) { border-bottom-color: var(--ink); }
+      .btn:disabled { color: var(--ink-soft); cursor: not-allowed; }
       .btn-primary {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.96em;
+        font-family: var(--serif); font-style: italic; font-size: 0.96em;
       }
-      .btn-back::before {
-        content: "← ";
-      }
-      .btn-primary::after {
-        content: " →";
-      }
+      .btn-back::before { content: "← "; }
+      .btn-primary::after { content: " →"; }
       .btn-secondary {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
+        font-family: var(--serif); font-style: italic; color: var(--ink-soft);
       }
 
       .loading-line {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
-        font-size: 0.92em;
-        text-align: center;
-        padding: 36px 0;
+        font-family: var(--serif); font-style: italic;
+        color: var(--ink-soft); font-size: 0.92em;
+        text-align: center; padding: 36px 0;
       }
-
       .error {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--error);
-        font-size: 0.82em;
-        margin-top: 16px;
+        font-family: var(--serif); font-style: italic;
+        color: var(--error); font-size: 0.82em; margin-top: 16px;
       }
 
       /* Storyboard */
       .strategy-block {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.92em;
-        line-height: 1.55;
-        color: var(--ink);
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.92em; line-height: 1.55; color: var(--ink);
         padding: 20px 22px;
         background: var(--paper-output);
         border-left: 2px solid var(--accent);
-        margin-bottom: 32px;
+        margin-bottom: 24px;
       }
       .strategy-block .strategy-label {
-        font-size: 0.7em;
-        letter-spacing: 0.08em;
-        color: var(--accent);
-        font-style: italic;
-        margin-bottom: 8px;
-        display: block;
+        font-size: 0.7em; letter-spacing: 0.08em;
+        color: var(--accent); font-style: italic;
+        margin-bottom: 8px; display: block;
+      }
+
+      /* Playbook signal chips */
+      .signals {
+        display: flex; flex-wrap: wrap; gap: 8px;
+        margin-bottom: 24px;
+      }
+      .signal-chip {
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.74em;
+        padding: 4px 10px;
+        border: 1px solid var(--hairline);
+        color: var(--ink-soft);
+      }
+      .signal-chip.is-pass {
+        color: var(--good);
+        border-color: var(--good);
+      }
+      .signal-chip.is-fail {
+        color: var(--error);
+        border-color: var(--error);
+      }
+
+      /* Variant tabs */
+      .variant-tabs {
+        display: flex; gap: 0;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--hairline);
+      }
+      .variant-tab {
+        background: none; border: none;
+        font: inherit; font-family: var(--serif);
+        font-style: italic; font-size: 0.86em;
+        color: var(--ink-soft); cursor: pointer;
+        padding: 10px 18px; border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+      }
+      .variant-tab.is-active {
+        color: var(--ink); border-bottom-color: var(--ink);
+      }
+      .variant-tab .meta {
+        font-size: 0.7em; color: var(--ink-soft); margin-left: 8px;
       }
 
       .concept-input {
-        font-family: var(--serif);
-        font-size: 1.2em;
-        font-style: italic;
-        color: var(--ink);
+        font-family: var(--serif); font-size: 1.2em;
+        font-style: italic; color: var(--ink);
         background: transparent;
-        border: none;
-        border-bottom: 1px dashed var(--hairline);
-        width: 100%;
-        padding: 6px 0;
-        outline: none;
-        margin-bottom: 6px;
+        border: none; border-bottom: 1px dashed var(--hairline);
+        width: 100%; padding: 6px 0; outline: none; margin-bottom: 6px;
       }
-      .concept-input:focus {
-        border-bottom-color: var(--ink);
-      }
+      .concept-input:focus { border-bottom-color: var(--ink); }
 
       .concept-meta {
-        font-size: 0.7em;
-        color: var(--ink-soft);
-        letter-spacing: 0.04em;
-        margin-bottom: 24px;
+        font-size: 0.7em; color: var(--ink-soft);
+        letter-spacing: 0.04em; margin-bottom: 24px;
       }
 
-      .frames-rail {
-        position: relative;
+      .add-frame-row {
+        text-align: center;
+        padding: 14px 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--ink-soft);
+        border-top: 1px dashed var(--hairline);
+        border-bottom: 1px dashed var(--hairline);
+        margin: 8px 0;
+      }
+      .add-frame-btn {
+        background: none; border: none;
+        font: inherit; color: var(--ink);
+        cursor: pointer;
+        font-family: var(--serif); font-style: italic;
+        text-decoration: underline;
+        text-underline-offset: 4px;
       }
 
       .frame {
         padding: 24px 0;
         border-top: 1px solid var(--hairline);
         display: grid;
-        grid-template-columns: 78px 1fr auto;
+        grid-template-columns: 78px 1fr 132px;
         gap: 18px;
         align-items: start;
       }
-      .frame:last-of-type {
-        border-bottom: 1px solid var(--hairline);
-      }
+      .frame:last-of-type { border-bottom: 1px solid var(--hairline); }
 
       .frame-num {
         font-family: var(--serif);
-        font-size: 2.4em;
-        line-height: 1;
-        color: var(--ink);
-        font-weight: 300;
+        font-size: 2.4em; line-height: 1;
+        color: var(--ink); font-weight: 300;
       }
       .frame-num small {
         display: block;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.32em;
-        color: var(--ink-soft);
-        letter-spacing: 0.08em;
-        margin-top: 6px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.32em; color: var(--ink-soft);
+        letter-spacing: 0.08em; margin-top: 6px;
       }
+      .frame-controls {
+        display: flex;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .frame-control {
+        background: none; border: 1px solid var(--hairline);
+        width: 28px; height: 28px;
+        cursor: pointer;
+        color: var(--ink);
+        font-size: 12pt;
+        line-height: 1;
+        padding: 0;
+      }
+      .frame-control:hover:not(:disabled) {
+        border-color: var(--ink);
+        background: var(--paper-deep);
+      }
+      .frame-control:disabled { opacity: 0.3; cursor: not-allowed; }
 
-      .frame-fields {
-        font-size: 0.74em;
-        line-height: 1.55;
-      }
+      .frame-fields { font-size: 0.74em; line-height: 1.55; }
       .frame-fields dl {
         margin: 0;
         display: grid;
@@ -689,23 +555,47 @@
         column-gap: 16px;
       }
       .frame-fields dt {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
+        font-family: var(--serif); font-style: italic; color: var(--ink-soft);
       }
-      .frame-fields dd {
-        margin: 0;
-        color: var(--ink);
-      }
+      .frame-fields dd { margin: 0; color: var(--ink); }
 
       .frame-rationale {
         margin-top: 12px;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.78em;
-        color: var(--accent);
-        padding-left: 10px;
-        border-left: 1px solid var(--accent);
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.78em; color: var(--accent);
+        padding-left: 10px; border-left: 1px solid var(--accent);
+      }
+
+      .frame-image-zone {
+        margin-top: 14px;
+        background: var(--paper-input);
+        border: 1px dashed var(--hairline);
+        text-align: center;
+        padding: 14px;
+        cursor: pointer;
+      }
+      .frame-image-zone.is-drag {
+        border-color: var(--ink);
+        background: var(--paper-deep);
+      }
+      .frame-image-empty {
+        font-family: var(--serif); font-style: italic;
+        color: var(--ink-soft); font-size: 0.78em;
+      }
+      .frame-image-preview {
+        max-width: 100%;
+        max-height: 280px;
+        display: block;
+        margin: 0 auto;
+      }
+      .frame-image-remove {
+        background: none; border: none;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.74em; color: var(--ink-soft);
+        cursor: pointer;
+        margin-top: 6px;
+        text-decoration: underline;
+        text-underline-offset: 3px;
       }
 
       .frame-notes {
@@ -715,40 +605,41 @@
         padding: 12px 14px;
       }
       .frame-notes-label {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.74em;
-        color: var(--ink-soft);
-        margin-bottom: 6px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.74em; color: var(--ink-soft); margin-bottom: 6px;
       }
-      .frame-notes-label::before {
-        content: "▸ ";
-      }
+      .frame-notes-label::before { content: "▸ "; }
       .frame-notes textarea {
         width: 100%;
-        background: transparent;
-        border: none;
-        font: inherit;
-        font-size: 0.78em;
-        color: var(--ink);
-        outline: none;
-        resize: vertical;
-        min-height: 38px;
+        background: transparent; border: none;
+        font: inherit; font-size: 0.78em; color: var(--ink);
+        outline: none; resize: vertical; min-height: 38px;
         font-family: var(--sans);
       }
       .frame-notes textarea::placeholder {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
+        font-family: var(--serif); font-style: italic; color: var(--ink-soft);
       }
 
+      .frame-actions {
+        display: flex; flex-direction: column;
+        gap: 6px; align-items: flex-end;
+      }
       .frame-duration {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
-        font-size: 0.72em;
+        font-family: var(--serif); font-style: italic;
+        color: var(--ink-soft); font-size: 0.72em;
         white-space: nowrap;
       }
+      .frame-regen-btn {
+        background: none; border: none;
+        font: inherit; font-family: var(--serif);
+        font-style: italic; font-size: 0.72em;
+        color: var(--accent); cursor: pointer;
+        padding: 4px 0;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .frame-regen-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+      .frame.is-regenerating { opacity: 0.5; pointer-events: none; }
 
       .caption-block {
         margin-top: 32px;
@@ -757,76 +648,93 @@
         border-bottom: 1px solid var(--hairline);
       }
       .caption-label {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.74em;
-        color: var(--ink-soft);
-        letter-spacing: 0.06em;
-        margin-bottom: 10px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.74em; color: var(--ink-soft);
+        letter-spacing: 0.06em; margin-bottom: 10px;
       }
+      .caption-input-wrap { position: relative; }
       .caption-input {
-        width: 100%;
-        background: transparent;
+        width: 100%; background: transparent;
         border: 1px dashed var(--hairline);
         padding: 12px;
-        font: inherit;
-        font-size: 0.86em;
-        color: var(--ink);
-        outline: none;
-        font-family: var(--sans);
-        resize: vertical;
-        min-height: 100px;
-        line-height: 1.55;
+        font: inherit; font-size: 0.86em; color: var(--ink);
+        outline: none; font-family: var(--sans);
+        resize: vertical; min-height: 100px; line-height: 1.55;
       }
-      .caption-input:focus {
-        border-color: var(--ink);
-        border-style: solid;
+      .caption-input:focus { border-color: var(--ink); border-style: solid; }
+      .caption-counter {
+        margin-top: 6px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.72em;
+        display: flex; justify-content: space-between;
+        color: var(--ink-soft);
       }
+      .caption-counter .preview-warn { color: var(--error); }
+      .caption-counter .preview-ok { color: var(--good); }
+
       .caption-rationale {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.78em;
-        color: var(--accent);
-        padding-left: 10px;
-        border-left: 1px solid var(--accent);
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.78em; color: var(--accent);
+        padding-left: 10px; border-left: 1px solid var(--accent);
         margin: 12px 0;
       }
-      .hashtags {
-        font-size: 0.74em;
-        color: var(--ink-soft);
+
+      .hashtag-editor {
+        margin-top: 8px;
+        display: flex; flex-wrap: wrap;
+        gap: 6px; align-items: center;
+      }
+      .hashtag-chip {
+        display: inline-flex; align-items: center;
+        gap: 6px;
+        background: var(--paper-deep);
+        border: 1px solid var(--hairline);
+        padding: 4px 10px;
+        font-size: 0.74em; color: var(--ink);
+      }
+      .hashtag-chip-x {
+        background: none; border: none;
+        cursor: pointer; padding: 0;
+        color: var(--ink-soft); font: inherit;
+        font-size: 1em; line-height: 1;
+      }
+      .hashtag-chip-x:hover { color: var(--ink); }
+      .hashtag-input {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--hairline);
+        font: inherit; font-size: 0.74em;
+        color: var(--ink);
+        outline: none;
+        padding: 4px 0;
+        min-width: 100px;
+      }
+      .hashtag-warning {
+        margin-top: 6px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.72em;
+        color: var(--error);
       }
 
       .footnote {
-        margin-top: 80px;
-        text-align: center;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.62em;
-        color: var(--ink-soft);
+        margin-top: 80px; text-align: center;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.62em; color: var(--ink-soft);
         letter-spacing: 0.06em;
       }
 
-      /* Settings drawer */
+      /* Drawers */
       .scrim {
-        position: fixed;
-        inset: 0;
+        position: fixed; inset: 0;
         background: rgba(0, 0, 0, 0.18);
-        opacity: 0;
-        pointer-events: none;
+        opacity: 0; pointer-events: none;
         transition: opacity 200ms ease;
         z-index: 100;
       }
-      .scrim.is-open {
-        opacity: 1;
-        pointer-events: auto;
-      }
+      .scrim.is-open { opacity: 1; pointer-events: auto; }
       .drawer {
-        position: fixed;
-        top: 0;
-        right: 0;
-        height: 100%;
-        width: 360px;
-        max-width: 88vw;
+        position: fixed; top: 0; right: 0; height: 100%;
+        width: 380px; max-width: 88vw;
         background: var(--paper);
         border-left: 1px solid var(--hairline);
         padding: 32px 28px;
@@ -835,218 +743,167 @@
         z-index: 101;
         overflow-y: auto;
       }
-      .drawer.is-open {
-        transform: translateX(0);
-      }
+      .drawer.is-open { transform: translateX(0); }
       .drawer-head {
-        display: flex;
-        justify-content: space-between;
+        display: flex; justify-content: space-between;
         align-items: baseline;
-        margin-bottom: 28px;
-        padding-bottom: 16px;
+        margin-bottom: 28px; padding-bottom: 16px;
         border-bottom: 1px solid var(--hairline);
       }
-      .drawer-title {
-        font-family: var(--serif);
-        font-size: 1.2em;
-      }
+      .drawer-title { font-family: var(--serif); font-size: 1.2em; }
       .drawer-close {
-        background: none;
-        border: none;
-        font: inherit;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.86em;
-        color: var(--ink-soft);
-        cursor: pointer;
+        background: none; border: none;
+        font: inherit; font-family: var(--serif);
+        font-style: italic; font-size: 0.86em;
+        color: var(--ink-soft); cursor: pointer;
       }
-      .drawer-close:hover {
-        color: var(--ink);
-      }
-      .setting {
-        margin-bottom: 28px;
-      }
+      .drawer-close:hover { color: var(--ink); }
+
+      .setting { margin-bottom: 28px; }
       .setting-label {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.82em;
-        color: var(--ink-soft);
-        margin-bottom: 10px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.82em; color: var(--ink-soft); margin-bottom: 10px;
       }
       .seg {
-        display: flex;
-        gap: 0;
+        display: flex; gap: 0;
         border: 1px solid var(--hairline);
       }
       .seg button {
-        background: none;
-        border: none;
-        font: inherit;
-        font-size: 0.74em;
-        color: var(--ink);
-        padding: 10px 8px;
-        flex: 1;
-        cursor: pointer;
+        background: none; border: none;
+        font: inherit; font-size: 0.74em; color: var(--ink);
+        padding: 10px 8px; flex: 1; cursor: pointer;
         letter-spacing: 0.04em;
       }
-      .seg button + button {
-        border-left: 1px solid var(--hairline);
-      }
+      .seg button + button { border-left: 1px solid var(--hairline); }
       .seg button.is-active {
         background: var(--paper-deep);
-        font-family: var(--serif);
-        font-style: italic;
+        font-family: var(--serif); font-style: italic;
       }
       .toggle-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 16px;
+        display: flex; justify-content: space-between;
+        align-items: center; gap: 16px;
       }
       .toggle {
-        position: relative;
-        width: 44px;
-        height: 22px;
-        border: 1px solid var(--ink);
-        background: transparent;
-        cursor: pointer;
-        flex-shrink: 0;
+        position: relative; width: 44px; height: 22px;
+        border: 1px solid var(--ink); background: transparent;
+        cursor: pointer; flex-shrink: 0;
       }
       .toggle::after {
-        content: "";
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 16px;
-        height: 16px;
+        content: ""; position: absolute; top: 2px; left: 2px;
+        width: 16px; height: 16px;
         background: var(--ink-soft);
         transition: left 180ms ease, background 180ms ease;
       }
-      .toggle.is-on::after {
-        left: 24px;
-        background: var(--ink);
+      .toggle.is-on::after { left: 24px; background: var(--ink); }
+
+      /* Library drawer */
+      .library-list { list-style: none; margin: 0; padding: 0; }
+      .library-list li {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--hairline);
+      }
+      .library-item {
+        background: none; border: none;
+        text-align: left; width: 100%;
+        font: inherit; cursor: pointer;
+        color: var(--ink); padding: 0;
+      }
+      .library-item-title {
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.96em; margin-bottom: 4px;
+      }
+      .library-item-meta {
+        font-size: 0.72em;
+        color: var(--ink-soft);
+      }
+      .library-item-actions {
+        margin-top: 6px;
+        display: flex; gap: 12px;
+      }
+      .library-empty {
+        font-family: var(--serif); font-style: italic;
+        color: var(--ink-soft); font-size: 0.86em;
+        padding: 24px 0;
       }
 
       /* Auth gate */
       .gate {
-        position: fixed;
-        inset: 0;
+        position: fixed; inset: 0;
         background: var(--paper);
         z-index: 200;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; align-items: center; justify-content: center;
         padding: 24px;
       }
-      .gate-card {
-        max-width: 440px;
-        width: 100%;
-        text-align: center;
-      }
+      .gate-card { max-width: 440px; width: 100%; text-align: center; }
       .gate-wordmark {
-        font-family: var(--serif);
-        font-weight: 400;
-        letter-spacing: 0.32em;
-        font-size: 1.1em;
-        margin: 0 0 8px;
+        font-family: var(--serif); font-weight: 400;
+        letter-spacing: 0.32em; font-size: 1.1em; margin: 0 0 8px;
       }
       .gate-tagline {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
-        font-size: 0.82em;
-        margin-bottom: 36px;
+        font-family: var(--serif); font-style: italic;
+        color: var(--ink-soft); font-size: 0.82em; margin-bottom: 36px;
       }
       .gate-eyebrow {
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.78em;
-        color: var(--ink-soft);
-        margin-bottom: 14px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.78em; color: var(--ink-soft); margin-bottom: 14px;
       }
       .gate-input {
-        width: 100%;
-        background: transparent;
-        border: none;
+        width: 100%; background: transparent; border: none;
         border-bottom: 1px solid var(--ink);
-        font: inherit;
-        font-family: var(--sans);
-        font-size: 0.96em;
-        color: var(--ink);
-        padding: 10px 0;
-        outline: none;
-        text-align: center;
-        letter-spacing: 0.16em;
+        font: inherit; font-family: var(--sans);
+        font-size: 0.96em; color: var(--ink);
+        padding: 10px 0; outline: none;
+        text-align: center; letter-spacing: 0.16em;
       }
       .gate-input::placeholder {
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--ink-soft);
-        letter-spacing: 0.04em;
+        font-family: var(--serif); font-style: italic;
+        color: var(--ink-soft); letter-spacing: 0.04em;
       }
       .gate-remember {
         margin-top: 18px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: flex; justify-content: center; align-items: center;
         gap: 8px;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.82em;
-        color: var(--ink-soft);
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.82em; color: var(--ink-soft);
       }
-      .gate-remember input {
-        accent-color: var(--ink);
-      }
+      .gate-remember input { accent-color: var(--ink); }
       .gate-submit {
         margin-top: 28px;
         background: none;
         border: 1px solid var(--ink);
-        font: inherit;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 0.92em;
+        font: inherit; font-family: var(--serif);
+        font-style: italic; font-size: 0.92em;
         color: var(--ink);
         padding: 12px 28px;
-        cursor: pointer;
-        letter-spacing: 0.04em;
+        cursor: pointer; letter-spacing: 0.04em;
       }
-      .gate-submit:hover {
-        background: var(--ink);
-        color: var(--paper);
-      }
+      .gate-submit:hover { background: var(--ink); color: var(--paper); }
       .gate-error {
         margin-top: 16px;
-        font-family: var(--serif);
-        font-style: italic;
-        color: var(--error);
-        font-size: 0.82em;
+        font-family: var(--serif); font-style: italic;
+        color: var(--error); font-size: 0.82em;
         min-height: 1.2em;
       }
 
+      .draft-banner {
+        background: var(--paper-deep);
+        border-left: 2px solid var(--accent);
+        padding: 12px 16px;
+        margin-bottom: 24px;
+        font-family: var(--serif); font-style: italic;
+        font-size: 0.82em;
+        color: var(--ink);
+        display: flex; justify-content: space-between;
+        align-items: center; gap: 12px; flex-wrap: wrap;
+      }
+
       @media (max-width: 640px) {
-        .page {
-          padding: 28px 18px 64px;
-        }
-        .stepper {
-          gap: 4px;
-          padding-bottom: 24px;
-          margin-bottom: 28px;
-        }
-        .stepper .step {
-          font-size: 0.66em;
-          padding: 4px 8px;
-        }
-        .frame {
-          grid-template-columns: 56px 1fr;
-          gap: 14px;
-        }
-        .frame-duration {
-          grid-column: 2;
-        }
-        .zone {
-          padding: 18px 16px;
-        }
+        .page { padding: 28px 18px 64px; }
+        .stepper { gap: 4px; padding-bottom: 24px; margin-bottom: 28px; }
+        .stepper .step { font-size: 0.66em; padding: 4px 8px; }
+        .frame { grid-template-columns: 56px 1fr; gap: 14px; }
+        .frame-actions { grid-column: 2; align-items: flex-start; }
+        .zone { padding: 18px 16px; }
       }
     </style>
   </head>
@@ -1058,22 +915,14 @@
         <div class="gate-tagline">— Social Studio —</div>
         <div class="gate-eyebrow">Enter the studio</div>
         <form id="gate-form">
-          <input
-            id="gate-password"
-            class="gate-input"
-            type="password"
-            placeholder="password"
-            autocomplete="current-password"
-            required
-          />
+          <input id="gate-password" class="gate-input" type="password"
+            placeholder="password" autocomplete="current-password" required />
           <label class="gate-remember">
             <input type="checkbox" id="gate-remember" />
             <span>remember me for 7 days</span>
           </label>
           <div>
-            <button class="gate-submit" type="submit" id="gate-submit">
-              Enter
-            </button>
+            <button class="gate-submit" type="submit" id="gate-submit">Enter</button>
           </div>
         </form>
         <div class="gate-error" id="gate-error"></div>
@@ -1084,6 +933,7 @@
       <div class="topbar">
         <div class="brand-mini">RICE &amp; FLOWER</div>
         <div class="topbar-actions">
+          <button class="topbar-btn" id="library-toggle">Recent</button>
           <button class="topbar-btn" id="settings-toggle">Settings</button>
         </div>
       </div>
@@ -1093,61 +943,34 @@
         <div class="tagline">— composing for the feed —</div>
       </header>
 
+      <div id="draft-banner" class="draft-banner" hidden>
+        <span id="draft-banner-text">A draft from your last session is saved.</span>
+        <span>
+          <button class="btn" id="draft-restore" type="button">Restore</button>
+          <button class="btn btn-secondary" id="draft-discard" type="button">Discard</button>
+        </span>
+      </div>
+
       <nav class="stepper" id="stepper" aria-label="Progress">
-        <button class="step" data-step="1" type="button">
-          <span class="num">i.</span>Format
-        </button>
-        <button class="step" data-step="2" type="button">
-          <span class="num">ii.</span>Idea
-        </button>
-        <button class="step" data-step="3" type="button">
-          <span class="num">iii.</span>Refine
-        </button>
-        <button class="step" data-step="4" type="button">
-          <span class="num">iv.</span>Storyboard
-        </button>
+        <button class="step" data-step="1" type="button"><span class="num">i.</span>Format</button>
+        <button class="step" data-step="2" type="button"><span class="num">ii.</span>Idea</button>
+        <button class="step" data-step="3" type="button"><span class="num">iii.</span>Refine</button>
+        <button class="step" data-step="4" type="button"><span class="num">iv.</span>Storyboard</button>
       </nav>
 
       <!-- STEP 1: FORMAT -->
       <section class="step-panel" id="panel-1">
         <div class="step-eyebrow">Step one</div>
         <h2 class="step-title">Choose a format.</h2>
-        <p class="step-body">
-          Each format has its own rhythm — frame-by-frame motion, sequential
-          stills, or a single composed image.
-        </p>
+        <p class="step-body">Each format has its own rhythm — frame-by-frame motion, sequential stills, or a single composed image.</p>
 
         <div class="zone zone-input">
           <div class="zone-label">your turn — pick one</div>
           <ul class="format-list" id="format-list">
-            <li>
-              <button class="format-btn" data-format="reel" type="button">
-                <span class="name">Reel</span>
-                <span class="desc">vertical video, frame by frame</span>
-                <span class="check">selected</span>
-              </button>
-            </li>
-            <li>
-              <button class="format-btn" data-format="story" type="button">
-                <span class="name">Story</span>
-                <span class="desc">sequential vertical frames</span>
-                <span class="check">selected</span>
-              </button>
-            </li>
-            <li>
-              <button class="format-btn" data-format="post" type="button">
-                <span class="name">Post</span>
-                <span class="desc">single image or carousel</span>
-                <span class="check">selected</span>
-              </button>
-            </li>
-            <li>
-              <button class="format-btn" data-format="auto" type="button">
-                <span class="name">— Decide for me</span>
-                <span class="desc">let the studio choose what fits</span>
-                <span class="check">selected</span>
-              </button>
-            </li>
+            <li><button class="format-btn" data-format="reel" type="button"><span class="name">Reel</span><span class="desc">vertical video, frame by frame</span><span class="check">selected</span></button></li>
+            <li><button class="format-btn" data-format="story" type="button"><span class="name">Story</span><span class="desc">sequential vertical frames</span><span class="check">selected</span></button></li>
+            <li><button class="format-btn" data-format="post" type="button"><span class="name">Post</span><span class="desc">single image or carousel</span><span class="check">selected</span></button></li>
+            <li><button class="format-btn" data-format="auto" type="button"><span class="name">— Decide for me</span><span class="desc">let the studio choose what fits</span><span class="check">selected</span></button></li>
           </ul>
         </div>
 
@@ -1158,9 +981,7 @@
 
         <div class="nav">
           <div class="spacer"></div>
-          <button class="btn btn-primary" id="next-1" type="button" disabled>
-            Continue
-          </button>
+          <button class="btn btn-primary" id="next-1" type="button" disabled>Continue</button>
         </div>
       </section>
 
@@ -1168,62 +989,35 @@
       <section class="step-panel" id="panel-2">
         <div class="step-eyebrow">Step two</div>
         <h2 class="step-title">Share the idea.</h2>
-        <p class="step-body">
-          A single sentence is enough — a cake, a moment, a feeling. Pick a
-          starter, write your own, or chat with the studio to sharpen it.
-        </p>
+        <p class="step-body">A single sentence is enough — a cake, a moment, a feeling. Pick a starter, write your own, or chat with the studio to sharpen it.</p>
 
         <div class="zone zone-input">
           <div class="zone-label">your turn — describe the idea</div>
           <div class="field">
             <label for="idea">The idea</label>
-            <textarea
-              id="idea"
-              placeholder="a peony tier cake reveal — soft morning light —"
-            ></textarea>
+            <textarea id="idea" placeholder="a peony tier cake reveal — soft morning light —"></textarea>
           </div>
-
           <div class="inspirations">
             <div class="inspirations-label">— or borrow a starter —</div>
             <ul class="inspirations-list" id="inspirations-list"></ul>
           </div>
-
-          <button
-            class="brainstorm-toggle"
-            id="brainstorm-toggle"
-            type="button"
-          >
+          <button class="brainstorm-toggle" id="brainstorm-toggle" type="button">
             Chat with the studio about this idea →
           </button>
-
           <div class="brainstorm-panel" id="brainstorm-panel" hidden>
             <div class="chat-log" id="chat-log"></div>
             <div class="chat-composer">
-              <textarea
-                id="chat-input"
-                rows="1"
-                placeholder="ask, refine, push back —"
-              ></textarea>
-              <button class="chat-send" id="chat-send" type="button">
-                send
-              </button>
+              <textarea id="chat-input" rows="1" placeholder="ask, refine, push back —"></textarea>
+              <button class="chat-send" id="chat-send" type="button">send</button>
             </div>
           </div>
         </div>
 
         <div class="nav">
           <button class="btn btn-back" id="back-2" type="button">Back</button>
-          <button
-            class="btn btn-secondary"
-            id="skip-from-idea"
-            type="button"
-          >
-            Skip questions, compose now
-          </button>
+          <button class="btn btn-secondary" id="skip-from-idea" type="button">Skip questions, compose now</button>
           <div class="spacer"></div>
-          <button class="btn btn-primary" id="next-2" type="button" disabled>
-            Ask the studio
-          </button>
+          <button class="btn btn-primary" id="next-2" type="button" disabled>Ask the studio</button>
         </div>
         <div class="error" id="error-2" hidden></div>
       </section>
@@ -1232,13 +1026,9 @@
       <section class="step-panel" id="panel-3">
         <div class="step-eyebrow">Step three</div>
         <h2 class="step-title">A few questions to refine.</h2>
-        <p class="step-body">
-          Each question is paired with the studio's reasoning — what it unlocks
-          for the storyboard. Answer in your own words; fragments are fine.
-        </p>
+        <p class="step-body">Each question is paired with the studio's reasoning — what it unlocks for the storyboard.</p>
 
         <div id="clarify-loading" class="loading-line">composing questions —</div>
-
         <div class="zone zone-output" id="clarify-zone" hidden>
           <div class="zone-label">from the studio — clarifying questions</div>
           <ol class="questions" id="questions"></ol>
@@ -1247,9 +1037,7 @@
         <div class="nav">
           <button class="btn btn-back" id="back-3" type="button">Back</button>
           <div class="spacer"></div>
-          <button class="btn btn-primary" id="next-3" type="button" disabled>
-            Compose the storyboard
-          </button>
+          <button class="btn btn-primary" id="next-3" type="button" disabled>Compose the storyboard</button>
         </div>
         <div class="error" id="error-3" hidden></div>
       </section>
@@ -1258,10 +1046,7 @@
       <section class="step-panel" id="panel-4">
         <div class="step-eyebrow">Step four</div>
         <h2 class="step-title">Your storyboard.</h2>
-        <p class="step-body">
-          Edit the concept and caption, add notes to any frame. When it's
-          ready, share or export.
-        </p>
+        <p class="step-body">Edit anything, reorder frames, drop in references, regenerate one frame or the whole thing. When ready, share or export.</p>
 
         <div id="sb-loading" class="loading-line">piping —</div>
         <div id="storyboard" hidden></div>
@@ -1269,15 +1054,13 @@
         <div class="nav">
           <button class="btn btn-back" id="back-4" type="button">Back</button>
           <div class="spacer"></div>
+          <button class="btn" id="save-btn" type="button" hidden>Save to library</button>
           <button class="btn" id="copy-btn" type="button" hidden>Copy</button>
           <button class="btn" id="share-btn" type="button" hidden>Share</button>
           <button class="btn" id="export-btn" type="button" hidden>Export</button>
-          <button class="btn" id="regen-btn" type="button" hidden>
-            Regenerate
-          </button>
-          <button class="btn btn-primary" id="restart-btn" type="button" hidden>
-            Start over
-          </button>
+          <button class="btn" id="variants-btn" type="button" hidden>Compose 2 variants</button>
+          <button class="btn" id="regen-btn" type="button" hidden>Regenerate</button>
+          <button class="btn btn-primary" id="restart-btn" type="button" hidden>Start over</button>
         </div>
         <div class="error" id="error-4" hidden></div>
       </section>
@@ -1292,7 +1075,6 @@
         <div class="drawer-title">Settings</div>
         <button class="drawer-close" id="drawer-close" type="button">close</button>
       </div>
-
       <div class="setting">
         <div class="setting-label">Theme</div>
         <div class="seg" data-setting="theme">
@@ -1301,7 +1083,6 @@
           <button data-value="auto" type="button">Auto</button>
         </div>
       </div>
-
       <div class="setting">
         <div class="setting-label">Type size</div>
         <div class="seg" data-setting="scale">
@@ -1310,40 +1091,38 @@
           <button data-value="lg" type="button">Large</button>
         </div>
       </div>
-
       <div class="setting">
-        <div class="toggle-row">
-          <div class="setting-label" style="margin-bottom: 0">
-            Show studio rationale
-          </div>
-          <button
-            class="toggle"
-            id="toggle-rationale"
-            type="button"
-            aria-pressed="true"
-          ></button>
+        <div class="setting-label">Voice register</div>
+        <div class="seg" data-setting="voice">
+          <button data-value="studio" type="button">Studio</button>
+          <button data-value="balanced" type="button">Balanced</button>
+          <button data-value="warmer" type="button">Warmer</button>
         </div>
       </div>
-
       <div class="setting">
         <div class="toggle-row">
-          <div class="setting-label" style="margin-bottom: 0">
-            Reduce motion
-          </div>
-          <button
-            class="toggle"
-            id="toggle-motion"
-            type="button"
-            aria-pressed="false"
-          ></button>
+          <div class="setting-label" style="margin-bottom: 0">Show studio rationale</div>
+          <button class="toggle" id="toggle-rationale" type="button" aria-pressed="true"></button>
         </div>
       </div>
-
       <div class="setting">
-        <button class="btn" id="logout-btn" type="button">
-          Sign out of the studio
-        </button>
+        <div class="toggle-row">
+          <div class="setting-label" style="margin-bottom: 0">Reduce motion</div>
+          <button class="toggle" id="toggle-motion" type="button" aria-pressed="false"></button>
+        </div>
       </div>
+      <div class="setting">
+        <button class="btn" id="logout-btn" type="button">Sign out of the studio</button>
+      </div>
+    </aside>
+
+    <!-- Library drawer -->
+    <aside class="drawer" id="library-drawer" role="dialog" aria-label="Recent storyboards">
+      <div class="drawer-head">
+        <div class="drawer-title">Recent</div>
+        <button class="drawer-close" id="library-close" type="button">close</button>
+      </div>
+      <div id="library-content"></div>
     </aside>
 
     <script>
@@ -1356,43 +1135,31 @@
         "the first piping pass on a tier in afternoon light",
       ];
 
-      /* ============== auth gate ============== */
+      /* ============== auth ============== */
       const AUTH_KEY = "rfsocial-auth-until";
-
-      function isAuthedLocal() {
+      const isAuthedLocal = () => {
         try {
           const t = Number(localStorage.getItem(AUTH_KEY) || 0);
           return Number.isFinite(t) && t > Date.now();
-        } catch {
-          return false;
-        }
-      }
-
-      function setAuthedLocal(expiresAt) {
-        try {
-          localStorage.setItem(AUTH_KEY, String(expiresAt));
-        } catch {}
-      }
-
-      function clearAuthedLocal() {
-        try {
-          localStorage.removeItem(AUTH_KEY);
-        } catch {}
-      }
-
-      function showGate() {
+        } catch { return false; }
+      };
+      const setAuthedLocal = (exp) => {
+        try { localStorage.setItem(AUTH_KEY, String(exp)); } catch {}
+      };
+      const clearAuthedLocal = () => {
+        try { localStorage.removeItem(AUTH_KEY); } catch {}
+      };
+      const showGate = () => {
         document.getElementById("gate").style.display = "flex";
         document.getElementById("app").hidden = true;
         setTimeout(() => document.getElementById("gate-password").focus(), 50);
-      }
-
-      function hideGate() {
+      };
+      const hideGate = () => {
         document.getElementById("gate").style.display = "none";
         document.getElementById("app").hidden = false;
-      }
+      };
 
-      const gateForm = document.getElementById("gate-form");
-      gateForm.addEventListener("submit", async (e) => {
+      document.getElementById("gate-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const pw = document.getElementById("gate-password").value;
         const remember = document.getElementById("gate-remember").checked;
@@ -1414,6 +1181,7 @@
           const data = await res.json();
           setAuthedLocal(data.expiresAt);
           hideGate();
+          checkAndOfferDraft();
         } catch (err) {
           errEl.textContent = err.message || "Couldn't sign in.";
         } finally {
@@ -1422,14 +1190,10 @@
         }
       });
 
-      if (isAuthedLocal()) {
-        hideGate();
-      } else {
-        showGate();
-      }
+      if (isAuthedLocal()) hideGate(); else showGate();
 
       /* ============== settings ============== */
-      const SETTINGS_KEY = "rfsocial-settings-v1";
+      const SETTINGS_KEY = "rfsocial-settings-v2";
       const settings = loadSettings();
       applySettings();
       bindSettings();
@@ -1442,31 +1206,20 @@
             scale: s.scale || "md",
             motion: s.motion || "full",
             rationale: s.rationale === false ? false : true,
+            voice: s.voice || "balanced",
           };
         } catch {
-          return {
-            theme: "light",
-            scale: "md",
-            motion: "full",
-            rationale: true,
-          };
+          return { theme: "light", scale: "md", motion: "full", rationale: true, voice: "balanced" };
         }
       }
-
       function saveSettings() {
-        try {
-          localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-        } catch {}
+        try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {}
       }
-
       function applySettings() {
         const body = document.body;
-        const resolvedTheme =
-          settings.theme === "auto"
-            ? window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light"
-            : settings.theme;
+        const resolvedTheme = settings.theme === "auto"
+          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : settings.theme;
         body.dataset.theme = resolvedTheme;
         body.dataset.scale = settings.scale;
         body.dataset.motion = settings.motion;
@@ -1480,16 +1233,13 @@
         });
         const r = document.getElementById("toggle-rationale");
         r.classList.toggle("is-on", settings.rationale);
-        r.setAttribute("aria-pressed", String(!!settings.rationale));
         const m = document.getElementById("toggle-motion");
         const on = settings.motion === "reduce";
         m.classList.toggle("is-on", on);
-        m.setAttribute("aria-pressed", String(on));
 
         if (state?.storyboard) renderStoryboard();
         if (state?.questions?.length) renderQuestions();
       }
-
       function bindSettings() {
         document.querySelectorAll(".seg").forEach((seg) => {
           seg.addEventListener("click", (e) => {
@@ -1501,54 +1251,43 @@
             applySettings();
           });
         });
-        document
-          .getElementById("toggle-rationale")
-          .addEventListener("click", () => {
-            settings.rationale = !settings.rationale;
-            saveSettings();
-            applySettings();
-          });
-        document
-          .getElementById("toggle-motion")
-          .addEventListener("click", () => {
-            settings.motion = settings.motion === "reduce" ? "full" : "reduce";
-            saveSettings();
-            applySettings();
-          });
+        document.getElementById("toggle-rationale").addEventListener("click", () => {
+          settings.rationale = !settings.rationale;
+          saveSettings(); applySettings();
+        });
+        document.getElementById("toggle-motion").addEventListener("click", () => {
+          settings.motion = settings.motion === "reduce" ? "full" : "reduce";
+          saveSettings(); applySettings();
+        });
         if (window.matchMedia) {
-          window
-            .matchMedia("(prefers-color-scheme: dark)")
+          window.matchMedia("(prefers-color-scheme: dark)")
             .addEventListener("change", () => {
               if (settings.theme === "auto") applySettings();
             });
         }
 
-        const drawer = document.getElementById("drawer");
+        // Drawers
         const scrim = document.getElementById("scrim");
-        const open = () => {
-          drawer.classList.add("is-open");
-          scrim.classList.add("is-open");
-        };
-        const close = () => {
+        const drawer = document.getElementById("drawer");
+        const lib = document.getElementById("library-drawer");
+        const openDrawer = (d) => { d.classList.add("is-open"); scrim.classList.add("is-open"); };
+        const closeAll = () => {
           drawer.classList.remove("is-open");
+          lib.classList.remove("is-open");
           scrim.classList.remove("is-open");
         };
-        document
-          .getElementById("settings-toggle")
-          .addEventListener("click", open);
-        document
-          .getElementById("drawer-close")
-          .addEventListener("click", close);
-        scrim.addEventListener("click", close);
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") close();
+        document.getElementById("settings-toggle").addEventListener("click", () => openDrawer(drawer));
+        document.getElementById("drawer-close").addEventListener("click", closeAll);
+        document.getElementById("library-toggle").addEventListener("click", () => {
+          renderLibrary();
+          openDrawer(lib);
         });
+        document.getElementById("library-close").addEventListener("click", closeAll);
+        scrim.addEventListener("click", closeAll);
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAll(); });
 
         document.getElementById("logout-btn").addEventListener("click", () => {
           clearAuthedLocal();
-          // Best-effort: also clear the server cookie by overwriting with an
-          // expired Max-Age. The browser will still send it once but the next
-          // /api/chat call will get 401 and re-trigger the gate.
           document.cookie = "rfs_auth=; Path=/; Max-Age=0; SameSite=Lax";
           location.reload();
         });
@@ -1562,13 +1301,36 @@
         idea: "",
         questions: [],
         answers: [],
-        chatTurns: [], // for brainstorm panel
+        chatTurns: [],
+        variants: [],       // [{storyboard, notes, images, hashtags}]
+        activeVariant: 0,
         storyboard: null,
-        notes: {}, // { frameIndex: string }
-        messages: [], // master conversation passed to API
+        notes: {},          // { frameIndex: string }
+        images: {},         // { frameIndex: dataURL }
+        hashtags: [],       // editable list
+        messages: [],
       };
 
       const $ = (id) => document.getElementById(id);
+
+      // Bind variant pointer
+      function bindActiveVariant() {
+        const v = state.variants[state.activeVariant];
+        if (!v) return;
+        state.storyboard = v.storyboard;
+        state.notes = v.notes;
+        state.images = v.images;
+        state.hashtags = v.hashtags;
+      }
+
+      function snapshotActiveVariant() {
+        const v = state.variants[state.activeVariant];
+        if (!v) return;
+        v.storyboard = state.storyboard;
+        v.notes = state.notes;
+        v.images = state.images;
+        v.hashtags = state.hashtags;
+      }
 
       /* ============== inspirations ============== */
       const inspList = $("inspirations-list");
@@ -1587,11 +1349,8 @@
         inspList.appendChild(li);
       });
 
-      /* ============== stepper navigation ============== */
-      function canVisit(n) {
-        return n <= state.highest;
-      }
-
+      /* ============== stepper ============== */
+      const canVisit = (n) => n <= state.highest;
       function refreshStepper() {
         document.querySelectorAll("#stepper .step").forEach((b) => {
           const n = Number(b.dataset.step);
@@ -1600,7 +1359,6 @@
           b.disabled = !canVisit(n);
         });
       }
-
       function goto(n) {
         if (!canVisit(n)) return;
         state.step = n;
@@ -1609,31 +1367,18 @@
           p.classList.toggle("is-active", p.id === `panel-${n}`);
         });
         refreshStepper();
-        window.scrollTo({
-          top: 0,
-          behavior: settings.motion === "reduce" ? "auto" : "smooth",
-        });
+        window.scrollTo({ top: 0, behavior: settings.motion === "reduce" ? "auto" : "smooth" });
       }
-
-      function reach(n) {
-        if (n > state.highest) state.highest = n;
-        refreshStepper();
-      }
-
+      function reach(n) { if (n > state.highest) state.highest = n; refreshStepper(); }
       document.querySelectorAll("#stepper .step").forEach((b) => {
-        b.addEventListener("click", () => {
-          const n = Number(b.dataset.step);
-          goto(n);
-        });
+        b.addEventListener("click", () => goto(Number(b.dataset.step)));
       });
 
-      /* ============== step 1: format ============== */
+      /* ============== step 1 ============== */
       document.querySelectorAll(".format-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           state.format = btn.dataset.format;
-          document
-            .querySelectorAll(".format-btn")
-            .forEach((b) => b.classList.toggle("is-selected", b === btn));
+          document.querySelectorAll(".format-btn").forEach((b) => b.classList.toggle("is-selected", b === btn));
           $("next-1").disabled = false;
           reach(2);
         });
@@ -1645,26 +1390,20 @@
         state.idea = "";
         state.questions = [];
         state.answers = [];
-        state.messages = [
-          {
-            role: "user",
-            content:
-              "Compose a fresh storyboard for the studio's feed. Pick the format and the idea. Match the atelier voice and apply current Instagram playbook signals.",
-          },
-        ];
+        state.messages = [{ role: "user", content: "Compose a fresh storyboard for the studio's feed. Pick the format and the idea. Match the atelier voice and apply current Instagram playbook signals." }];
         state.highest = 4;
         goto(4);
         runAuto();
       });
 
-      /* ============== step 2: idea + brainstorm ============== */
+      /* ============== step 2 ============== */
       const ideaEl = $("idea");
       ideaEl.addEventListener("input", () => {
         $("next-2").disabled = ideaEl.value.trim().length < 3;
+        scheduleAutoSave();
       });
       $("back-2").addEventListener("click", () => goto(1));
       $("next-2").addEventListener("click", askClarify);
-
       $("skip-from-idea").addEventListener("click", () => {
         const idea = ideaEl.value.trim();
         state.idea = idea;
@@ -1672,31 +1411,24 @@
           ? `Compose a storyboard now without clarifying questions. Idea: ${idea}. Pick the rest yourself.`
           : "Compose a fresh storyboard for the studio's feed. Pick the format and the idea.";
         state.messages = [{ role: "user", content: seedContent }];
-        state.questions = [];
-        state.answers = [];
+        state.questions = []; state.answers = [];
         state.highest = 4;
         goto(4);
         runAuto();
       });
 
-      // Brainstorm panel
       const brainstormToggle = $("brainstorm-toggle");
       const brainstormPanel = $("brainstorm-panel");
       brainstormToggle.addEventListener("click", () => {
         const willOpen = brainstormPanel.hidden;
         brainstormPanel.hidden = !willOpen;
-        brainstormToggle.textContent = willOpen
-          ? "Hide chat"
-          : "Chat with the studio about this idea →";
+        brainstormToggle.textContent = willOpen ? "Hide chat" : "Chat with the studio about this idea →";
         if (willOpen) $("chat-input").focus();
       });
 
       const chatInput = $("chat-input");
       chatInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          sendChat();
-        }
+        if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendChat(); }
       });
       $("chat-send").addEventListener("click", sendChat);
 
@@ -1705,12 +1437,8 @@
         if (!text) return;
         chatInput.value = "";
         const idea = ideaEl.value.trim();
-        // Brainstorm conversation history kept separate
         if (state.chatTurns.length === 0 && idea) {
-          state.chatTurns.push({
-            role: "user",
-            content: `My current idea: ${idea}\n\n${text}`,
-          });
+          state.chatTurns.push({ role: "user", content: `My current idea: ${idea}\n\n${text}` });
         } else {
           state.chatTurns.push({ role: "user", content: text });
         }
@@ -1722,23 +1450,18 @@
             body: JSON.stringify({
               mode: "brainstorm",
               format: state.format,
+              voice: settings.voice,
               messages: state.chatTurns,
             }),
           });
-          if (res.status === 401) {
-            clearAuthedLocal();
-            showGate();
-            return;
-          }
+          if (res.status === 401) { clearAuthedLocal(); showGate(); return; }
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || "Request failed");
           state.chatTurns.push({ role: "assistant", content: data.text });
           renderChat(false);
+          scheduleAutoSave();
         } catch (err) {
-          state.chatTurns.push({
-            role: "assistant",
-            content: `(couldn't reach the studio — ${err.message || "try again"})`,
-          });
+          state.chatTurns.push({ role: "assistant", content: `(couldn't reach the studio — ${err.message || "try again"})` });
           renderChat(false);
         }
       }
@@ -1749,9 +1472,7 @@
         state.chatTurns.forEach((m) => {
           const el = document.createElement("div");
           el.className = "chat-msg " + m.role;
-          el.innerHTML = `<span class="who">${
-            m.role === "user" ? "You" : "Studio"
-          }</span><div class="body"></div>`;
+          el.innerHTML = `<span class="who">${m.role === "user" ? "You" : "Studio"}</span><div class="body"></div>`;
           el.querySelector(".body").textContent = m.content;
           log.appendChild(el);
         });
@@ -1767,27 +1488,20 @@
       async function askClarify() {
         state.idea = ideaEl.value.trim();
         if (!state.idea) return;
-        clearError("error-2");
-        clearError("error-3");
-        reach(3);
-        goto(3);
+        clearError("error-2"); clearError("error-3");
+        reach(3); goto(3);
         $("clarify-loading").hidden = false;
         $("clarify-zone").hidden = true;
         $("next-3").disabled = true;
 
-        // Build messages: include brainstorm context if user used it
         state.messages = [];
         if (state.chatTurns.length > 0) {
           state.chatTurns.forEach((m) => state.messages.push(m));
-          state.messages.push({
-            role: "user",
-            content: `Here is the refined idea I want to move forward with: ${state.idea}`,
-          });
+          state.messages.push({ role: "user", content: `Here is the refined idea I want to move forward with: ${state.idea}` });
         } else {
           state.messages.push({ role: "user", content: state.idea });
         }
-        state.questions = [];
-        state.answers = [];
+        state.questions = []; state.answers = [];
 
         try {
           const data = await callApi("clarify");
@@ -1795,8 +1509,7 @@
           state.questions = parseQuestions(data.text);
           renderQuestions();
         } catch (err) {
-          $("clarify-loading").textContent =
-            "(couldn't reach the studio — try again)";
+          $("clarify-loading").textContent = "(couldn't reach the studio — try again)";
           showError("error-3", err.message || "Request failed.");
         }
       }
@@ -1819,16 +1532,11 @@
             current.rationale = ratMatch[1].replace(/^[*_]+|[*_]+$/g, "").trim();
             continue;
           }
-          if (current && !current.rationale) {
-            current.question += " " + line;
-          }
+          if (current && !current.rationale) current.question += " " + line;
         }
         if (current) out.push(current);
         if (out.length === 0) {
-          const qs = text
-            .split(/(?<=\?)\s+/)
-            .map((s) => s.trim())
-            .filter((s) => s.endsWith("?"));
+          const qs = text.split(/(?<=\?)\s+/).map((s) => s.trim()).filter((s) => s.endsWith("?"));
           return qs.slice(0, 4).map((q) => ({ question: q, rationale: "" }));
         }
         return out.slice(0, 4);
@@ -1840,35 +1548,27 @@
         ol.innerHTML = "";
         state.questions.forEach((q, i) => {
           const li = document.createElement("li");
-          const ratHtml =
-            showRationale && q.rationale
-              ? `<div class="question-rationale">— ${escapeHtml(q.rationale)}</div>`
-              : "";
+          const ratHtml = showRationale && q.rationale
+            ? `<div class="question-rationale">— ${escapeHtml(q.rationale)}</div>` : "";
           li.innerHTML = `
             <div class="question-text"></div>
             ${ratHtml}
-            <div class="field">
-              <textarea data-i="${i}" placeholder="your answer —"></textarea>
-            </div>`;
+            <div class="field"><textarea data-i="${i}" placeholder="your answer —"></textarea></div>`;
           li.querySelector(".question-text").textContent = q.question;
-          if (state.answers[i]) {
-            li.querySelector("textarea").value = state.answers[i];
-          }
+          if (state.answers[i]) li.querySelector("textarea").value = state.answers[i];
           ol.appendChild(li);
         });
         $("clarify-loading").hidden = true;
         $("clarify-zone").hidden = false;
-
         const checkFilled = () => {
-          const filled = [...ol.querySelectorAll("textarea")].every(
-            (x) => x.value.trim().length > 0,
-          );
+          const filled = [...ol.querySelectorAll("textarea")].every((x) => x.value.trim().length > 0);
           $("next-3").disabled = !filled;
         };
         ol.querySelectorAll("textarea").forEach((t) => {
           t.addEventListener("input", () => {
             const i = Number(t.dataset.i);
             state.answers[i] = t.value;
+            scheduleAutoSave();
             checkFilled();
           });
         });
@@ -1880,63 +1580,36 @@
 
       async function generateStoryboard() {
         clearError("error-3");
-        const answers = [...$("questions").querySelectorAll("textarea")].map(
-          (t) => t.value.trim(),
-        );
+        const answers = [...$("questions").querySelectorAll("textarea")].map((t) => t.value.trim());
         state.answers = answers;
-
-        const combined = state.questions
-          .map((q, i) => `Q: ${q.question}\nA: ${answers[i] || ""}`)
-          .join("\n\n");
+        const combined = state.questions.map((q, i) => `Q: ${q.question}\nA: ${answers[i] || ""}`).join("\n\n");
         state.messages.push({ role: "user", content: combined });
-
-        reach(4);
-        goto(4);
+        reach(4); goto(4);
         await runStoryboardCall("storyboard");
       }
 
       /* ============== step 4: storyboard ============== */
       $("back-4").addEventListener("click", () => goto(3));
       $("restart-btn").addEventListener("click", () => {
-        state.step = 1;
-        state.highest = 1;
-        state.format = null;
-        state.idea = "";
-        state.questions = [];
-        state.answers = [];
-        state.chatTurns = [];
-        state.storyboard = null;
-        state.notes = {};
-        state.messages = [];
-        document
-          .querySelectorAll(".format-btn")
-          .forEach((b) => b.classList.remove("is-selected"));
-        $("next-1").disabled = true;
-        ideaEl.value = "";
-        $("next-2").disabled = true;
-        $("brainstorm-panel").hidden = true;
-        $("brainstorm-toggle").textContent =
-          "Chat with the studio about this idea →";
-        $("chat-log").innerHTML = "";
-        goto(1);
+        if (!confirm("Start over? Your current storyboard will be cleared (saved entries in Recent stay).")) return;
+        clearAutoSave();
+        location.reload();
       });
       $("regen-btn").addEventListener("click", regenerate);
+      $("variants-btn").addEventListener("click", composeTwoVariants);
+      $("save-btn").addEventListener("click", saveCurrentToLibrary);
 
       async function runAuto() {
         $("sb-loading").hidden = false;
         $("sb-loading").textContent = "piping —";
         $("storyboard").hidden = true;
-        ["copy-btn", "share-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
-          (id) => ($(id).hidden = true),
-        );
+        hideStoryboardActions();
         try {
           const data = await callApi("auto");
           state.messages.push({ role: "assistant", content: data.text });
           const parsed = parseStoryboard(data.text);
           if (!parsed) throw new Error("The storyboard didn't return valid JSON.");
-          state.storyboard = parsed;
-          state.notes = {};
-          renderStoryboard();
+          installNewStoryboard(parsed, true);
         } catch (err) {
           $("sb-loading").textContent = "(couldn't compose the storyboard)";
           showError("error-4", err.message || "Request failed.");
@@ -1948,17 +1621,13 @@
         $("sb-loading").hidden = false;
         $("sb-loading").textContent = "piping —";
         $("storyboard").hidden = true;
-        ["copy-btn", "share-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
-          (id) => ($(id).hidden = true),
-        );
+        hideStoryboardActions();
         try {
           const data = await callApi(mode);
           state.messages.push({ role: "assistant", content: data.text });
           const parsed = parseStoryboard(data.text);
           if (!parsed) throw new Error("The storyboard didn't return valid JSON.");
-          state.storyboard = parsed;
-          state.notes = {};
-          renderStoryboard();
+          installNewStoryboard(parsed, true);
         } catch (err) {
           $("sb-loading").textContent = "(couldn't compose the storyboard)";
           showError("error-4", err.message || "Request failed.");
@@ -1966,183 +1635,539 @@
         }
       }
 
+      function installNewStoryboard(parsed, replaceVariants) {
+        if (replaceVariants) {
+          state.variants = [{
+            storyboard: parsed,
+            notes: {},
+            images: {},
+            hashtags: [...(parsed.hashtags || [])],
+          }];
+          state.activeVariant = 0;
+        }
+        bindActiveVariant();
+        renderStoryboard();
+        scheduleAutoSave();
+      }
+
       async function regenerate() {
-        state.messages.push({
-          role: "user",
-          content:
-            "Regenerate with a different composition — same idea, fresh shots and pacing.",
-        });
+        state.messages.push({ role: "user", content: "Regenerate with a different composition — same idea, fresh shots and pacing." });
         await runStoryboardCall("storyboard");
       }
 
+      async function composeTwoVariants() {
+        $("variants-btn").disabled = true;
+        $("sb-loading").hidden = false;
+        $("sb-loading").textContent = "composing two variants —";
+        $("storyboard").hidden = true;
+        try {
+          const baseMessages = [...state.messages, { role: "user", content: "Compose two distinct variants of this storyboard — different angles, pacing, and CTA. Return the FIRST one only as JSON." }];
+          const altMessages = [...state.messages, { role: "user", content: "Compose two distinct variants of this storyboard — different angles, pacing, and CTA. Return the SECOND one (the contrasting take) only as JSON." }];
+          const [a, b] = await Promise.all([
+            callApiWith({ mode: "storyboard", format: state.format, voice: settings.voice, messages: baseMessages }),
+            callApiWith({ mode: "storyboard", format: state.format, voice: settings.voice, messages: altMessages }),
+          ]);
+          const pa = parseStoryboard(a.text), pb = parseStoryboard(b.text);
+          if (!pa || !pb) throw new Error("One of the variants didn't return valid JSON.");
+          state.variants = [
+            { storyboard: pa, notes: {}, images: {}, hashtags: [...(pa.hashtags || [])] },
+            { storyboard: pb, notes: {}, images: {}, hashtags: [...(pb.hashtags || [])] },
+          ];
+          state.activeVariant = 0;
+          bindActiveVariant();
+          renderStoryboard();
+          scheduleAutoSave();
+        } catch (err) {
+          showError("error-4", err.message || "Couldn't compose variants.");
+          $("sb-loading").hidden = true;
+          $("storyboard").hidden = false;
+        } finally {
+          $("variants-btn").disabled = false;
+        }
+      }
+
+      async function regenerateFrame(frameIndex) {
+        const frameEl = document.querySelector(`.frame[data-frame-index="${frameIndex}"]`);
+        if (frameEl) frameEl.classList.add("is-regenerating");
+        try {
+          const data = await callApiWith({
+            mode: "regenerate-frame",
+            voice: settings.voice,
+            storyboard: state.storyboard,
+            frame_index: frameIndex,
+          });
+          const parsed = parseStoryboard(data.text);
+          if (!parsed) throw new Error("Couldn't parse the new frame.");
+          state.storyboard.frames[frameIndex] = {
+            ...state.storyboard.frames[frameIndex],
+            ...parsed,
+          };
+          snapshotActiveVariant();
+          renderStoryboard();
+          scheduleAutoSave();
+        } catch (err) {
+          showError("error-4", err.message || "Couldn't regenerate frame.");
+        } finally {
+          if (frameEl) frameEl.classList.remove("is-regenerating");
+        }
+      }
+
       function parseStoryboard(text) {
-        // 1. Try ```json fenced block
         const fence = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
         const candidates = [];
         if (fence) candidates.push(fence[1]);
         candidates.push(text);
         for (const c of candidates) {
           const trimmed = c.trim();
-          try {
-            return JSON.parse(trimmed);
-          } catch {}
+          try { return JSON.parse(trimmed); } catch {}
           const obj = extractBalancedJson(trimmed);
-          if (obj) {
-            try {
-              return JSON.parse(obj);
-            } catch {}
-          }
+          if (obj) { try { return JSON.parse(obj); } catch {} }
         }
         return null;
       }
-
       function extractBalancedJson(text) {
         const start = text.indexOf("{");
         if (start === -1) return null;
-        let depth = 0;
-        let inStr = false;
-        let escape = false;
+        let depth = 0, inStr = false, escape = false;
         for (let i = start; i < text.length; i++) {
           const c = text[i];
-          if (escape) {
-            escape = false;
-            continue;
-          }
+          if (escape) { escape = false; continue; }
           if (inStr) {
-            if (c === "\\") {
-              escape = true;
-              continue;
-            }
+            if (c === "\\") { escape = true; continue; }
             if (c === '"') inStr = false;
             continue;
           }
-          if (c === '"') {
-            inStr = true;
-            continue;
-          }
+          if (c === '"') { inStr = true; continue; }
           if (c === "{") depth++;
-          else if (c === "}") {
-            depth--;
-            if (depth === 0) return text.slice(start, i + 1);
-          }
+          else if (c === "}") { depth--; if (depth === 0) return text.slice(start, i + 1); }
         }
         return null;
       }
 
+      /* ============== rendering: storyboard ============== */
       function renderStoryboard() {
         const sb = state.storyboard;
         const root = $("storyboard");
         if (!sb || !Array.isArray(sb.frames)) return;
         const showRationale = settings.rationale;
 
-        const strategyHtml =
-          showRationale && sb.strategy
-            ? `<div class="strategy-block">
-                 <span class="strategy-label">studio rationale</span>
-                 ${escapeHtml(sb.strategy)}
-               </div>`
-            : "";
+        // Variant tabs
+        const tabsHtml = state.variants.length > 1
+          ? `<div class="variant-tabs">${state.variants.map((v, i) => `
+              <button type="button" class="variant-tab ${i === state.activeVariant ? "is-active" : ""}" data-variant="${i}">
+                Variant ${String.fromCharCode(65 + i)}
+                <span class="meta">· ${v.storyboard.frames.length} frames</span>
+              </button>`).join("")}</div>` : "";
 
-        const frames = sb.frames
-          .map((f, i) => {
-            const num = String(f.frame_number ?? i + 1).padStart(2, "0");
-            const dur =
-              typeof f.duration_seconds === "number" && f.duration_seconds > 0
-                ? `${f.duration_seconds}s`
-                : "";
-            const ratHtml =
-              showRationale && f.rationale
-                ? `<div class="frame-rationale">— ${escapeHtml(f.rationale)}</div>`
-                : "";
-            const noteVal = state.notes[i] || "";
-            return `
-              <article class="frame">
-                <div class="frame-num">${num}<small>frame</small></div>
-                <div class="frame-fields">
-                  <dl>
-                    ${row("Shot", f.shot_description)}
-                    ${row("Camera", f.camera_direction)}
-                    ${row("On-screen text", f.on_screen_text)}
-                    ${row("Caption", f.caption_segment)}
-                    ${row("Audio", f.audio_cue)}
-                    ${row("Transition in", f.transition_in)}
-                    ${row("Transition out", f.transition_out)}
-                  </dl>
-                  ${ratHtml}
-                  <div class="frame-notes">
-                    <div class="frame-notes-label">your notes</div>
-                    <textarea
-                      data-frame-i="${i}"
-                      placeholder="adjust the framing, swap an angle, jot a reminder —"
-                    >${escapeHtml(noteVal)}</textarea>
-                  </div>
-                </div>
-                <div class="frame-duration">${dur}</div>
-              </article>`;
-          })
-          .join("");
+        // Signal chips
+        const signalHtml = `<div class="signals">${computeSignals(sb).map((s) => `
+          <span class="signal-chip ${s.pass === true ? "is-pass" : s.pass === false ? "is-fail" : ""}">
+            ${escapeHtml(s.label)}${s.pass === true ? " ✓" : s.pass === false ? " ✗" : ""}
+          </span>`).join("")}</div>`;
 
-        const totalDur =
-          typeof sb.total_duration_seconds === "number"
-            ? `${sb.total_duration_seconds}s`
-            : "";
+        const strategyHtml = showRationale && sb.strategy
+          ? `<div class="strategy-block"><span class="strategy-label">studio rationale</span>${escapeHtml(sb.strategy)}</div>` : "";
+
+        const frames = sb.frames.map((f, i) => renderFrame(f, i, showRationale)).join(`
+          <div class="add-frame-row"><button type="button" class="add-frame-btn" data-after="${"$INDEX$"}">add a frame here</button></div>
+        `).replace(/\$INDEX\$/g, () => `__placeholder__`);
+
+        // Build with proper indices for add-frame buttons
+        const framesWithAdd = [];
+        sb.frames.forEach((f, i) => {
+          framesWithAdd.push(renderFrame(f, i, showRationale));
+          framesWithAdd.push(`<div class="add-frame-row"><button type="button" class="add-frame-btn" data-after="${i}">add a frame after</button></div>`);
+        });
+
+        const totalDur = typeof sb.total_duration_seconds === "number" ? `${sb.total_duration_seconds}s` : "";
         const fmt = (sb.format || state.format || "").toString();
 
-        const captionRationaleHtml =
-          showRationale && sb.caption_strategy
-            ? `<div class="caption-rationale">— ${escapeHtml(sb.caption_strategy)}</div>`
-            : "";
+        const captionRationaleHtml = showRationale && sb.caption_strategy
+          ? `<div class="caption-rationale">— ${escapeHtml(sb.caption_strategy)}</div>` : "";
 
         root.innerHTML = `
+          ${tabsHtml}
+          ${signalHtml}
           ${strategyHtml}
           <input class="concept-input" id="concept-input" type="text" value="${escapeAttr(sb.concept || "")}" />
-          <div class="concept-meta">${[fmt, totalDur, `${sb.frames.length} frames`]
-            .filter(Boolean)
-            .join(" · ")}</div>
-          <div class="frames-rail">${frames}</div>
+          <div class="concept-meta">${[fmt, totalDur, `${sb.frames.length} frames`].filter(Boolean).join(" · ")}</div>
+          <div class="frames-rail">${framesWithAdd.join("")}</div>
           <div class="caption-block">
             <div class="caption-label">Caption — edit as needed</div>
-            <textarea class="caption-input" id="caption-input">${escapeHtml(sb.full_caption || "")}</textarea>
+            <div class="caption-input-wrap">
+              <textarea class="caption-input" id="caption-input">${escapeHtml(sb.full_caption || "")}</textarea>
+            </div>
+            <div class="caption-counter" id="caption-counter"></div>
             ${captionRationaleHtml}
-            <div class="hashtags">${(sb.hashtags || []).map(escapeHtml).join("  ")}</div>
+            <div class="caption-label" style="margin-top:18px">Hashtags</div>
+            <div class="hashtag-editor" id="hashtag-editor"></div>
+            <div class="hashtag-warning" id="hashtag-warning" hidden></div>
           </div>`;
 
         $("sb-loading").hidden = true;
         root.hidden = false;
-        ["copy-btn", "share-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
-          (id) => ($(id).hidden = false),
-        );
+        showStoryboardActions();
 
-        // Bind editable fields
+        // Bind: variant tabs
+        root.querySelectorAll(".variant-tab").forEach((b) => {
+          b.addEventListener("click", () => {
+            snapshotActiveVariant();
+            state.activeVariant = Number(b.dataset.variant);
+            bindActiveVariant();
+            renderStoryboard();
+          });
+        });
+
+        // Bind: concept
         $("concept-input").addEventListener("input", (e) => {
           state.storyboard.concept = e.target.value;
+          snapshotActiveVariant(); scheduleAutoSave();
         });
-        $("caption-input").addEventListener("input", (e) => {
+
+        // Bind: caption + counter
+        const cap = $("caption-input");
+        const updateCounter = () => {
+          const v = cap.value;
+          const total = v.length;
+          const previewLen = 125;
+          const inPreview = total <= previewLen;
+          $("caption-counter").innerHTML = `
+            <span class="${inPreview ? "preview-ok" : "preview-warn"}">${Math.min(total, previewLen)}/${previewLen} before "more" cut</span>
+            <span>${total} total</span>`;
+        };
+        cap.addEventListener("input", (e) => {
           state.storyboard.full_caption = e.target.value;
+          snapshotActiveVariant(); scheduleAutoSave(); updateCounter();
         });
+        updateCounter();
+
+        // Bind: frame field interactions
+        bindFrameInteractions(root);
+
+        // Bind: add-frame buttons
+        root.querySelectorAll(".add-frame-btn").forEach((b) => {
+          b.addEventListener("click", () => {
+            const afterIdx = Number(b.dataset.after);
+            const newFrame = {
+              frame_number: afterIdx + 2,
+              duration_seconds: 0,
+              shot_description: "",
+              camera_direction: "",
+              on_screen_text: "",
+              caption_segment: "",
+              audio_cue: "",
+              transition_in: "",
+              transition_out: "",
+              rationale: "",
+            };
+            state.storyboard.frames.splice(afterIdx + 1, 0, newFrame);
+            renumberFrames();
+            // shift notes/images
+            shiftIndexed(state.notes, afterIdx + 1, 1);
+            shiftIndexed(state.images, afterIdx + 1, 1);
+            snapshotActiveVariant();
+            renderStoryboard();
+            scheduleAutoSave();
+          });
+        });
+
+        // Bind: hashtag editor
+        renderHashtagEditor();
+      }
+
+      function renderFrame(f, i, showRationale) {
+        const num = String(f.frame_number ?? i + 1).padStart(2, "0");
+        const dur = typeof f.duration_seconds === "number" && f.duration_seconds > 0 ? `${f.duration_seconds}s` : "";
+        const ratHtml = showRationale && f.rationale
+          ? `<div class="frame-rationale">— ${escapeHtml(f.rationale)}</div>` : "";
+        const noteVal = state.notes[i] || "";
+        const img = state.images[i];
+        const imgZone = img
+          ? `<div class="frame-image-zone has-image" data-frame-i="${i}">
+               <img class="frame-image-preview" src="${img}" alt="frame ${i + 1} reference" />
+               <button type="button" class="frame-image-remove" data-remove-img="${i}">remove image</button>
+             </div>`
+          : `<div class="frame-image-zone" data-frame-i="${i}">
+               <div class="frame-image-empty">drop or click to add a reference image (9:16 ideal)</div>
+               <input type="file" accept="image/*" hidden data-frame-file="${i}" />
+             </div>`;
+        const last = state.storyboard.frames.length - 1;
+        return `
+          <article class="frame" data-frame-index="${i}">
+            <div>
+              <div class="frame-num">${num}<small>frame</small></div>
+              <div class="frame-controls">
+                <button type="button" class="frame-control" data-move="up" data-i="${i}" ${i === 0 ? "disabled" : ""} title="Move up">↑</button>
+                <button type="button" class="frame-control" data-move="down" data-i="${i}" ${i === last ? "disabled" : ""} title="Move down">↓</button>
+                <button type="button" class="frame-control" data-delete="${i}" ${state.storyboard.frames.length <= 1 ? "disabled" : ""} title="Delete">×</button>
+              </div>
+            </div>
+            <div class="frame-fields">
+              <dl>
+                ${row("Shot", f.shot_description)}
+                ${row("Camera", f.camera_direction)}
+                ${row("On-screen text", f.on_screen_text)}
+                ${row("Caption", f.caption_segment)}
+                ${row("Audio", f.audio_cue)}
+                ${row("Transition in", f.transition_in)}
+                ${row("Transition out", f.transition_out)}
+              </dl>
+              ${ratHtml}
+              ${imgZone}
+              <div class="frame-notes">
+                <div class="frame-notes-label">your notes</div>
+                <textarea data-frame-i="${i}" placeholder="adjust the framing, swap an angle, jot a reminder —">${escapeHtml(noteVal)}</textarea>
+              </div>
+            </div>
+            <div class="frame-actions">
+              <span class="frame-duration">${dur}</span>
+              <button type="button" class="frame-regen-btn" data-regen="${i}">regenerate frame</button>
+            </div>
+          </article>`;
+      }
+
+      function bindFrameInteractions(root) {
+        // Notes
         root.querySelectorAll("textarea[data-frame-i]").forEach((t) => {
           t.addEventListener("input", (e) => {
             const i = Number(e.target.dataset.frameI);
             state.notes[i] = e.target.value;
+            snapshotActiveVariant(); scheduleAutoSave();
+          });
+        });
+        // Move/delete
+        root.querySelectorAll(".frame-control[data-move]").forEach((b) => {
+          b.addEventListener("click", () => {
+            const i = Number(b.dataset.i);
+            const dir = b.dataset.move === "up" ? -1 : 1;
+            const j = i + dir;
+            if (j < 0 || j >= state.storyboard.frames.length) return;
+            const frames = state.storyboard.frames;
+            [frames[i], frames[j]] = [frames[j], frames[i]];
+            swapIndexed(state.notes, i, j);
+            swapIndexed(state.images, i, j);
+            renumberFrames();
+            snapshotActiveVariant();
+            renderStoryboard();
+            scheduleAutoSave();
+          });
+        });
+        root.querySelectorAll(".frame-control[data-delete]").forEach((b) => {
+          b.addEventListener("click", () => {
+            const i = Number(b.dataset.delete);
+            if (state.storyboard.frames.length <= 1) return;
+            state.storyboard.frames.splice(i, 1);
+            removeIndexed(state.notes, i);
+            removeIndexed(state.images, i);
+            renumberFrames();
+            snapshotActiveVariant();
+            renderStoryboard();
+            scheduleAutoSave();
+          });
+        });
+        // Regenerate frame
+        root.querySelectorAll(".frame-regen-btn").forEach((b) => {
+          b.addEventListener("click", () => regenerateFrame(Number(b.dataset.regen)));
+        });
+        // Image drop / click
+        root.querySelectorAll(".frame-image-zone").forEach((zone) => {
+          const i = Number(zone.dataset.frameI);
+          const fileInput = zone.querySelector("input[type=file]");
+          zone.addEventListener("click", (e) => {
+            if (e.target.matches(".frame-image-remove")) return;
+            if (fileInput) fileInput.click();
+          });
+          zone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            zone.classList.add("is-drag");
+          });
+          zone.addEventListener("dragleave", () => zone.classList.remove("is-drag"));
+          zone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            zone.classList.remove("is-drag");
+            const file = e.dataTransfer.files?.[0];
+            if (file) loadImageFile(i, file);
+          });
+          if (fileInput) {
+            fileInput.addEventListener("change", (e) => {
+              const file = e.target.files?.[0];
+              if (file) loadImageFile(i, file);
+            });
+          }
+        });
+        root.querySelectorAll("[data-remove-img]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const i = Number(b.dataset.removeImg);
+            delete state.images[i];
+            snapshotActiveVariant();
+            renderStoryboard();
+            scheduleAutoSave();
           });
         });
       }
 
+      function loadImageFile(i, file) {
+        if (file.size > 4 * 1024 * 1024) {
+          alert("Reference image must be under 4 MB.");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          state.images[i] = reader.result;
+          snapshotActiveVariant();
+          renderStoryboard();
+          scheduleAutoSave();
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function renumberFrames() {
+        state.storyboard.frames.forEach((f, i) => { f.frame_number = i + 1; });
+      }
+      function swapIndexed(obj, i, j) {
+        const a = obj[i], b = obj[j];
+        if (a !== undefined) obj[j] = a; else delete obj[j];
+        if (b !== undefined) obj[i] = b; else delete obj[i];
+      }
+      function shiftIndexed(obj, fromIndex, by) {
+        const keys = Object.keys(obj).map(Number).sort((a, b) => b - a);
+        keys.forEach((k) => {
+          if (k >= fromIndex) {
+            obj[k + by] = obj[k];
+            delete obj[k];
+          }
+        });
+      }
+      function removeIndexed(obj, i) {
+        delete obj[i];
+        const keys = Object.keys(obj).map(Number).sort((a, b) => a - b);
+        keys.forEach((k) => {
+          if (k > i) {
+            obj[k - 1] = obj[k];
+            delete obj[k];
+          }
+        });
+      }
+
+      function renderHashtagEditor() {
+        const editor = $("hashtag-editor");
+        const warn = $("hashtag-warning");
+        editor.innerHTML = "";
+        state.hashtags.forEach((tag, i) => {
+          const chip = document.createElement("span");
+          chip.className = "hashtag-chip";
+          chip.innerHTML = `<span></span><button type="button" class="hashtag-chip-x" data-i="${i}" aria-label="remove">×</button>`;
+          chip.querySelector("span").textContent = tag;
+          chip.querySelector("button").addEventListener("click", () => {
+            state.hashtags.splice(i, 1);
+            state.storyboard.hashtags = [...state.hashtags];
+            snapshotActiveVariant();
+            renderHashtagEditor();
+            scheduleAutoSave();
+          });
+          editor.appendChild(chip);
+        });
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "+ add tag";
+        input.className = "hashtag-input";
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === "," || e.key === " ") {
+            e.preventDefault();
+            addHashtagFromInput(input);
+          }
+        });
+        input.addEventListener("blur", () => addHashtagFromInput(input));
+        editor.appendChild(input);
+
+        if (state.hashtags.length > 5) {
+          warn.hidden = false;
+          warn.textContent = `— Instagram is testing a 5-hashtag cap. You have ${state.hashtags.length}.`;
+        } else if (state.hashtags.length < 3) {
+          warn.hidden = false;
+          warn.textContent = `— the playbook recommends 3 to 5 niche tags. You have ${state.hashtags.length}.`;
+        } else {
+          warn.hidden = true;
+        }
+      }
+      function addHashtagFromInput(input) {
+        const raw = input.value.trim();
+        if (!raw) return;
+        raw.split(/[,\s]+/).forEach((part) => {
+          const tag = part.replace(/^#?/, "#").toLowerCase();
+          if (tag.length > 1 && !state.hashtags.includes(tag)) state.hashtags.push(tag);
+        });
+        state.storyboard.hashtags = [...state.hashtags];
+        input.value = "";
+        snapshotActiveVariant();
+        renderHashtagEditor();
+        scheduleAutoSave();
+      }
+
+      /* ============== signals ============== */
+      function computeSignals(sb) {
+        const signals = [];
+        const fmt = (sb.format || state.format || "").toLowerCase();
+        const frames = sb.frames || [];
+
+        // Hook duration (Reels)
+        if (fmt === "reel") {
+          const first = frames[0];
+          const hookOk = first && typeof first.duration_seconds === "number" && first.duration_seconds <= 3;
+          signals.push({ label: "1.5–3s hook", pass: !!hookOk });
+        }
+
+        // Frame count
+        const counts = { reel: [5, 8], story: [3, 6], post: [1, 8] };
+        const range = counts[fmt];
+        if (range) {
+          const ok = frames.length >= range[0] && frames.length <= range[1];
+          signals.push({ label: `${range[0]}–${range[1]} frames`, pass: ok });
+        }
+
+        // Hashtags 3-5
+        const hCount = (state.hashtags || []).length;
+        signals.push({ label: `${hCount} hashtags`, pass: hCount >= 3 && hCount <= 5 });
+
+        // Audio cue every frame
+        const audioOk = frames.every((f) => (f.audio_cue || "").trim().length > 0);
+        signals.push({ label: "audio on every frame", pass: audioOk });
+
+        // CTA in caption
+        const cap = (sb.full_caption || "").toLowerCase();
+        const hasCTA = /save|share|send|dm|comment|tag|message/.test(cap);
+        signals.push({ label: "save/send CTA", pass: hasCTA });
+
+        // First 125 chars
+        const first125 = (sb.full_caption || "").slice(0, 125);
+        const front125Ok = first125.trim().length >= 50;
+        signals.push({ label: "first 125 chars used", pass: front125Ok });
+
+        return signals;
+      }
+
+      /* ============== util ============== */
       function row(label, value) {
         const v = (value || "").toString().trim();
         if (!v) return "";
         return `<dt>${label}</dt><dd>${escapeHtml(v)}</dd>`;
       }
-
       function escapeHtml(s) {
-        return String(s)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
+        return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      function escapeAttr(s) { return escapeHtml(s).replace(/"/g, "&quot;"); }
+      function flash(id, text) {
+        const b = $(id); const orig = b.textContent;
+        b.textContent = text;
+        setTimeout(() => (b.textContent = orig), 1400);
       }
 
-      function escapeAttr(s) {
-        return escapeHtml(s).replace(/"/g, "&quot;");
+      function showStoryboardActions() {
+        ["save-btn", "copy-btn", "share-btn", "export-btn", "regen-btn", "variants-btn", "restart-btn"].forEach((id) => ($(id).hidden = false));
+      }
+      function hideStoryboardActions() {
+        ["save-btn", "copy-btn", "share-btn", "export-btn", "regen-btn", "variants-btn", "restart-btn"].forEach((id) => ($(id).hidden = true));
       }
 
       /* ============== copy / share / export ============== */
@@ -2150,99 +2175,74 @@
         try {
           await navigator.clipboard.writeText(toPlainText(state.storyboard));
           flash("copy-btn", "Copied");
-        } catch {
-          showError("error-4", "Copy failed — clipboard blocked.");
-        }
+        } catch { showError("error-4", "Copy failed — clipboard blocked."); }
       });
-
       $("share-btn").addEventListener("click", async () => {
         const text = toPlainText(state.storyboard);
-        const title = state.storyboard?.concept
-          ? `Rice & Flower — ${state.storyboard.concept}`
-          : "Rice & Flower — Storyboard";
+        const title = state.storyboard?.concept ? `Rice & Flower — ${state.storyboard.concept}` : "Rice & Flower — Storyboard";
         if (navigator.share) {
-          try {
-            await navigator.share({ title, text });
-          } catch {}
+          try { await navigator.share({ title, text }); } catch {}
         } else {
           try {
             await navigator.clipboard.writeText(text);
             flash("share-btn", "Copied to share");
-          } catch {
-            showError("error-4", "Share unavailable in this browser.");
-          }
+          } catch { showError("error-4", "Share unavailable."); }
         }
       });
-
       $("export-btn").addEventListener("click", () => {
-        const blob = new Blob([toPlainText(state.storyboard)], {
-          type: "text/plain",
-        });
+        const blob = new Blob([toPlainText(state.storyboard)], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
-        a.href = url;
-        a.download = "rice-and-flower-storyboard.txt";
-        a.click();
+        a.href = url; a.download = "rice-and-flower-storyboard.txt"; a.click();
         URL.revokeObjectURL(url);
       });
-
-      function flash(id, text) {
-        const b = $(id);
-        const orig = b.textContent;
-        b.textContent = text;
-        setTimeout(() => (b.textContent = orig), 1400);
-      }
 
       function toPlainText(sb) {
         const lines = [];
         lines.push(`Rice & Flower — Storyboard`);
         lines.push(`Format: ${sb.format || ""}`);
-        if (sb.total_duration_seconds)
-          lines.push(`Duration: ${sb.total_duration_seconds}s`);
+        if (sb.total_duration_seconds) lines.push(`Duration: ${sb.total_duration_seconds}s`);
         if (sb.concept) lines.push(`Concept: ${sb.concept}`);
         if (sb.strategy) lines.push(`Strategy: ${sb.strategy}`);
         lines.push("");
         sb.frames.forEach((f, i) => {
-          lines.push(
-            `Frame ${f.frame_number ?? i + 1}${f.duration_seconds ? ` — ${f.duration_seconds}s` : ""}`,
-          );
+          lines.push(`Frame ${f.frame_number ?? i + 1}${f.duration_seconds ? ` — ${f.duration_seconds}s` : ""}`);
           if (f.shot_description) lines.push(`  Shot: ${f.shot_description}`);
           if (f.camera_direction) lines.push(`  Camera: ${f.camera_direction}`);
           if (f.on_screen_text) lines.push(`  On-screen: ${f.on_screen_text}`);
           if (f.caption_segment) lines.push(`  Caption: ${f.caption_segment}`);
           if (f.audio_cue) lines.push(`  Audio: ${f.audio_cue}`);
           if (f.transition_in) lines.push(`  Transition in: ${f.transition_in}`);
-          if (f.transition_out)
-            lines.push(`  Transition out: ${f.transition_out}`);
+          if (f.transition_out) lines.push(`  Transition out: ${f.transition_out}`);
           if (f.rationale) lines.push(`  Rationale: ${f.rationale}`);
           if (state.notes[i]) lines.push(`  Notes: ${state.notes[i]}`);
+          if (state.images[i]) lines.push(`  (reference image attached)`);
           lines.push("");
         });
         if (sb.full_caption) {
           lines.push("Caption:");
           lines.push(sb.full_caption);
-          if (sb.caption_strategy)
-            lines.push(`(rationale: ${sb.caption_strategy})`);
+          if (sb.caption_strategy) lines.push(`(rationale: ${sb.caption_strategy})`);
           lines.push("");
         }
-        if (sb.hashtags?.length) lines.push((sb.hashtags || []).join(" "));
+        if (state.hashtags.length) lines.push(state.hashtags.join(" "));
         return lines.join("\n");
       }
 
       /* ============== api ============== */
       async function callApi(mode) {
+        return callApiWith({
+          mode, format: state.format, voice: settings.voice, messages: state.messages,
+        });
+      }
+      async function callApiWith(body) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            mode,
-            format: state.format,
-            messages: state.messages,
-          }),
+          body: JSON.stringify(body),
         });
         if (res.status === 401) {
-          clearAuthedLocal();
-          showGate();
+          clearAuthedLocal(); showGate();
           throw new Error("Session expired — sign in again.");
         }
         const data = await res.json();
@@ -2251,18 +2251,182 @@
       }
 
       function showError(id, msg) {
-        const el = $(id);
-        el.textContent = msg;
-        el.hidden = false;
+        const el = $(id); el.textContent = msg; el.hidden = false;
       }
       function clearError(id) {
-        const el = $(id);
-        el.textContent = "";
-        el.hidden = true;
+        const el = $(id); el.textContent = ""; el.hidden = true;
+      }
+
+      /* ============== auto-save drafts ============== */
+      const DRAFT_KEY = "rfsocial-draft-v1";
+      let autoSaveTimer = null;
+      function scheduleAutoSave() {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(persistDraft, 1500);
+      }
+      function persistDraft() {
+        try {
+          const draft = {
+            ts: Date.now(),
+            step: state.step,
+            highest: state.highest,
+            format: state.format,
+            idea: ideaEl.value,
+            chatTurns: state.chatTurns,
+            questions: state.questions,
+            answers: state.answers,
+            messages: state.messages,
+            variants: state.variants,
+            activeVariant: state.activeVariant,
+          };
+          localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+        } catch {}
+      }
+      function clearAutoSave() { try { localStorage.removeItem(DRAFT_KEY); } catch {} }
+
+      function checkAndOfferDraft() {
+        let draft = null;
+        try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch {}
+        if (!draft) return;
+        // Only offer if there's something meaningful (variants or idea)
+        const meaningful = (draft.variants && draft.variants.length > 0) || (draft.idea && draft.idea.length > 2);
+        if (!meaningful) return;
+        const ago = Math.round((Date.now() - draft.ts) / 60000);
+        $("draft-banner-text").textContent = `A draft from ${ago < 1 ? "just now" : ago + " min ago"} is saved.`;
+        $("draft-banner").hidden = false;
+        $("draft-restore").addEventListener("click", () => restoreDraft(draft), { once: true });
+        $("draft-discard").addEventListener("click", () => {
+          clearAutoSave();
+          $("draft-banner").hidden = true;
+        }, { once: true });
+      }
+      function restoreDraft(d) {
+        state.format = d.format;
+        state.highest = d.highest || 1;
+        state.chatTurns = d.chatTurns || [];
+        state.questions = d.questions || [];
+        state.answers = d.answers || [];
+        state.messages = d.messages || [];
+        state.variants = d.variants || [];
+        state.activeVariant = d.activeVariant || 0;
+        ideaEl.value = d.idea || "";
+        if (state.format) {
+          document.querySelectorAll(".format-btn").forEach((b) => {
+            b.classList.toggle("is-selected", b.dataset.format === state.format);
+          });
+          $("next-1").disabled = false;
+        }
+        if (ideaEl.value.trim().length >= 3) $("next-2").disabled = false;
+        if (state.questions.length > 0) renderQuestions();
+        if (state.variants.length > 0) {
+          bindActiveVariant();
+          renderStoryboard();
+        }
+        if (state.chatTurns.length > 0) {
+          renderChat(false);
+          $("brainstorm-panel").hidden = false;
+          $("brainstorm-toggle").textContent = "Hide chat";
+        }
+        $("draft-banner").hidden = true;
+        goto(d.step || 1);
+      }
+
+      window.addEventListener("beforeunload", () => persistDraft());
+
+      /* ============== library ============== */
+      const LIB_KEY = "rfsocial-library-v1";
+      function loadLibrary() {
+        try { return JSON.parse(localStorage.getItem(LIB_KEY) || "[]"); } catch { return []; }
+      }
+      function saveLibrary(items) {
+        try { localStorage.setItem(LIB_KEY, JSON.stringify(items)); } catch {}
+      }
+      function saveCurrentToLibrary() {
+        if (!state.storyboard) return;
+        snapshotActiveVariant();
+        const items = loadLibrary();
+        const id = "sb-" + Date.now();
+        items.unshift({
+          id,
+          ts: Date.now(),
+          concept: state.storyboard.concept || "",
+          format: state.storyboard.format || state.format || "",
+          frameCount: state.storyboard.frames.length,
+          payload: {
+            storyboard: state.storyboard,
+            notes: state.notes,
+            images: state.images,
+            hashtags: state.hashtags,
+          },
+        });
+        // Cap library to 30 entries to avoid localStorage bloat
+        while (items.length > 30) items.pop();
+        saveLibrary(items);
+        flash("save-btn", "Saved");
+      }
+      function renderLibrary() {
+        const root = $("library-content");
+        const items = loadLibrary();
+        if (items.length === 0) {
+          root.innerHTML = `<div class="library-empty">Your saved storyboards will appear here. Save one from step four with "Save to library."</div>`;
+          return;
+        }
+        const ul = document.createElement("ul");
+        ul.className = "library-list";
+        items.forEach((it) => {
+          const li = document.createElement("li");
+          const dt = new Date(it.ts);
+          const when = dt.toLocaleString();
+          li.innerHTML = `
+            <button type="button" class="library-item" data-id="${it.id}">
+              <div class="library-item-title"></div>
+              <div class="library-item-meta">${escapeHtml(it.format)} · ${it.frameCount} frames · ${when}</div>
+            </button>
+            <div class="library-item-actions">
+              <button type="button" class="btn library-load" data-id="${it.id}">Load</button>
+              <button type="button" class="btn btn-secondary library-delete" data-id="${it.id}">Delete</button>
+            </div>`;
+          li.querySelector(".library-item-title").textContent = it.concept || "(untitled)";
+          ul.appendChild(li);
+        });
+        root.innerHTML = "";
+        root.appendChild(ul);
+
+        ul.querySelectorAll(".library-load, .library-item").forEach((b) => {
+          b.addEventListener("click", () => loadFromLibrary(b.dataset.id));
+        });
+        ul.querySelectorAll(".library-delete").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const id = b.dataset.id;
+            const filtered = loadLibrary().filter((x) => x.id !== id);
+            saveLibrary(filtered);
+            renderLibrary();
+          });
+        });
+      }
+      function loadFromLibrary(id) {
+        const it = loadLibrary().find((x) => x.id === id);
+        if (!it) return;
+        state.format = it.format || "auto";
+        state.highest = 4;
+        state.variants = [{
+          storyboard: it.payload.storyboard,
+          notes: it.payload.notes || {},
+          images: it.payload.images || {},
+          hashtags: it.payload.hashtags || [...(it.payload.storyboard.hashtags || [])],
+        }];
+        state.activeVariant = 0;
+        bindActiveVariant();
+        renderStoryboard();
+        document.querySelectorAll(".scrim, .drawer").forEach((d) => d.classList.remove("is-open"));
+        goto(4);
+        scheduleAutoSave();
       }
 
       // boot
       goto(1);
+      if (isAuthedLocal()) checkAndOfferDraft();
     </script>
   </body>
 </html>
