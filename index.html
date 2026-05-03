@@ -1035,8 +1035,9 @@
           <ol class="questions" id="questions"></ol>
         </div>
 
-        <div class="nav">
+<div class="nav">
           <button class="btn btn-back" id="back-3" type="button">Back</button>
+          <button class="btn btn-secondary" id="skip-questions" type="button">Skip questions, use best guess</button>
           <div class="spacer"></div>
           <button class="btn btn-primary" id="next-3" type="button" disabled>Compose the storyboard</button>
         </div>
@@ -1578,6 +1579,20 @@
 
       $("back-3").addEventListener("click", () => goto(2));
       $("next-3").addEventListener("click", generateStoryboard);
+      $("skip-questions").addEventListener("click", () => {
+        clearError("error-3");
+        // Carry over any partial answers, but tell the model to fill in
+        // the rest with its best playbook-guided guess.
+        const partial = state.questions
+          .map((q, i) => `Q: ${q.question}\nA: ${(state.answers[i] || "").trim() || "(skipped — use your best judgment based on the studio voice and Instagram playbook)"}`)
+          .join("\n\n");
+        const seed = partial
+          ? `${partial}\n\nThe user is skipping any unanswered questions — make confident decisions grounded in the playbook and the studio's voice.`
+          : `The user is skipping the clarifying questions entirely — compose the storyboard using your best judgment for this idea, grounded in the playbook and the studio's voice.`;
+        state.messages.push({ role: "user", content: seed });
+        reach(4); goto(4);
+        runStoryboardCall("storyboard");
+      });
 
       async function generateStoryboard() {
         clearError("error-3");
