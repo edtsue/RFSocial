@@ -56,9 +56,12 @@ export default async function handler(req, res) {
     return;
   }
 
-  const apiKey = process.env.CLAUDE_API_KEY || process.env.ANTHROPIC_API_KEY;
+  const apiKey =
+    process.env.RF_CLAUDE_KEY ||
+    process.env.CLAUDE_API_KEY ||
+    process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    res.status(500).json({ error: "Server is missing CLAUDE_API_KEY" });
+    res.status(500).json({ error: "Server is missing RF_CLAUDE_KEY" });
     return;
   }
 
