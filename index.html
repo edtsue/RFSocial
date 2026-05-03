@@ -14,12 +14,49 @@
       :root {
         --paper: #faf7f2;
         --paper-deep: #f3ede3;
+        --paper-input: #ffffff;
+        --paper-output: #f6efe2;
         --ink: #2a2620;
         --ink-soft: #6b6358;
         --hairline: #d9cfbf;
+        --accent: #8a6f4a;
+        --error: #8a3a2a;
+
         --serif: "Cormorant Garamond", "Cormorant", Georgia, serif;
         --sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
           sans-serif;
+
+        --base-size: 18pt;
+      }
+
+      [data-theme="dark"] {
+        --paper: #18150f;
+        --paper-deep: #221d15;
+        --paper-input: #0e0c08;
+        --paper-output: #261f15;
+        --ink: #f0e8db;
+        --ink-soft: #a89d8a;
+        --hairline: #3a3128;
+        --accent: #c9a878;
+        --error: #d68872;
+      }
+
+      [data-scale="sm"] {
+        --base-size: 16pt;
+      }
+      [data-scale="md"] {
+        --base-size: 18pt;
+      }
+      [data-scale="lg"] {
+        --base-size: 21pt;
+      }
+
+      [data-motion="reduce"] *,
+      [data-motion="reduce"] *::before,
+      [data-motion="reduce"] *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
       }
 
       * {
@@ -36,71 +73,116 @@
 
       body {
         font-family: var(--sans);
-        font-size: 18pt;
+        font-size: var(--base-size);
         line-height: 1.5;
         font-weight: 300;
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        transition: background 200ms ease, color 200ms ease;
       }
 
       .page {
         max-width: 760px;
         margin: 0 auto;
-        padding: 64px 32px 96px;
+        padding: 56px 32px 96px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+
+      .brand-mini {
+        font-family: var(--serif);
+        font-size: 0.7em;
+        letter-spacing: 0.24em;
+        color: var(--ink-soft);
+      }
+
+      .topbar-actions {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .topbar-btn {
+        background: none;
+        border: none;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.74em;
+        color: var(--ink);
+        cursor: pointer;
+        padding: 4px 0;
+        letter-spacing: 0.04em;
+        border-bottom: 1px solid transparent;
+      }
+      .topbar-btn:hover {
+        border-bottom-color: var(--ink);
       }
 
       header.masthead {
         text-align: center;
         padding-bottom: 36px;
-        margin-bottom: 48px;
+        margin-bottom: 36px;
       }
 
       .wordmark {
         font-family: var(--serif);
         font-weight: 400;
         letter-spacing: 0.32em;
-        font-size: 1.15em;
+        font-size: 1.2em;
         margin: 0;
       }
 
       .tagline {
         font-family: var(--serif);
         font-style: italic;
-        font-size: 0.78em;
+        font-size: 0.8em;
         color: var(--ink-soft);
         margin-top: 10px;
         letter-spacing: 0.04em;
       }
 
-      /* Stepper */
+      /* Stepper — clickable */
       .stepper {
         display: flex;
         justify-content: center;
-        gap: 32px;
-        padding: 0 0 48px;
+        gap: 8px;
+        padding: 0 0 36px;
         margin-bottom: 48px;
         border-bottom: 1px solid var(--hairline);
         flex-wrap: wrap;
       }
 
       .stepper .step {
+        background: none;
+        border: none;
         font-family: var(--serif);
         font-size: 0.74em;
         color: var(--ink-soft);
         letter-spacing: 0.06em;
         white-space: nowrap;
-        position: relative;
+        cursor: pointer;
+        padding: 4px 16px;
+        font-weight: 300;
       }
-
+      .stepper .step:hover:not(:disabled) {
+        color: var(--ink);
+      }
+      .stepper .step:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
       .stepper .step .num {
         font-style: italic;
         margin-right: 8px;
       }
-
       .stepper .step.is-current {
         color: var(--ink);
+        position: relative;
       }
-
       .stepper .step.is-current::after {
         content: "";
         display: block;
@@ -108,7 +190,6 @@
         background: var(--ink);
         margin-top: 6px;
       }
-
       .stepper .step.is-done {
         color: var(--ink);
       }
@@ -117,7 +198,6 @@
       .step-panel {
         display: none;
       }
-
       .step-panel.is-active {
         display: block;
       }
@@ -142,21 +222,55 @@
       .step-body {
         font-size: 0.86em;
         color: var(--ink-soft);
-        margin-bottom: 36px;
+        margin-bottom: 28px;
+      }
+
+      .zone {
+        border-left: 2px solid var(--hairline);
+        padding: 22px 24px;
+        margin-bottom: 24px;
+        background: var(--paper);
+      }
+      .zone-input {
+        background: var(--paper-input);
+        border-left-color: var(--ink);
+      }
+      .zone-output {
+        background: var(--paper-output);
+        border-left-color: var(--accent);
+      }
+
+      .zone-label {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.74em;
+        letter-spacing: 0.06em;
+        margin-bottom: 14px;
+      }
+      .zone-input .zone-label {
+        color: var(--ink);
+      }
+      .zone-input .zone-label::before {
+        content: "▸ ";
+        font-style: normal;
+      }
+      .zone-output .zone-label {
+        color: var(--accent);
+      }
+      .zone-output .zone-label::before {
+        content: "❦ ";
+        font-style: normal;
       }
 
       /* Format options */
       .format-list {
         list-style: none;
-        margin: 0 0 32px;
+        margin: 0;
         padding: 0;
+      }
+      .format-list li + li {
         border-top: 1px solid var(--hairline);
       }
-
-      .format-list li {
-        border-bottom: 1px solid var(--hairline);
-      }
-
       .format-btn {
         background: none;
         border: none;
@@ -164,51 +278,70 @@
         text-align: left;
         font: inherit;
         color: var(--ink);
-        padding: 22px 4px;
+        padding: 18px 4px;
         cursor: pointer;
         display: flex;
         align-items: baseline;
         gap: 18px;
       }
-
       .format-btn:hover {
         background: var(--paper-deep);
       }
-
       .format-btn.is-selected {
         background: var(--paper-deep);
       }
-
       .format-btn .name {
         font-family: var(--serif);
         font-style: italic;
-        font-size: 1.1em;
+        font-size: 1.05em;
         min-width: 130px;
       }
-
       .format-btn .desc {
-        font-size: 0.78em;
+        font-size: 0.74em;
         color: var(--ink-soft);
       }
-
       .format-btn .check {
         margin-left: auto;
         font-family: var(--serif);
         font-style: italic;
-        font-size: 0.86em;
+        font-size: 0.82em;
         color: var(--ink);
         opacity: 0;
       }
-
       .format-btn.is-selected .check {
         opacity: 1;
       }
 
-      /* Inputs */
-      .field {
-        margin-bottom: 28px;
+      .or-divider {
+        text-align: center;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.74em;
+        color: var(--ink-soft);
+        margin: 18px 0;
       }
 
+      .skip-link {
+        display: block;
+        text-align: center;
+        background: none;
+        border: 1px solid var(--accent);
+        padding: 14px;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.92em;
+        color: var(--accent);
+        cursor: pointer;
+        width: 100%;
+      }
+      .skip-link:hover {
+        background: var(--paper-output);
+      }
+
+      /* Inputs */
+      .field + .field {
+        margin-top: 22px;
+      }
       .field label {
         font-family: var(--serif);
         font-style: italic;
@@ -216,11 +349,11 @@
         color: var(--ink-soft);
         letter-spacing: 0.04em;
         display: block;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
-
       .field textarea,
-      .field input[type="text"] {
+      .field input[type="text"],
+      .field input[type="password"] {
         width: 100%;
         background: transparent;
         border: none;
@@ -228,63 +361,188 @@
         font: inherit;
         font-size: 0.92em;
         color: var(--ink);
-        padding: 10px 0;
+        padding: 8px 0;
         outline: none;
         font-family: var(--sans);
         resize: vertical;
       }
-
       .field textarea::placeholder,
       .field input::placeholder {
         font-family: var(--serif);
         font-style: italic;
         color: var(--ink-soft);
       }
-
       .field textarea {
-        min-height: 120px;
+        min-height: 100px;
       }
 
-      /* Clarify questions list */
+      /* Inspirations */
+      .inspirations {
+        margin-top: 22px;
+      }
+      .inspirations-label {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--ink-soft);
+        margin-bottom: 10px;
+      }
+      .inspirations-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .inspiration-chip {
+        background: none;
+        border: 1px solid var(--hairline);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--ink);
+        padding: 8px 14px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .inspiration-chip:hover {
+        background: var(--paper-deep);
+        border-color: var(--ink);
+      }
+
+      /* Brainstorm chat */
+      .brainstorm-toggle {
+        margin-top: 22px;
+        background: none;
+        border: 1px dashed var(--hairline);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.84em;
+        color: var(--ink);
+        padding: 12px;
+        cursor: pointer;
+        width: 100%;
+      }
+      .brainstorm-toggle:hover {
+        border-color: var(--ink);
+      }
+      .brainstorm-panel {
+        margin-top: 22px;
+        padding-top: 22px;
+        border-top: 1px solid var(--hairline);
+      }
+      .chat-log {
+        max-height: 340px;
+        overflow-y: auto;
+        margin-bottom: 14px;
+        font-size: 0.84em;
+        line-height: 1.55;
+      }
+      .chat-msg {
+        margin-bottom: 14px;
+      }
+      .chat-msg .who {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.84em;
+        opacity: 0.7;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .chat-msg.user {
+        text-align: right;
+        color: var(--ink-soft);
+      }
+      .chat-msg.assistant {
+        color: var(--ink);
+      }
+      .chat-msg .body {
+        white-space: pre-wrap;
+      }
+      .chat-composer {
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 6px;
+      }
+      .chat-composer textarea {
+        flex: 1;
+        background: transparent;
+        border: none;
+        resize: none;
+        font: inherit;
+        font-size: 0.86em;
+        color: var(--ink);
+        outline: none;
+        padding: 6px 0;
+        min-height: 1.6em;
+        max-height: 6em;
+      }
+      .chat-composer textarea::placeholder {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--ink-soft);
+      }
+      .chat-send {
+        background: none;
+        border: none;
+        font: inherit;
+        font-size: 0.78em;
+        color: var(--ink);
+        cursor: pointer;
+        padding: 6px 0 6px 8px;
+        letter-spacing: 0.06em;
+      }
+      .chat-send:disabled {
+        color: var(--ink-soft);
+        cursor: not-allowed;
+      }
+
+      /* Clarify questions */
       .questions {
         list-style: none;
-        margin: 0 0 24px;
+        margin: 0;
         padding: 0;
       }
-
-      .questions li {
-        margin-bottom: 28px;
-        padding-bottom: 28px;
+      .questions > li {
+        margin-bottom: 26px;
+        padding-bottom: 26px;
         border-bottom: 1px solid var(--hairline);
       }
-
-      .questions li:last-child {
+      .questions > li:last-child {
         border-bottom: none;
       }
-
       .question-text {
         font-family: var(--serif);
-        font-size: 1.05em;
+        font-size: 1.02em;
         font-style: italic;
         color: var(--ink);
-        margin-bottom: 12px;
+        margin-bottom: 6px;
       }
-
+      .question-rationale {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--ink-soft);
+        margin-bottom: 14px;
+      }
       .questions textarea {
-        min-height: 70px;
+        min-height: 60px;
       }
 
-      /* Footer nav */
+      /* Nav */
       .nav {
-        margin-top: 48px;
-        padding-top: 28px;
+        margin-top: 40px;
+        padding-top: 24px;
         border-top: 1px solid var(--hairline);
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 16px;
+        flex-wrap: wrap;
       }
-
       .nav .spacer {
         flex: 1;
       }
@@ -300,28 +558,28 @@
         letter-spacing: 0.06em;
         border-bottom: 1px solid transparent;
       }
-
       .btn:hover:not(:disabled) {
         border-bottom-color: var(--ink);
       }
-
       .btn:disabled {
         color: var(--ink-soft);
         cursor: not-allowed;
       }
-
       .btn-primary {
         font-family: var(--serif);
         font-style: italic;
         font-size: 0.96em;
       }
-
       .btn-back::before {
         content: "← ";
       }
-
       .btn-primary::after {
         content: " →";
+      }
+      .btn-secondary {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--ink-soft);
       }
 
       .loading-line {
@@ -330,43 +588,75 @@
         color: var(--ink-soft);
         font-size: 0.92em;
         text-align: center;
-        padding: 48px 0;
+        padding: 36px 0;
       }
 
       .error {
         font-family: var(--serif);
         font-style: italic;
-        color: #8a3a2a;
+        color: var(--error);
         font-size: 0.82em;
         margin-top: 16px;
       }
 
-      /* Storyboard render */
-      .concept {
+      /* Storyboard */
+      .strategy-block {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.92em;
+        line-height: 1.55;
+        color: var(--ink);
+        padding: 20px 22px;
+        background: var(--paper-output);
+        border-left: 2px solid var(--accent);
+        margin-bottom: 32px;
+      }
+      .strategy-block .strategy-label {
+        font-size: 0.7em;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        font-style: italic;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .concept-input {
         font-family: var(--serif);
         font-size: 1.2em;
         font-style: italic;
         color: var(--ink);
+        background: transparent;
+        border: none;
+        border-bottom: 1px dashed var(--hairline);
+        width: 100%;
+        padding: 6px 0;
+        outline: none;
         margin-bottom: 6px;
+      }
+      .concept-input:focus {
+        border-bottom-color: var(--ink);
       }
 
       .concept-meta {
         font-size: 0.7em;
         color: var(--ink-soft);
         letter-spacing: 0.04em;
-        margin-bottom: 32px;
+        margin-bottom: 24px;
+      }
+
+      .frames-rail {
+        position: relative;
       }
 
       .frame {
-        padding: 28px 0;
+        padding: 24px 0;
         border-top: 1px solid var(--hairline);
         display: grid;
-        grid-template-columns: 80px 1fr auto;
-        gap: 20px;
+        grid-template-columns: 78px 1fr auto;
+        gap: 18px;
         align-items: start;
       }
-
-      .frame:last-child {
+      .frame:last-of-type {
         border-bottom: 1px solid var(--hairline);
       }
 
@@ -377,7 +667,6 @@
         color: var(--ink);
         font-weight: 300;
       }
-
       .frame-num small {
         display: block;
         font-family: var(--serif);
@@ -392,7 +681,6 @@
         font-size: 0.74em;
         line-height: 1.55;
       }
-
       .frame-fields dl {
         margin: 0;
         display: grid;
@@ -400,16 +688,58 @@
         row-gap: 8px;
         column-gap: 16px;
       }
-
       .frame-fields dt {
         font-family: var(--serif);
         font-style: italic;
         color: var(--ink-soft);
       }
-
       .frame-fields dd {
         margin: 0;
         color: var(--ink);
+      }
+
+      .frame-rationale {
+        margin-top: 12px;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--accent);
+        padding-left: 10px;
+        border-left: 1px solid var(--accent);
+      }
+
+      .frame-notes {
+        margin-top: 14px;
+        background: var(--paper-input);
+        border-left: 2px solid var(--ink);
+        padding: 12px 14px;
+      }
+      .frame-notes-label {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.74em;
+        color: var(--ink-soft);
+        margin-bottom: 6px;
+      }
+      .frame-notes-label::before {
+        content: "▸ ";
+      }
+      .frame-notes textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        font: inherit;
+        font-size: 0.78em;
+        color: var(--ink);
+        outline: none;
+        resize: vertical;
+        min-height: 38px;
+        font-family: var(--sans);
+      }
+      .frame-notes textarea::placeholder {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--ink-soft);
       }
 
       .frame-duration {
@@ -421,12 +751,11 @@
       }
 
       .caption-block {
-        margin-top: 40px;
-        padding: 28px 0;
+        margin-top: 32px;
+        padding: 24px 0;
         border-top: 1px solid var(--hairline);
         border-bottom: 1px solid var(--hairline);
       }
-
       .caption-label {
         font-family: var(--serif);
         font-style: italic;
@@ -435,14 +764,33 @@
         letter-spacing: 0.06em;
         margin-bottom: 10px;
       }
-
-      .caption-text {
-        font-size: 0.84em;
-        line-height: 1.6;
-        white-space: pre-wrap;
-        margin-bottom: 18px;
+      .caption-input {
+        width: 100%;
+        background: transparent;
+        border: 1px dashed var(--hairline);
+        padding: 12px;
+        font: inherit;
+        font-size: 0.86em;
+        color: var(--ink);
+        outline: none;
+        font-family: var(--sans);
+        resize: vertical;
+        min-height: 100px;
+        line-height: 1.55;
       }
-
+      .caption-input:focus {
+        border-color: var(--ink);
+        border-style: solid;
+      }
+      .caption-rationale {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--accent);
+        padding-left: 10px;
+        border-left: 1px solid var(--accent);
+        margin: 12px 0;
+      }
       .hashtags {
         font-size: 0.74em;
         color: var(--ink-soft);
@@ -458,40 +806,306 @@
         letter-spacing: 0.06em;
       }
 
+      /* Settings drawer */
+      .scrim {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.18);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 200ms ease;
+        z-index: 100;
+      }
+      .scrim.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 360px;
+        max-width: 88vw;
+        background: var(--paper);
+        border-left: 1px solid var(--hairline);
+        padding: 32px 28px;
+        transform: translateX(100%);
+        transition: transform 240ms ease;
+        z-index: 101;
+        overflow-y: auto;
+      }
+      .drawer.is-open {
+        transform: translateX(0);
+      }
+      .drawer-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 28px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--hairline);
+      }
+      .drawer-title {
+        font-family: var(--serif);
+        font-size: 1.2em;
+      }
+      .drawer-close {
+        background: none;
+        border: none;
+        font: inherit;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.86em;
+        color: var(--ink-soft);
+        cursor: pointer;
+      }
+      .drawer-close:hover {
+        color: var(--ink);
+      }
+      .setting {
+        margin-bottom: 28px;
+      }
+      .setting-label {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.82em;
+        color: var(--ink-soft);
+        margin-bottom: 10px;
+      }
+      .seg {
+        display: flex;
+        gap: 0;
+        border: 1px solid var(--hairline);
+      }
+      .seg button {
+        background: none;
+        border: none;
+        font: inherit;
+        font-size: 0.74em;
+        color: var(--ink);
+        padding: 10px 8px;
+        flex: 1;
+        cursor: pointer;
+        letter-spacing: 0.04em;
+      }
+      .seg button + button {
+        border-left: 1px solid var(--hairline);
+      }
+      .seg button.is-active {
+        background: var(--paper-deep);
+        font-family: var(--serif);
+        font-style: italic;
+      }
+      .toggle-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+      .toggle {
+        position: relative;
+        width: 44px;
+        height: 22px;
+        border: 1px solid var(--ink);
+        background: transparent;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .toggle::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background: var(--ink-soft);
+        transition: left 180ms ease, background 180ms ease;
+      }
+      .toggle.is-on::after {
+        left: 24px;
+        background: var(--ink);
+      }
+
+      /* Auth gate */
+      .gate {
+        position: fixed;
+        inset: 0;
+        background: var(--paper);
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .gate-card {
+        max-width: 440px;
+        width: 100%;
+        text-align: center;
+      }
+      .gate-wordmark {
+        font-family: var(--serif);
+        font-weight: 400;
+        letter-spacing: 0.32em;
+        font-size: 1.1em;
+        margin: 0 0 8px;
+      }
+      .gate-tagline {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--ink-soft);
+        font-size: 0.82em;
+        margin-bottom: 36px;
+      }
+      .gate-eyebrow {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.78em;
+        color: var(--ink-soft);
+        margin-bottom: 14px;
+      }
+      .gate-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--ink);
+        font: inherit;
+        font-family: var(--sans);
+        font-size: 0.96em;
+        color: var(--ink);
+        padding: 10px 0;
+        outline: none;
+        text-align: center;
+        letter-spacing: 0.16em;
+      }
+      .gate-input::placeholder {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--ink-soft);
+        letter-spacing: 0.04em;
+      }
+      .gate-remember {
+        margin-top: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.82em;
+        color: var(--ink-soft);
+      }
+      .gate-remember input {
+        accent-color: var(--ink);
+      }
+      .gate-submit {
+        margin-top: 28px;
+        background: none;
+        border: 1px solid var(--ink);
+        font: inherit;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 0.92em;
+        color: var(--ink);
+        padding: 12px 28px;
+        cursor: pointer;
+        letter-spacing: 0.04em;
+      }
+      .gate-submit:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .gate-error {
+        margin-top: 16px;
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--error);
+        font-size: 0.82em;
+        min-height: 1.2em;
+      }
+
       @media (max-width: 640px) {
         .page {
-          padding: 36px 20px 64px;
+          padding: 28px 18px 64px;
         }
         .stepper {
-          gap: 14px;
-          padding-bottom: 28px;
-          margin-bottom: 32px;
+          gap: 4px;
+          padding-bottom: 24px;
+          margin-bottom: 28px;
         }
         .stepper .step {
           font-size: 0.66em;
+          padding: 4px 8px;
         }
         .frame {
-          grid-template-columns: 60px 1fr;
+          grid-template-columns: 56px 1fr;
           gap: 14px;
         }
         .frame-duration {
           grid-column: 2;
         }
+        .zone {
+          padding: 18px 16px;
+        }
       }
     </style>
   </head>
-  <body>
-    <main class="page">
+  <body data-theme="light" data-scale="md" data-motion="full" data-rationale="on">
+    <!-- Auth gate -->
+    <div class="gate" id="gate" role="dialog" aria-label="Studio access">
+      <div class="gate-card">
+        <div class="gate-wordmark">RICE &nbsp;&amp;&nbsp; FLOWER</div>
+        <div class="gate-tagline">— Social Studio —</div>
+        <div class="gate-eyebrow">Enter the studio</div>
+        <form id="gate-form">
+          <input
+            id="gate-password"
+            class="gate-input"
+            type="password"
+            placeholder="password"
+            autocomplete="current-password"
+            required
+          />
+          <label class="gate-remember">
+            <input type="checkbox" id="gate-remember" />
+            <span>remember me for 7 days</span>
+          </label>
+          <div>
+            <button class="gate-submit" type="submit" id="gate-submit">
+              Enter
+            </button>
+          </div>
+        </form>
+        <div class="gate-error" id="gate-error"></div>
+      </div>
+    </div>
+
+    <main class="page" id="app" hidden>
+      <div class="topbar">
+        <div class="brand-mini">RICE &amp; FLOWER</div>
+        <div class="topbar-actions">
+          <button class="topbar-btn" id="settings-toggle">Settings</button>
+        </div>
+      </div>
+
       <header class="masthead">
-        <h1 class="wordmark">RICE &nbsp;&amp;&nbsp; FLOWER</h1>
-        <div class="tagline">— Social Studio —</div>
+        <h1 class="wordmark">SOCIAL &nbsp; STUDIO</h1>
+        <div class="tagline">— composing for the feed —</div>
       </header>
 
       <nav class="stepper" id="stepper" aria-label="Progress">
-        <div class="step" data-step="1"><span class="num">i.</span>Format</div>
-        <div class="step" data-step="2"><span class="num">ii.</span>Idea</div>
-        <div class="step" data-step="3"><span class="num">iii.</span>Refine</div>
-        <div class="step" data-step="4"><span class="num">iv.</span>Storyboard</div>
+        <button class="step" data-step="1" type="button">
+          <span class="num">i.</span>Format
+        </button>
+        <button class="step" data-step="2" type="button">
+          <span class="num">ii.</span>Idea
+        </button>
+        <button class="step" data-step="3" type="button">
+          <span class="num">iii.</span>Refine
+        </button>
+        <button class="step" data-step="4" type="button">
+          <span class="num">iv.</span>Storyboard
+        </button>
       </nav>
 
       <!-- STEP 1: FORMAT -->
@@ -503,40 +1117,50 @@
           stills, or a single composed image.
         </p>
 
-        <ul class="format-list" id="format-list">
-          <li>
-            <button class="format-btn" data-format="reel">
-              <span class="name">Reel</span>
-              <span class="desc">vertical video, frame by frame</span>
-              <span class="check">selected</span>
-            </button>
-          </li>
-          <li>
-            <button class="format-btn" data-format="story">
-              <span class="name">Story</span>
-              <span class="desc">sequential vertical frames</span>
-              <span class="check">selected</span>
-            </button>
-          </li>
-          <li>
-            <button class="format-btn" data-format="post">
-              <span class="name">Post</span>
-              <span class="desc">single image or carousel</span>
-              <span class="check">selected</span>
-            </button>
-          </li>
-          <li>
-            <button class="format-btn" data-format="auto">
-              <span class="name">— Decide for me</span>
-              <span class="desc">let the studio choose what fits</span>
-              <span class="check">selected</span>
-            </button>
-          </li>
-        </ul>
+        <div class="zone zone-input">
+          <div class="zone-label">your turn — pick one</div>
+          <ul class="format-list" id="format-list">
+            <li>
+              <button class="format-btn" data-format="reel" type="button">
+                <span class="name">Reel</span>
+                <span class="desc">vertical video, frame by frame</span>
+                <span class="check">selected</span>
+              </button>
+            </li>
+            <li>
+              <button class="format-btn" data-format="story" type="button">
+                <span class="name">Story</span>
+                <span class="desc">sequential vertical frames</span>
+                <span class="check">selected</span>
+              </button>
+            </li>
+            <li>
+              <button class="format-btn" data-format="post" type="button">
+                <span class="name">Post</span>
+                <span class="desc">single image or carousel</span>
+                <span class="check">selected</span>
+              </button>
+            </li>
+            <li>
+              <button class="format-btn" data-format="auto" type="button">
+                <span class="name">— Decide for me</span>
+                <span class="desc">let the studio choose what fits</span>
+                <span class="check">selected</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="or-divider">— or —</div>
+        <button class="skip-link" id="skip-all" type="button">
+          Skip everything — let the studio compose for me
+        </button>
 
         <div class="nav">
           <div class="spacer"></div>
-          <button class="btn btn-primary" id="next-1" disabled>Continue</button>
+          <button class="btn btn-primary" id="next-1" type="button" disabled>
+            Continue
+          </button>
         </div>
       </section>
 
@@ -545,43 +1169,85 @@
         <div class="step-eyebrow">Step two</div>
         <h2 class="step-title">Share the idea.</h2>
         <p class="step-body">
-          A single sentence is enough — a cake, a moment, a feeling. The studio
-          will ask a few questions to refine it.
+          A single sentence is enough — a cake, a moment, a feeling. Pick a
+          starter, write your own, or chat with the studio to sharpen it.
         </p>
 
-        <div class="field">
-          <label for="idea">The idea</label>
-          <textarea
-            id="idea"
-            placeholder="a peony tier cake reveal — soft morning light —"
-          ></textarea>
+        <div class="zone zone-input">
+          <div class="zone-label">your turn — describe the idea</div>
+          <div class="field">
+            <label for="idea">The idea</label>
+            <textarea
+              id="idea"
+              placeholder="a peony tier cake reveal — soft morning light —"
+            ></textarea>
+          </div>
+
+          <div class="inspirations">
+            <div class="inspirations-label">— or borrow a starter —</div>
+            <ul class="inspirations-list" id="inspirations-list"></ul>
+          </div>
+
+          <button
+            class="brainstorm-toggle"
+            id="brainstorm-toggle"
+            type="button"
+          >
+            Chat with the studio about this idea →
+          </button>
+
+          <div class="brainstorm-panel" id="brainstorm-panel" hidden>
+            <div class="chat-log" id="chat-log"></div>
+            <div class="chat-composer">
+              <textarea
+                id="chat-input"
+                rows="1"
+                placeholder="ask, refine, push back —"
+              ></textarea>
+              <button class="chat-send" id="chat-send" type="button">
+                send
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="nav">
-          <button class="btn btn-back" id="back-2">Back</button>
+          <button class="btn btn-back" id="back-2" type="button">Back</button>
+          <button
+            class="btn btn-secondary"
+            id="skip-from-idea"
+            type="button"
+          >
+            Skip questions, compose now
+          </button>
           <div class="spacer"></div>
-          <button class="btn btn-primary" id="next-2" disabled>
+          <button class="btn btn-primary" id="next-2" type="button" disabled>
             Ask the studio
           </button>
         </div>
         <div class="error" id="error-2" hidden></div>
       </section>
 
-      <!-- STEP 3: CLARIFY -->
+      <!-- STEP 3: REFINE -->
       <section class="step-panel" id="panel-3">
         <div class="step-eyebrow">Step three</div>
         <h2 class="step-title">A few questions to refine.</h2>
         <p class="step-body">
-          Answer in your own words — fragments are fine.
+          Each question is paired with the studio's reasoning — what it unlocks
+          for the storyboard. Answer in your own words; fragments are fine.
         </p>
 
         <div id="clarify-loading" class="loading-line">composing questions —</div>
-        <ol class="questions" id="questions" hidden></ol>
+
+        <div class="zone zone-output" id="clarify-zone" hidden>
+          <div class="zone-label">from the studio — clarifying questions</div>
+          <ol class="questions" id="questions"></ol>
+        </div>
 
         <div class="nav">
-          <button class="btn btn-back" id="back-3">Back</button>
+          <button class="btn btn-back" id="back-3" type="button">Back</button>
           <div class="spacer"></div>
-          <button class="btn btn-primary" id="next-3" disabled>
+          <button class="btn btn-primary" id="next-3" type="button" disabled>
             Compose the storyboard
           </button>
         </div>
@@ -592,17 +1258,24 @@
       <section class="step-panel" id="panel-4">
         <div class="step-eyebrow">Step four</div>
         <h2 class="step-title">Your storyboard.</h2>
+        <p class="step-body">
+          Edit the concept and caption, add notes to any frame. When it's
+          ready, share or export.
+        </p>
 
         <div id="sb-loading" class="loading-line">piping —</div>
         <div id="storyboard" hidden></div>
 
         <div class="nav">
-          <button class="btn btn-back" id="back-4">Back</button>
+          <button class="btn btn-back" id="back-4" type="button">Back</button>
           <div class="spacer"></div>
-          <button class="btn" id="copy-btn" hidden>Copy storyboard</button>
-          <button class="btn" id="export-btn" hidden>Export as text</button>
-          <button class="btn" id="regen-btn" hidden>Regenerate</button>
-          <button class="btn btn-primary" id="restart-btn" hidden>
+          <button class="btn" id="copy-btn" type="button" hidden>Copy</button>
+          <button class="btn" id="share-btn" type="button" hidden>Share</button>
+          <button class="btn" id="export-btn" type="button" hidden>Export</button>
+          <button class="btn" id="regen-btn" type="button" hidden>
+            Regenerate
+          </button>
+          <button class="btn btn-primary" id="restart-btn" type="button" hidden>
             Start over
           </button>
         </div>
@@ -612,34 +1285,349 @@
       <div class="footnote">Rice &amp; Flower — atelier of buttercream</div>
     </main>
 
+    <!-- Settings drawer -->
+    <div class="scrim" id="scrim"></div>
+    <aside class="drawer" id="drawer" role="dialog" aria-label="Settings">
+      <div class="drawer-head">
+        <div class="drawer-title">Settings</div>
+        <button class="drawer-close" id="drawer-close" type="button">close</button>
+      </div>
+
+      <div class="setting">
+        <div class="setting-label">Theme</div>
+        <div class="seg" data-setting="theme">
+          <button data-value="light" type="button">Light</button>
+          <button data-value="dark" type="button">Dark</button>
+          <button data-value="auto" type="button">Auto</button>
+        </div>
+      </div>
+
+      <div class="setting">
+        <div class="setting-label">Type size</div>
+        <div class="seg" data-setting="scale">
+          <button data-value="sm" type="button">Small</button>
+          <button data-value="md" type="button">Default</button>
+          <button data-value="lg" type="button">Large</button>
+        </div>
+      </div>
+
+      <div class="setting">
+        <div class="toggle-row">
+          <div class="setting-label" style="margin-bottom: 0">
+            Show studio rationale
+          </div>
+          <button
+            class="toggle"
+            id="toggle-rationale"
+            type="button"
+            aria-pressed="true"
+          ></button>
+        </div>
+      </div>
+
+      <div class="setting">
+        <div class="toggle-row">
+          <div class="setting-label" style="margin-bottom: 0">
+            Reduce motion
+          </div>
+          <button
+            class="toggle"
+            id="toggle-motion"
+            type="button"
+            aria-pressed="false"
+          ></button>
+        </div>
+      </div>
+
+      <div class="setting">
+        <button class="btn" id="logout-btn" type="button">
+          Sign out of the studio
+        </button>
+      </div>
+    </aside>
+
     <script>
+      const INSPIRATIONS = [
+        "a peony tier cake reveal — soft morning light",
+        "behind the scenes of mixing a custom buttercream tone",
+        "petal by petal — the slowness of one rose",
+        "a tonal study — five whites on one tier",
+        "a delivery-day moment outside a brownstone",
+        "the first piping pass on a tier in afternoon light",
+      ];
+
+      /* ============== auth gate ============== */
+      const AUTH_KEY = "rfsocial-auth-until";
+
+      function isAuthedLocal() {
+        try {
+          const t = Number(localStorage.getItem(AUTH_KEY) || 0);
+          return Number.isFinite(t) && t > Date.now();
+        } catch {
+          return false;
+        }
+      }
+
+      function setAuthedLocal(expiresAt) {
+        try {
+          localStorage.setItem(AUTH_KEY, String(expiresAt));
+        } catch {}
+      }
+
+      function clearAuthedLocal() {
+        try {
+          localStorage.removeItem(AUTH_KEY);
+        } catch {}
+      }
+
+      function showGate() {
+        document.getElementById("gate").style.display = "flex";
+        document.getElementById("app").hidden = true;
+        setTimeout(() => document.getElementById("gate-password").focus(), 50);
+      }
+
+      function hideGate() {
+        document.getElementById("gate").style.display = "none";
+        document.getElementById("app").hidden = false;
+      }
+
+      const gateForm = document.getElementById("gate-form");
+      gateForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const pw = document.getElementById("gate-password").value;
+        const remember = document.getElementById("gate-remember").checked;
+        const errEl = document.getElementById("gate-error");
+        const submitBtn = document.getElementById("gate-submit");
+        errEl.textContent = "";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "checking —";
+        try {
+          const res = await fetch("/api/auth", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ password: pw, remember }),
+          });
+          if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(data.error || "Incorrect password");
+          }
+          const data = await res.json();
+          setAuthedLocal(data.expiresAt);
+          hideGate();
+        } catch (err) {
+          errEl.textContent = err.message || "Couldn't sign in.";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Enter";
+        }
+      });
+
+      if (isAuthedLocal()) {
+        hideGate();
+      } else {
+        showGate();
+      }
+
+      /* ============== settings ============== */
+      const SETTINGS_KEY = "rfsocial-settings-v1";
+      const settings = loadSettings();
+      applySettings();
+      bindSettings();
+
+      function loadSettings() {
+        try {
+          const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
+          return {
+            theme: s.theme || "light",
+            scale: s.scale || "md",
+            motion: s.motion || "full",
+            rationale: s.rationale === false ? false : true,
+          };
+        } catch {
+          return {
+            theme: "light",
+            scale: "md",
+            motion: "full",
+            rationale: true,
+          };
+        }
+      }
+
+      function saveSettings() {
+        try {
+          localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+        } catch {}
+      }
+
+      function applySettings() {
+        const body = document.body;
+        const resolvedTheme =
+          settings.theme === "auto"
+            ? window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : settings.theme;
+        body.dataset.theme = resolvedTheme;
+        body.dataset.scale = settings.scale;
+        body.dataset.motion = settings.motion;
+        body.dataset.rationale = settings.rationale ? "on" : "off";
+
+        document.querySelectorAll(".seg").forEach((seg) => {
+          const key = seg.dataset.setting;
+          seg.querySelectorAll("button").forEach((b) => {
+            b.classList.toggle("is-active", b.dataset.value === settings[key]);
+          });
+        });
+        const r = document.getElementById("toggle-rationale");
+        r.classList.toggle("is-on", settings.rationale);
+        r.setAttribute("aria-pressed", String(!!settings.rationale));
+        const m = document.getElementById("toggle-motion");
+        const on = settings.motion === "reduce";
+        m.classList.toggle("is-on", on);
+        m.setAttribute("aria-pressed", String(on));
+
+        if (state?.storyboard) renderStoryboard();
+        if (state?.questions?.length) renderQuestions();
+      }
+
+      function bindSettings() {
+        document.querySelectorAll(".seg").forEach((seg) => {
+          seg.addEventListener("click", (e) => {
+            const btn = e.target.closest("button[data-value]");
+            if (!btn) return;
+            const key = seg.dataset.setting;
+            settings[key] = btn.dataset.value;
+            saveSettings();
+            applySettings();
+          });
+        });
+        document
+          .getElementById("toggle-rationale")
+          .addEventListener("click", () => {
+            settings.rationale = !settings.rationale;
+            saveSettings();
+            applySettings();
+          });
+        document
+          .getElementById("toggle-motion")
+          .addEventListener("click", () => {
+            settings.motion = settings.motion === "reduce" ? "full" : "reduce";
+            saveSettings();
+            applySettings();
+          });
+        if (window.matchMedia) {
+          window
+            .matchMedia("(prefers-color-scheme: dark)")
+            .addEventListener("change", () => {
+              if (settings.theme === "auto") applySettings();
+            });
+        }
+
+        const drawer = document.getElementById("drawer");
+        const scrim = document.getElementById("scrim");
+        const open = () => {
+          drawer.classList.add("is-open");
+          scrim.classList.add("is-open");
+        };
+        const close = () => {
+          drawer.classList.remove("is-open");
+          scrim.classList.remove("is-open");
+        };
+        document
+          .getElementById("settings-toggle")
+          .addEventListener("click", open);
+        document
+          .getElementById("drawer-close")
+          .addEventListener("click", close);
+        scrim.addEventListener("click", close);
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") close();
+        });
+
+        document.getElementById("logout-btn").addEventListener("click", () => {
+          clearAuthedLocal();
+          // Best-effort: also clear the server cookie by overwriting with an
+          // expired Max-Age. The browser will still send it once but the next
+          // /api/chat call will get 401 and re-trigger the gate.
+          document.cookie = "rfs_auth=; Path=/; Max-Age=0; SameSite=Lax";
+          location.reload();
+        });
+      }
+
+      /* ============== app state ============== */
       const state = {
         step: 1,
+        highest: 1,
         format: null,
         idea: "",
-        questions: [], // string[]
-        answers: [], // string[]
+        questions: [],
+        answers: [],
+        chatTurns: [], // for brainstorm panel
         storyboard: null,
-        messages: [], // claude conversation
+        notes: {}, // { frameIndex: string }
+        messages: [], // master conversation passed to API
       };
 
       const $ = (id) => document.getElementById(id);
 
-      // --- stepper ---
+      /* ============== inspirations ============== */
+      const inspList = $("inspirations-list");
+      INSPIRATIONS.forEach((text) => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "inspiration-chip";
+        btn.textContent = text;
+        btn.addEventListener("click", () => {
+          ideaEl.value = text;
+          ideaEl.dispatchEvent(new Event("input"));
+          ideaEl.focus();
+        });
+        li.appendChild(btn);
+        inspList.appendChild(li);
+      });
+
+      /* ============== stepper navigation ============== */
+      function canVisit(n) {
+        return n <= state.highest;
+      }
+
+      function refreshStepper() {
+        document.querySelectorAll("#stepper .step").forEach((b) => {
+          const n = Number(b.dataset.step);
+          b.classList.toggle("is-current", n === state.step);
+          b.classList.toggle("is-done", n < state.step);
+          b.disabled = !canVisit(n);
+        });
+      }
+
       function goto(n) {
+        if (!canVisit(n)) return;
         state.step = n;
+        if (n > state.highest) state.highest = n;
         document.querySelectorAll(".step-panel").forEach((p) => {
           p.classList.toggle("is-active", p.id === `panel-${n}`);
         });
-        document.querySelectorAll("#stepper .step").forEach((s) => {
-          const num = Number(s.dataset.step);
-          s.classList.toggle("is-current", num === n);
-          s.classList.toggle("is-done", num < n);
+        refreshStepper();
+        window.scrollTo({
+          top: 0,
+          behavior: settings.motion === "reduce" ? "auto" : "smooth",
         });
-        window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      // --- step 1 ---
+      function reach(n) {
+        if (n > state.highest) state.highest = n;
+        refreshStepper();
+      }
+
+      document.querySelectorAll("#stepper .step").forEach((b) => {
+        b.addEventListener("click", () => {
+          const n = Number(b.dataset.step);
+          goto(n);
+        });
+      });
+
+      /* ============== step 1: format ============== */
       document.querySelectorAll(".format-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           state.format = btn.dataset.format;
@@ -647,11 +1635,29 @@
             .querySelectorAll(".format-btn")
             .forEach((b) => b.classList.toggle("is-selected", b === btn));
           $("next-1").disabled = false;
+          reach(2);
         });
       });
       $("next-1").addEventListener("click", () => goto(2));
 
-      // --- step 2 ---
+      $("skip-all").addEventListener("click", () => {
+        state.format = "auto";
+        state.idea = "";
+        state.questions = [];
+        state.answers = [];
+        state.messages = [
+          {
+            role: "user",
+            content:
+              "Compose a fresh storyboard for the studio's feed. Pick the format and the idea. Match the atelier voice and apply current Instagram playbook signals.",
+          },
+        ];
+        state.highest = 4;
+        goto(4);
+        runAuto();
+      });
+
+      /* ============== step 2: idea + brainstorm ============== */
       const ideaEl = $("idea");
       ideaEl.addEventListener("input", () => {
         $("next-2").disabled = ideaEl.value.trim().length < 3;
@@ -659,17 +1665,127 @@
       $("back-2").addEventListener("click", () => goto(1));
       $("next-2").addEventListener("click", askClarify);
 
+      $("skip-from-idea").addEventListener("click", () => {
+        const idea = ideaEl.value.trim();
+        state.idea = idea;
+        const seedContent = idea
+          ? `Compose a storyboard now without clarifying questions. Idea: ${idea}. Pick the rest yourself.`
+          : "Compose a fresh storyboard for the studio's feed. Pick the format and the idea.";
+        state.messages = [{ role: "user", content: seedContent }];
+        state.questions = [];
+        state.answers = [];
+        state.highest = 4;
+        goto(4);
+        runAuto();
+      });
+
+      // Brainstorm panel
+      const brainstormToggle = $("brainstorm-toggle");
+      const brainstormPanel = $("brainstorm-panel");
+      brainstormToggle.addEventListener("click", () => {
+        const willOpen = brainstormPanel.hidden;
+        brainstormPanel.hidden = !willOpen;
+        brainstormToggle.textContent = willOpen
+          ? "Hide chat"
+          : "Chat with the studio about this idea →";
+        if (willOpen) $("chat-input").focus();
+      });
+
+      const chatInput = $("chat-input");
+      chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendChat();
+        }
+      });
+      $("chat-send").addEventListener("click", sendChat);
+
+      async function sendChat() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        chatInput.value = "";
+        const idea = ideaEl.value.trim();
+        // Brainstorm conversation history kept separate
+        if (state.chatTurns.length === 0 && idea) {
+          state.chatTurns.push({
+            role: "user",
+            content: `My current idea: ${idea}\n\n${text}`,
+          });
+        } else {
+          state.chatTurns.push({ role: "user", content: text });
+        }
+        renderChat(true);
+        try {
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              mode: "brainstorm",
+              format: state.format,
+              messages: state.chatTurns,
+            }),
+          });
+          if (res.status === 401) {
+            clearAuthedLocal();
+            showGate();
+            return;
+          }
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Request failed");
+          state.chatTurns.push({ role: "assistant", content: data.text });
+          renderChat(false);
+        } catch (err) {
+          state.chatTurns.push({
+            role: "assistant",
+            content: `(couldn't reach the studio — ${err.message || "try again"})`,
+          });
+          renderChat(false);
+        }
+      }
+
+      function renderChat(loading) {
+        const log = $("chat-log");
+        log.innerHTML = "";
+        state.chatTurns.forEach((m) => {
+          const el = document.createElement("div");
+          el.className = "chat-msg " + m.role;
+          el.innerHTML = `<span class="who">${
+            m.role === "user" ? "You" : "Studio"
+          }</span><div class="body"></div>`;
+          el.querySelector(".body").textContent = m.content;
+          log.appendChild(el);
+        });
+        if (loading) {
+          const el = document.createElement("div");
+          el.className = "chat-msg assistant";
+          el.innerHTML = `<span class="who">Studio</span><div class="body" style="font-style:italic;color:var(--ink-soft)">composing —</div>`;
+          log.appendChild(el);
+        }
+        log.scrollTop = log.scrollHeight;
+      }
+
       async function askClarify() {
         state.idea = ideaEl.value.trim();
         if (!state.idea) return;
         clearError("error-2");
+        clearError("error-3");
+        reach(3);
         goto(3);
         $("clarify-loading").hidden = false;
-        $("questions").hidden = true;
+        $("clarify-zone").hidden = true;
         $("next-3").disabled = true;
 
-        // Reset conversation for a fresh round
-        state.messages = [{ role: "user", content: state.idea }];
+        // Build messages: include brainstorm context if user used it
+        state.messages = [];
+        if (state.chatTurns.length > 0) {
+          state.chatTurns.forEach((m) => state.messages.push(m));
+          state.messages.push({
+            role: "user",
+            content: `Here is the refined idea I want to move forward with: ${state.idea}`,
+          });
+        } else {
+          state.messages.push({ role: "user", content: state.idea });
+        }
         state.questions = [];
         state.answers = [];
 
@@ -686,50 +1802,77 @@
       }
 
       function parseQuestions(text) {
-        // Pull numbered or bulleted questions; fall back to splitting on '?'
-        const lines = text
-          .split(/\n+/)
-          .map((l) => l.trim())
-          .filter(Boolean);
-        const numbered = lines
-          .filter((l) => /^(\d+[.)]|\-|•)\s+/.test(l))
-          .map((l) => l.replace(/^(\d+[.)]|\-|•)\s+/, "").trim());
-        if (numbered.length >= 2) return numbered.slice(0, 4);
-
-        const sentences = text
-          .split(/(?<=\?)\s+/)
-          .map((s) => s.trim())
-          .filter((s) => s.endsWith("?"));
-        if (sentences.length >= 2) return sentences.slice(0, 4);
-
-        // Last resort: one block, one question
-        return [text.trim()];
+        const out = [];
+        const lines = text.split(/\n/);
+        let current = null;
+        for (const raw of lines) {
+          const line = raw.trim();
+          if (!line) continue;
+          const numMatch = line.match(/^(\d+[.)]|\-|•)\s+(.+)$/);
+          if (numMatch) {
+            if (current) out.push(current);
+            current = { question: numMatch[2].trim(), rationale: "" };
+            continue;
+          }
+          const ratMatch = line.match(/^[*_]?\s*[—–-]\s*(.+?)\s*[*_]?$/);
+          if (current && ratMatch && !current.rationale) {
+            current.rationale = ratMatch[1].replace(/^[*_]+|[*_]+$/g, "").trim();
+            continue;
+          }
+          if (current && !current.rationale) {
+            current.question += " " + line;
+          }
+        }
+        if (current) out.push(current);
+        if (out.length === 0) {
+          const qs = text
+            .split(/(?<=\?)\s+/)
+            .map((s) => s.trim())
+            .filter((s) => s.endsWith("?"));
+          return qs.slice(0, 4).map((q) => ({ question: q, rationale: "" }));
+        }
+        return out.slice(0, 4);
       }
 
       function renderQuestions() {
         const ol = $("questions");
+        const showRationale = settings.rationale;
         ol.innerHTML = "";
         state.questions.forEach((q, i) => {
           const li = document.createElement("li");
+          const ratHtml =
+            showRationale && q.rationale
+              ? `<div class="question-rationale">— ${escapeHtml(q.rationale)}</div>`
+              : "";
           li.innerHTML = `
             <div class="question-text"></div>
+            ${ratHtml}
             <div class="field">
               <textarea data-i="${i}" placeholder="your answer —"></textarea>
             </div>`;
-          li.querySelector(".question-text").textContent = q;
+          li.querySelector(".question-text").textContent = q.question;
+          if (state.answers[i]) {
+            li.querySelector("textarea").value = state.answers[i];
+          }
           ol.appendChild(li);
         });
         $("clarify-loading").hidden = true;
-        ol.hidden = false;
+        $("clarify-zone").hidden = false;
 
+        const checkFilled = () => {
+          const filled = [...ol.querySelectorAll("textarea")].every(
+            (x) => x.value.trim().length > 0,
+          );
+          $("next-3").disabled = !filled;
+        };
         ol.querySelectorAll("textarea").forEach((t) => {
           t.addEventListener("input", () => {
-            const filled = [...ol.querySelectorAll("textarea")].every(
-              (x) => x.value.trim().length > 0,
-            );
-            $("next-3").disabled = !filled;
+            const i = Number(t.dataset.i);
+            state.answers[i] = t.value;
+            checkFilled();
           });
         });
+        checkFilled();
       }
 
       $("back-3").addEventListener("click", () => goto(2));
@@ -742,25 +1885,57 @@
         );
         state.answers = answers;
 
-        // Combine into a single user message for the storyboard turn
         const combined = state.questions
-          .map((q, i) => `Q: ${q}\nA: ${answers[i] || ""}`)
+          .map((q, i) => `Q: ${q.question}\nA: ${answers[i] || ""}`)
           .join("\n\n");
         state.messages.push({ role: "user", content: combined });
 
+        reach(4);
         goto(4);
+        await runStoryboardCall("storyboard");
+      }
+
+      /* ============== step 4: storyboard ============== */
+      $("back-4").addEventListener("click", () => goto(3));
+      $("restart-btn").addEventListener("click", () => {
+        state.step = 1;
+        state.highest = 1;
+        state.format = null;
+        state.idea = "";
+        state.questions = [];
+        state.answers = [];
+        state.chatTurns = [];
+        state.storyboard = null;
+        state.notes = {};
+        state.messages = [];
+        document
+          .querySelectorAll(".format-btn")
+          .forEach((b) => b.classList.remove("is-selected"));
+        $("next-1").disabled = true;
+        ideaEl.value = "";
+        $("next-2").disabled = true;
+        $("brainstorm-panel").hidden = true;
+        $("brainstorm-toggle").textContent =
+          "Chat with the studio about this idea →";
+        $("chat-log").innerHTML = "";
+        goto(1);
+      });
+      $("regen-btn").addEventListener("click", regenerate);
+
+      async function runAuto() {
         $("sb-loading").hidden = false;
+        $("sb-loading").textContent = "piping —";
         $("storyboard").hidden = true;
-        ["copy-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
+        ["copy-btn", "share-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
           (id) => ($(id).hidden = true),
         );
-
         try {
-          const data = await callApi("storyboard");
+          const data = await callApi("auto");
           state.messages.push({ role: "assistant", content: data.text });
           const parsed = parseStoryboard(data.text);
           if (!parsed) throw new Error("The storyboard didn't return valid JSON.");
           state.storyboard = parsed;
+          state.notes = {};
           renderStoryboard();
         } catch (err) {
           $("sb-loading").textContent = "(couldn't compose the storyboard)";
@@ -769,24 +1944,27 @@
         }
       }
 
-      // --- step 4 ---
-      $("back-4").addEventListener("click", () => goto(3));
-      $("restart-btn").addEventListener("click", () => {
-        state.format = null;
-        state.idea = "";
-        state.questions = [];
-        state.answers = [];
-        state.storyboard = null;
-        state.messages = [];
-        document
-          .querySelectorAll(".format-btn")
-          .forEach((b) => b.classList.remove("is-selected"));
-        $("next-1").disabled = true;
-        ideaEl.value = "";
-        $("next-2").disabled = true;
-        goto(1);
-      });
-      $("regen-btn").addEventListener("click", regenerate);
+      async function runStoryboardCall(mode) {
+        $("sb-loading").hidden = false;
+        $("sb-loading").textContent = "piping —";
+        $("storyboard").hidden = true;
+        ["copy-btn", "share-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
+          (id) => ($(id).hidden = true),
+        );
+        try {
+          const data = await callApi(mode);
+          state.messages.push({ role: "assistant", content: data.text });
+          const parsed = parseStoryboard(data.text);
+          if (!parsed) throw new Error("The storyboard didn't return valid JSON.");
+          state.storyboard = parsed;
+          state.notes = {};
+          renderStoryboard();
+        } catch (err) {
+          $("sb-loading").textContent = "(couldn't compose the storyboard)";
+          showError("error-4", err.message || "Request failed.");
+          $("restart-btn").hidden = false;
+        }
+      }
 
       async function regenerate() {
         state.messages.push({
@@ -794,46 +1972,76 @@
           content:
             "Regenerate with a different composition — same idea, fresh shots and pacing.",
         });
-        $("sb-loading").hidden = false;
-        $("sb-loading").textContent = "piping —";
-        $("storyboard").hidden = true;
-        ["copy-btn", "export-btn", "regen-btn"].forEach(
-          (id) => ($(id).hidden = true),
-        );
-        try {
-          const data = await callApi("storyboard");
-          state.messages.push({ role: "assistant", content: data.text });
-          const parsed = parseStoryboard(data.text);
-          if (!parsed) throw new Error("The storyboard didn't return valid JSON.");
-          state.storyboard = parsed;
-          renderStoryboard();
-        } catch (err) {
-          showError("error-4", err.message || "Request failed.");
-        }
+        await runStoryboardCall("storyboard");
       }
 
       function parseStoryboard(text) {
-        const fence = text.match(/```json\s*([\s\S]*?)```/);
-        const raw = fence ? fence[1] : text;
-        try {
-          return JSON.parse(raw);
-        } catch {
-          const m = raw.match(/\{[\s\S]*\}/);
-          if (m) {
+        // 1. Try ```json fenced block
+        const fence = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
+        const candidates = [];
+        if (fence) candidates.push(fence[1]);
+        candidates.push(text);
+        for (const c of candidates) {
+          const trimmed = c.trim();
+          try {
+            return JSON.parse(trimmed);
+          } catch {}
+          const obj = extractBalancedJson(trimmed);
+          if (obj) {
             try {
-              return JSON.parse(m[0]);
-            } catch {
-              return null;
-            }
+              return JSON.parse(obj);
+            } catch {}
           }
-          return null;
         }
+        return null;
+      }
+
+      function extractBalancedJson(text) {
+        const start = text.indexOf("{");
+        if (start === -1) return null;
+        let depth = 0;
+        let inStr = false;
+        let escape = false;
+        for (let i = start; i < text.length; i++) {
+          const c = text[i];
+          if (escape) {
+            escape = false;
+            continue;
+          }
+          if (inStr) {
+            if (c === "\\") {
+              escape = true;
+              continue;
+            }
+            if (c === '"') inStr = false;
+            continue;
+          }
+          if (c === '"') {
+            inStr = true;
+            continue;
+          }
+          if (c === "{") depth++;
+          else if (c === "}") {
+            depth--;
+            if (depth === 0) return text.slice(start, i + 1);
+          }
+        }
+        return null;
       }
 
       function renderStoryboard() {
         const sb = state.storyboard;
         const root = $("storyboard");
         if (!sb || !Array.isArray(sb.frames)) return;
+        const showRationale = settings.rationale;
+
+        const strategyHtml =
+          showRationale && sb.strategy
+            ? `<div class="strategy-block">
+                 <span class="strategy-label">studio rationale</span>
+                 ${escapeHtml(sb.strategy)}
+               </div>`
+            : "";
 
         const frames = sb.frames
           .map((f, i) => {
@@ -842,6 +2050,11 @@
               typeof f.duration_seconds === "number" && f.duration_seconds > 0
                 ? `${f.duration_seconds}s`
                 : "";
+            const ratHtml =
+              showRationale && f.rationale
+                ? `<div class="frame-rationale">— ${escapeHtml(f.rationale)}</div>`
+                : "";
+            const noteVal = state.notes[i] || "";
             return `
               <article class="frame">
                 <div class="frame-num">${num}<small>frame</small></div>
@@ -855,6 +2068,14 @@
                     ${row("Transition in", f.transition_in)}
                     ${row("Transition out", f.transition_out)}
                   </dl>
+                  ${ratHtml}
+                  <div class="frame-notes">
+                    <div class="frame-notes-label">your notes</div>
+                    <textarea
+                      data-frame-i="${i}"
+                      placeholder="adjust the framing, swap an angle, jot a reminder —"
+                    >${escapeHtml(noteVal)}</textarea>
+                  </div>
                 </div>
                 <div class="frame-duration">${dur}</div>
               </article>`;
@@ -867,23 +2088,44 @@
             : "";
         const fmt = (sb.format || state.format || "").toString();
 
+        const captionRationaleHtml =
+          showRationale && sb.caption_strategy
+            ? `<div class="caption-rationale">— ${escapeHtml(sb.caption_strategy)}</div>`
+            : "";
+
         root.innerHTML = `
-          <div class="concept">${escapeHtml(sb.concept || "")}</div>
+          ${strategyHtml}
+          <input class="concept-input" id="concept-input" type="text" value="${escapeAttr(sb.concept || "")}" />
           <div class="concept-meta">${[fmt, totalDur, `${sb.frames.length} frames`]
             .filter(Boolean)
             .join(" · ")}</div>
-          ${frames}
+          <div class="frames-rail">${frames}</div>
           <div class="caption-block">
-            <div class="caption-label">Caption</div>
-            <div class="caption-text">${escapeHtml(sb.full_caption || "")}</div>
+            <div class="caption-label">Caption — edit as needed</div>
+            <textarea class="caption-input" id="caption-input">${escapeHtml(sb.full_caption || "")}</textarea>
+            ${captionRationaleHtml}
             <div class="hashtags">${(sb.hashtags || []).map(escapeHtml).join("  ")}</div>
           </div>`;
 
         $("sb-loading").hidden = true;
         root.hidden = false;
-        ["copy-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
+        ["copy-btn", "share-btn", "export-btn", "regen-btn", "restart-btn"].forEach(
           (id) => ($(id).hidden = false),
         );
+
+        // Bind editable fields
+        $("concept-input").addEventListener("input", (e) => {
+          state.storyboard.concept = e.target.value;
+        });
+        $("caption-input").addEventListener("input", (e) => {
+          state.storyboard.full_caption = e.target.value;
+        });
+        root.querySelectorAll("textarea[data-frame-i]").forEach((t) => {
+          t.addEventListener("input", (e) => {
+            const i = Number(e.target.dataset.frameI);
+            state.notes[i] = e.target.value;
+          });
+        });
       }
 
       function row(label, value) {
@@ -899,16 +2141,36 @@
           .replace(/>/g, "&gt;");
       }
 
-      // --- copy / export ---
+      function escapeAttr(s) {
+        return escapeHtml(s).replace(/"/g, "&quot;");
+      }
+
+      /* ============== copy / share / export ============== */
       $("copy-btn").addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(toPlainText(state.storyboard));
-          const b = $("copy-btn");
-          const orig = b.textContent;
-          b.textContent = "Copied";
-          setTimeout(() => (b.textContent = orig), 1400);
+          flash("copy-btn", "Copied");
         } catch {
           showError("error-4", "Copy failed — clipboard blocked.");
+        }
+      });
+
+      $("share-btn").addEventListener("click", async () => {
+        const text = toPlainText(state.storyboard);
+        const title = state.storyboard?.concept
+          ? `Rice & Flower — ${state.storyboard.concept}`
+          : "Rice & Flower — Storyboard";
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, text });
+          } catch {}
+        } else {
+          try {
+            await navigator.clipboard.writeText(text);
+            flash("share-btn", "Copied to share");
+          } catch {
+            showError("error-4", "Share unavailable in this browser.");
+          }
         }
       });
 
@@ -924,6 +2186,13 @@
         URL.revokeObjectURL(url);
       });
 
+      function flash(id, text) {
+        const b = $(id);
+        const orig = b.textContent;
+        b.textContent = text;
+        setTimeout(() => (b.textContent = orig), 1400);
+      }
+
       function toPlainText(sb) {
         const lines = [];
         lines.push(`Rice & Flower — Storyboard`);
@@ -931,6 +2200,7 @@
         if (sb.total_duration_seconds)
           lines.push(`Duration: ${sb.total_duration_seconds}s`);
         if (sb.concept) lines.push(`Concept: ${sb.concept}`);
+        if (sb.strategy) lines.push(`Strategy: ${sb.strategy}`);
         lines.push("");
         sb.frames.forEach((f, i) => {
           lines.push(
@@ -944,18 +2214,22 @@
           if (f.transition_in) lines.push(`  Transition in: ${f.transition_in}`);
           if (f.transition_out)
             lines.push(`  Transition out: ${f.transition_out}`);
+          if (f.rationale) lines.push(`  Rationale: ${f.rationale}`);
+          if (state.notes[i]) lines.push(`  Notes: ${state.notes[i]}`);
           lines.push("");
         });
         if (sb.full_caption) {
           lines.push("Caption:");
           lines.push(sb.full_caption);
+          if (sb.caption_strategy)
+            lines.push(`(rationale: ${sb.caption_strategy})`);
           lines.push("");
         }
         if (sb.hashtags?.length) lines.push((sb.hashtags || []).join(" "));
         return lines.join("\n");
       }
 
-      // --- api ---
+      /* ============== api ============== */
       async function callApi(mode) {
         const res = await fetch("/api/chat", {
           method: "POST",
@@ -966,6 +2240,11 @@
             messages: state.messages,
           }),
         });
+        if (res.status === 401) {
+          clearAuthedLocal();
+          showGate();
+          throw new Error("Session expired — sign in again.");
+        }
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Request failed");
         return data;

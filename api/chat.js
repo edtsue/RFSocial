@@ -1,13 +1,12 @@
 import Anthropic from "@anthropic-ai/sdk";
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Read the playbook once at cold-start. Vercel bundles best.md alongside
-// the function via `includeFiles` in vercel.json.
 let PLAYBOOK = "";
 try {
   PLAYBOOK = fs.readFileSync(path.join(__dirname, "..", "best.md"), "utf8");
@@ -19,6 +18,7 @@ const FRAME_SCHEMA = `{
   "format": "reel" | "story" | "post",
   "total_duration_seconds": number,
   "concept": "One-line description of the overall narrative",
+  "strategy": "1 to 2 sentences in the studio voice on why this concept fits the format and what playbook signals it leans on (sends, saves, watch time, originality, search). This is the editorial rationale, not the concept restated.",
   "frames": [
     {
       "frame_number": number,
@@ -29,10 +29,12 @@ const FRAME_SCHEMA = `{
       "caption_segment": "Optional fragment of the overall caption tied to this frame, or empty string",
       "audio_cue": "Diegetic sound, music, or silence",
       "transition_in": "How this frame begins",
-      "transition_out": "How this frame ends into the next"
+      "transition_out": "How this frame ends into the next",
+      "rationale": "One sentence on why this frame at this moment — what it does for the viewer, or the specific playbook signal it serves (e.g. hook in the first 1.5s, save-worthy reference moment, send-worthy identity beat)."
     }
   ],
   "full_caption": "Full Instagram caption in Rice & Flower voice",
+  "caption_strategy": "One sentence naming the playbook signal this caption and CTA target — sends-per-reach, saves, search keyword surfacing in the first 125 characters, etc.",
   "hashtags": ["#tag", "#tag"]
 }`;
 
@@ -51,35 +53,61 @@ VOICE — atelier, not bakery:
 - Avoid: cute, casual, exclamatory, urgent, discounty, jargon-y, overly emotional, level-up bro language, trend-chasing slang
 - Avoid 2026-penalized engagement bait phrasing ("comment YES if…", "tag 5 friends," "like for X"). Calls to save or share must feel like an invitation, not a manipulation — e.g. "save this for the next cake you commission" rather than "save if you agree."
 
-YOU OPERATE IN TWO MODES:
+YOU OPERATE IN FOUR MODES:
 
-1. CLARIFYING — given a raw idea and a chosen format, ask 2 to 3 focused questions that will sharpen the storyboard. Each question should map to a real strategic dimension drawn from the Instagram Playbook below — e.g. shareability angle (relatability / utility / identity), audience (clients vs. fellow artists), the feeling the viewer should leave with, the cake or technique at the center, lighting/setting, the one save-worthy or send-worthy beat. Return plain prose — a one-line lead-in then a numbered list. No JSON.
+1. CLARIFYING — given a raw idea and a chosen format, ask 2 to 3 short, plain-English questions that will sharpen the storyboard.
 
-2. STORYBOARD — given the idea plus the user's answers, return a frame-by-frame storyboard as VALID JSON wrapped in a single \`\`\`json fenced code block. No prose outside the fence. Match this schema exactly:
+QUESTION RULES:
+- Each question must be ten words or fewer.
+- No jargon, no industry terms, no painterly metaphors. Save the studio voice for the storyboard itself.
+- Cover real strategic dimensions: who it's for, the feeling, the technique or moment at the center, where it's shot, the one beat worth saving or sharing.
+- Each question is paired with a rationale line — the rationale stays in the studio voice and explains what this answer will unlock.
+
+Return plain prose — a one-line lead-in then a numbered list, in this EXACT format:
+
+  1. <the question, ten words or fewer, plain English>
+     — <one-sentence rationale starting with an em-dash, naming the dimension this unlocks>
+
+  2. <question>
+     — <rationale>
+
+The em-dashed rationale line is required on every question. Do not return JSON in this mode.
+
+2. BRAINSTORM — the user is iterating on their idea before clarifying questions. Respond conversationally in the studio voice — 2 to 3 short sentences. Sharpen the angle, propose a single concrete alternative when useful, or ask one focused follow-up. Never produce a numbered list, a storyboard, or JSON in this mode. If the idea feels ready, end with a single italic line on its own: "— this feels ready to refine." (Do not say it otherwise.)
+
+3. STORYBOARD — given the idea plus the user's answers, return a frame-by-frame storyboard as VALID JSON wrapped in a single \`\`\`json fenced code block. NO prose outside the fence. NO markdown commentary. Match this schema exactly:
 
 ${FRAME_SCHEMA}
+
+4. AUTO-COMPOSE — when the user requests a storyboard with no idea provided ("compose something for me"), do not ask questions. Pick the strongest format and a fresh, on-brand idea drawn from the studio's current craft (a piping technique close-up, a tonal study, a delivery-day moment, a tier reveal, a flower-by-flower build, a color-mixing study) and return a storyboard JSON immediately in the same shape as STORYBOARD mode. Note in the strategy field that the studio chose the direction.
+
+OUTPUT DISCIPLINE FOR JSON MODES (storyboard, auto-compose):
+- The response must start with \`\`\`json on its own line and end with \`\`\` on its own line.
+- The JSON must be syntactically valid: no trailing commas, all strings double-quoted, all keys present.
+- Do not include any prose, headers, or commentary before or after the fence.
+- Keep frame count tight: Reels 5–8 frames, Stories 3–6 frames, Posts 1–6 frames.
 
 STORYBOARD GUIDANCE — apply the Instagram Playbook below to every decision:
 
 - Reels: aim for 7 to 15 seconds total for discovery, 30 to 60 seconds only when the idea genuinely warrants it. The first 1.5 to 3 seconds is a real hook — open on motion, a pattern interrupt, an unexpected angle, or a mid-action moment. Never open on a logo, a slow establishing shot, or "hey guys." Vertical 9:16. Burned-in captions implied (note them in on_screen_text where useful). End on a save- or send-worthy beat with a CTA in the studio voice.
 - Stories: 3 to 6 sequential vertical frames, each 4 to 7 seconds. Front-load the hook in frames 1 to 3. Where natural, suggest one interactive sticker (poll, question, quiz, or countdown) inside on_screen_text or audio_cue — described as direction, not as a literal sticker mock-up.
-- Posts: 1 to 6 frames for a carousel; if a single still, treat duration_seconds as 0. For carousels, 8 to 10 slides is the sweet spot when the depth supports it; the first slide is 80% of the work and must promise a specific outcome; slide 2 should pull the viewer past the swipe threshold; include at least one save-worthy reference slide (a checklist, a framework, a comparison) when the idea allows.
+- Posts: 1 to 6 frames for a carousel; if a single still, treat duration_seconds as 0. For carousels, the first slide is 80% of the work and must promise a specific outcome; slide 2 should pull the viewer past the swipe threshold; include at least one save-worthy reference slide when the idea allows.
 
 Every frame must read like a directed shot — a specific lens feel, lighting cue, and gesture. Generic "close-up of cake" is not enough.
 
-ON-SCREEN TEXT — short, lowercase, serif-feeling phrases in the studio voice. Empty string when silence is stronger. Do not stuff every frame with text.
+ON-SCREEN TEXT — short, lowercase, serif-feeling phrases in the studio voice. Empty string when silence is stronger.
 
 CAPTION:
-- Open with the strongest 125 characters: that's the truncation point and is also Instagram's primary search-indexed surface (post-July 2025, public Pro accounts are also indexed by Google).
+- Open with the strongest 125 characters: that's the truncation point and is also Instagram's primary search-indexed surface.
 - 2 to 4 sentences for most posts; longer only when the idea is educational/founder-personal/process-led.
 - No hashtags inside the caption body.
-- One clear, voice-aligned CTA — most often a save invitation or a send invitation, since sends-per-reach is the dominant 2026 reach signal.
+- One clear, voice-aligned CTA — most often a save invitation or a send invitation.
 
-HASHTAGS — 3 to 5 niche, highly relevant tags only. Lowercase. Anchor in NYC cake design, Korean buttercream artistry, the studio's atelier identity, and the specific occasion or technique of the piece. No more than 5. Hashtags categorize content for the algorithm; they do not boost reach on their own.
+HASHTAGS — 3 to 5 niche, highly relevant tags only. Lowercase. Anchor in NYC cake design, Korean buttercream artistry, the studio's atelier identity, and the specific occasion or technique of the piece.
 
-AUDIO_CUE — describe sound design, not a specific copyrighted track. Prefer ambient studio sound, soft piping, fabric, breath; or note "trending audio with soft, considered tempo" when motion-led. Reels without audio are blocked from recommendations, so always specify something.
+AUDIO_CUE — describe sound design, not a specific copyrighted track. Always specify something — Reels without audio are blocked from recommendations.
 
-TRANSITIONS — name them concretely (cut, match cut on form, cross-dissolve through bloom, whip pan on color shift). Movement and rhythm should feel composed.
+TRANSITIONS — name them concretely (cut, match cut on form, cross-dissolve through bloom, whip pan on color shift).
 
 INSTAGRAM PLAYBOOK (reference — apply to every recommendation, do not quote verbatim):
 
@@ -87,10 +115,53 @@ ${PLAYBOOK || "(playbook unavailable in this deployment — fall back to first p
 
 End of playbook reference.`;
 
+function parseCookies(header) {
+  if (!header) return {};
+  const out = {};
+  header.split(";").forEach((part) => {
+    const idx = part.indexOf("=");
+    if (idx === -1) return;
+    const k = part.slice(0, idx).trim();
+    const v = part.slice(idx + 1).trim();
+    if (k) out[k] = decodeURIComponent(v);
+  });
+  return out;
+}
+
+function verifyAuth(token, secret) {
+  if (!token || !secret) return false;
+  const dot = token.indexOf(".");
+  if (dot < 1) return false;
+  const expStr = token.slice(0, dot);
+  const sig = token.slice(dot + 1);
+  const exp = Number(expStr);
+  if (!Number.isFinite(exp) || exp < Date.now()) return false;
+  const expected = crypto
+    .createHmac("sha256", secret)
+    .update(String(exp))
+    .digest("hex");
+  if (sig.length !== expected.length) return false;
+  try {
+    return crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
+  }
+
+  // Auth gate (only enforced when PASSWORD is configured)
+  const sitePassword = process.env.PASSWORD;
+  if (sitePassword) {
+    const cookies = parseCookies(req.headers?.cookie || "");
+    if (!verifyAuth(cookies.rfs_auth, sitePassword)) {
+      res.status(401).json({ error: "Authentication required" });
+      return;
+    }
   }
 
   const apiKey =
@@ -107,22 +178,31 @@ export default async function handler(req, res) {
     res.status(400).json({ error: "messages[] is required" });
     return;
   }
-  if (mode !== "clarify" && mode !== "storyboard") {
-    res.status(400).json({ error: "mode must be 'clarify' or 'storyboard'" });
+  const VALID_MODES = new Set(["clarify", "brainstorm", "storyboard", "auto"]);
+  if (!VALID_MODES.has(mode)) {
+    res
+      .status(400)
+      .json({ error: "mode must be clarify, brainstorm, storyboard, or auto" });
     return;
   }
 
-  const modeInstruction =
-    mode === "clarify"
-      ? `MODE: CLARIFYING. The user has chosen format: ${format || "let-the-studio-decide"}. Ask 2 to 3 focused clarifying questions about their idea, each mapped to a strategic dimension (shareability angle, audience, save/send beat, technique focus, mood/lighting). Plain prose only — no JSON, no storyboard yet.`
-      : `MODE: STORYBOARD. The user has chosen format: ${format || "let-the-studio-decide"}. Return a complete storyboard as a single \`\`\`json fenced JSON block matching the schema. Apply the format-specific length, hook, CTA, and hashtag rules from the playbook. No prose outside the fence. If the user asks for revisions, return a fully updated JSON.`;
+  let modeInstruction;
+  if (mode === "clarify") {
+    modeInstruction = `MODE: CLARIFYING. The user has chosen format: ${format || "let-the-studio-decide"}. Ask 2 to 3 short, plain-English clarifying questions (each ten words or fewer), each paired with an em-dashed rationale line in the studio voice. Plain prose only — no JSON, no storyboard yet.`;
+  } else if (mode === "brainstorm") {
+    modeInstruction = `MODE: BRAINSTORM. Help the user sharpen their idea conversationally — 2 to 3 short sentences, studio voice. No questions list, no JSON, no storyboard. If the idea is ready to advance, end with the line "— this feels ready to refine." on its own.`;
+  } else if (mode === "auto") {
+    modeInstruction = `MODE: AUTO-COMPOSE. The user wants the studio to choose for them — pick the strongest format and a fresh on-brand idea drawn from the studio's current craft, then return a complete storyboard as a single \`\`\`json fenced JSON block. Note in strategy that the studio chose the direction. No prose outside the fence.`;
+  } else {
+    modeInstruction = `MODE: STORYBOARD. The user has chosen format: ${format || "let-the-studio-decide"}. Return a complete storyboard as a single \`\`\`json fenced JSON block matching the schema. Apply the format-specific length, hook, CTA, and hashtag rules from the playbook. No prose outside the fence. If the user asks for revisions, return a fully updated JSON.`;
+  }
 
   const client = new Anthropic({ apiKey });
 
   try {
     const response = await client.messages.create({
       model: "claude-sonnet-4-6",
-      max_tokens: 4096,
+      max_tokens: 8192,
       system: [
         {
           type: "text",
