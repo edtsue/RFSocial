@@ -1192,6 +1192,25 @@
 
       if (isAuthedLocal()) hideGate(); else showGate();
 
+      /* ============== app state (declared early so settings can reference) ============== */
+      const state = {
+        step: 1,
+        highest: 1,
+        format: null,
+        idea: "",
+        questions: [],
+        answers: [],
+        chatTurns: [],
+        variants: [],
+        activeVariant: 0,
+        storyboard: null,
+        notes: {},
+        images: {},
+        hashtags: [],
+        messages: [],
+      };
+      const $ = (id) => document.getElementById(id);
+
       /* ============== settings ============== */
       const SETTINGS_KEY = "rfsocial-settings-v2";
       const settings = loadSettings();
@@ -1293,26 +1312,7 @@
         });
       }
 
-      /* ============== app state ============== */
-      const state = {
-        step: 1,
-        highest: 1,
-        format: null,
-        idea: "",
-        questions: [],
-        answers: [],
-        chatTurns: [],
-        variants: [],       // [{storyboard, notes, images, hashtags}]
-        activeVariant: 0,
-        storyboard: null,
-        notes: {},          // { frameIndex: string }
-        images: {},         // { frameIndex: dataURL }
-        hashtags: [],       // editable list
-        messages: [],
-      };
-
-      const $ = (id) => document.getElementById(id);
-
+      /* ============== variant helpers ============== */
       // Bind variant pointer
       function bindActiveVariant() {
         const v = state.variants[state.activeVariant];
