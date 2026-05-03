@@ -1283,13 +1283,197 @@ body {
         max-width: 280px;
       }
 
-      @media (max-width: 640px) {
-        .page { padding: 28px 18px 64px; }
-        .stepper { gap: 4px; padding-bottom: 24px; margin-bottom: 28px; }
-        .stepper .step { font-size: 0.66em; padding: 4px 8px; }
-        .frame { grid-template-columns: 56px 1fr; gap: 14px; }
-        .frame-actions { grid-column: 2; align-items: flex-start; }
-        .zone { padding: 18px 16px; }
+@media (max-width: 760px) {
+        .page { padding: 18px 16px 56px; }
+        body { font-size: 17pt; }
+        [data-scale="lg"] body, [data-scale="lg"] { --base-size: 19pt; }
+
+        .topbar { margin-bottom: 16px; }
+        .brand-mini { font-size: 0.62em; letter-spacing: 0.18em; }
+
+        header.masthead {
+          padding-bottom: 12px;
+          margin-bottom: 14px;
+        }
+        .wordmark { font-size: 0.92em; letter-spacing: 0.24em; }
+        .tagline { font-size: 0.7em; }
+
+        /* Stepper: compact and tap-friendly */
+        .stepper {
+          gap: 0;
+          padding-bottom: 12px;
+          margin-bottom: 18px;
+          justify-content: space-between;
+        }
+        .stepper .step {
+          font-size: 0.6em;
+          padding: 10px 6px;
+          flex: 1;
+          min-width: 0;
+        }
+        .stepper .step .num { margin-right: 4px; }
+
+        .step-eyebrow { font-size: 0.7em; }
+        .step-title { font-size: 1.2em; }
+        .step-body { font-size: 0.72em; }
+
+        /* Format step */
+        .format-btn {
+          padding: 16px 8px;
+          flex-wrap: wrap;
+          gap: 4px;
+        }
+        .format-btn .name { min-width: 0; flex: 0 0 auto; }
+        .format-btn .desc { font-size: 0.7em; flex: 1 1 100%; }
+        .format-btn .check { font-size: 0.74em; }
+
+        .skip-link { padding: 14px; font-size: 0.82em; }
+
+        /* Inputs: bigger tap targets */
+        .field textarea,
+        .field input[type="text"],
+        .field input[type="password"] {
+          font-size: 0.96em;
+          padding: 12px 0;
+        }
+        .field textarea { min-height: 88px; }
+
+        .inspirations-list { gap: 6px; }
+        .inspiration-chip {
+          padding: 10px 14px;
+          font-size: 0.78em;
+        }
+
+        .brainstorm-toggle { padding: 12px; }
+        .chat-log { max-height: 200px; }
+        .chat-composer textarea { font-size: 0.92em; padding: 10px 0; }
+
+        /* Refine */
+        .questions textarea { min-height: 56px; font-size: 0.92em; }
+
+        /* Nav row: stack buttons full width */
+        .nav {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 6px;
+        }
+        .nav .spacer { display: none; }
+        .nav .btn {
+          padding: 14px 10px;
+          font-size: 0.86em;
+          text-align: center;
+          border: 1px solid var(--hairline);
+        }
+        .nav .btn:hover:not(:disabled) {
+          border-color: var(--ink);
+        }
+        .nav .btn-back::before { content: "← "; }
+        .nav .btn-primary { border-color: var(--ink); }
+
+        /* Storyboard step */
+        .tone-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .tone-row .seg { min-width: 0; width: 100%; }
+        .seg button { padding: 12px 6px; }
+
+        /* Variant tabs */
+        .variant-tab { padding: 10px 12px; font-size: 0.78em; }
+        .variant-tab .meta { display: none; }
+
+        /* Signal chips */
+        .signals { gap: 6px; }
+        .signal-chip { font-size: 0.7em; padding: 4px 8px; }
+
+        /* Concept */
+        .concept-input { font-size: 1.05em; }
+
+        /* Phone preview */
+        .phone-shell {
+          width: min(220px, 70vw);
+          height: calc(min(220px, 70vw) * 2.04);
+        }
+        .phone-controls { gap: 14px; }
+        .phone-nav { width: 40px; height: 40px; font-size: 16px; }
+        .phone-overlay-text { font-size: 14px; bottom: 60px; }
+        .phone-meta { font-size: 9px; padding: 0 18px; bottom: 16px; }
+
+        /* Frame card: stack everything in a single column */
+        .frame {
+          grid-template-columns: 1fr;
+          gap: 8px;
+          padding: 16px 0;
+        }
+        .frame > div:first-child {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .frame-num { font-size: 1.8em; }
+        .frame-num small { display: inline; margin-left: 4px; font-size: 0.4em; }
+        .frame-controls { margin-top: 0; gap: 4px; }
+        .frame-control { width: 36px; height: 36px; font-size: 14pt; }
+        .frame-fields { font-size: 0.82em; }
+        .frame-fields dl {
+          grid-template-columns: 100px 1fr;
+          row-gap: 10px;
+          column-gap: 12px;
+        }
+        .frame-fields dt { font-size: 0.86em; }
+        .frame-actions {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 8px 0;
+          border-top: 1px solid var(--hairline);
+        }
+        .frame-regen-btn { padding: 10px 0; font-size: 0.78em; }
+
+        /* Frame image zone touch-friendly */
+        .frame-image-zone { padding: 20px 14px; }
+        .frame-image-empty { font-size: 0.82em; }
+
+        /* Notes */
+        .frame-notes textarea { font-size: 0.86em; min-height: 56px; }
+
+        /* Caption */
+        .caption-input { font-size: 0.92em; min-height: 92px; }
+
+        /* Hashtags */
+        .hashtag-chip { font-size: 0.78em; padding: 6px 12px; }
+        .hashtag-input { font-size: 0.82em; padding: 8px 0; }
+
+        /* Drawers full-screen on phones */
+        .drawer {
+          width: 100vw;
+          max-width: none;
+          padding: 24px 18px;
+        }
+
+        /* Tooltips: bigger, position-aware */
+        .tip { width: 22px; height: 22px; font-size: 12px; }
+        .tip .tip-bubble {
+          width: 240px;
+          max-width: calc(100vw - 32px);
+          font-size: 14px;
+        }
+
+        .footnote { margin-top: 40px; font-size: 0.6em; }
+        .draft-banner { font-size: 0.78em; }
+        .draft-banner span:last-child { display: flex; gap: 10px; }
+
+        /* Library list tap-friendly */
+        .library-item-title { font-size: 0.94em; }
+        .library-item-meta { font-size: 0.72em; }
+      }
+
+      /* Tap-to-show tooltip support (touch devices) */
+      .tip.is-open .tip-bubble { visibility: visible; opacity: 1; }
+      @media (hover: none) {
+        .tip:hover .tip-bubble { visibility: hidden; opacity: 0; }
+        .tip.is-open .tip-bubble { visibility: visible; opacity: 1; }
       }
     </style>
   </head>
@@ -1592,7 +1776,8 @@ body {
         }
       });
 
-      if (isAuthedLocal()) hideGate(); else showGate();
+const IS_LOCAL = ["localhost", "127.0.0.1", "0.0.0.0"].includes(location.hostname);
+      if (IS_LOCAL || isAuthedLocal()) hideGate(); else showGate();
 
       /* ============== app state (declared early so settings can reference) ============== */
 const state = {
@@ -3133,9 +3318,27 @@ if (state.format) {
         scheduleAutoSave();
       }
 
+/* ============== tooltip tap handling (touch) ============== */
+      document.addEventListener("click", (e) => {
+        const t = e.target.closest(".tip");
+        if (t) {
+          e.preventDefault();
+          e.stopPropagation();
+          document
+            .querySelectorAll(".tip.is-open")
+            .forEach((x) => { if (x !== t) x.classList.remove("is-open"); });
+          t.classList.toggle("is-open");
+          return;
+        }
+        // Click outside any open tip closes them
+        document
+          .querySelectorAll(".tip.is-open")
+          .forEach((x) => x.classList.remove("is-open"));
+      });
+
       // boot
       goto(1);
-      if (isAuthedLocal()) checkAndOfferDraft();
+      if (IS_LOCAL || isAuthedLocal()) checkAndOfferDraft();
     </script>
   </body>
 </html>
